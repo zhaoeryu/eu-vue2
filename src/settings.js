@@ -20,6 +20,8 @@ export const defaultTheme = {
 export const defaultSetting = {
   // 网站名称
   title: 'EuBackend',
+  // 网站版本
+  version: '0.0.1',
   // 是否使用Mock数据
   useMock: true,
   // 页面底部的copyright

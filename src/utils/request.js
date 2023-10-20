@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getToken } from '@/utils/auth'
-import { REQUEST_HEADER_TOKEN } from '@/utils/constants'
+import { EU_FRONT_KEY, REQUEST_HEADER_TOKEN } from '@/utils/constants'
 import errorCode from '@/utils/errorCode'
 import { Message, Loading } from 'element-ui'
 import { blobValidate } from '@/utils/index'
@@ -21,7 +21,11 @@ const service = axios.create({
   //2.qs.stringify({ids: [1, 2, 3]}, {arrayFormat: ‘indices‘}) --形式：      ids[0]=1&ids[1]=2&ids[2]=3
   //3.qs.stringify({ids: [1, 2, 3]}, {arrayFormat: ‘brackets‘})  --形式：ids[]=1&ids[]=2&ids[]=3
   //4.qs.stringify({ids: [1, 2, 3]}, {arrayFormat: ‘repeat‘})  --形式： ids=1&ids=2&ids=3
-  paramsSerializer: params => qs.stringify(params, { indices: false })
+  paramsSerializer: params => qs.stringify(params, { indices: false }),
+  headers: {
+    'X-Eu-Front': EU_FRONT_KEY,
+    'X-Eu-Front-Version': defaultSetting.version,
+  }
 })
 
 service.interceptors.request.use(config => {
