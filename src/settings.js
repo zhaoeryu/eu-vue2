@@ -40,9 +40,9 @@ export const defaultSetting = {
   anonymousAccessWhiteList: ['/login', '/404', '/401', '/demo'],
 
   // 系统帮助文档地址
-  systemHelpDocUrl: 'https://www.baidu.com',
+  systemHelpDocUrl: 'https://zhaoeryu.github.io',
   // github源码地址
-  githubUrl: 'https://github.com/zhaoeryu/eu-vue2',
+  githubUrl: 'https://github.com/zhaoeryu',
   // gitee源码地址
-  giteeUrl: 'https://gitee.com/zhaoeryu/eu-vue2',
+  giteeUrl: 'https://gitee.com/zhaoeryu',
 }
