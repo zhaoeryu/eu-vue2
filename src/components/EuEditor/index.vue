@@ -21,6 +21,13 @@
 <script>
 // https://www.wangeditor.com/v5/for-frame.html#%E9%85%8D%E7%BD%AE
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+import { i18nChangeLanguage } from '@wangeditor/editor'
+import i18n from '@/plugins/i18n'
+if (i18n.locale === 'zh') {
+  i18nChangeLanguage('zh-CN')
+} else {
+  i18nChangeLanguage('en')
+}
 
 export default {
   name: 'EuEditor',
