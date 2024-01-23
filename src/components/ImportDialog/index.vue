@@ -70,7 +70,7 @@ export default {
   <el-dialog
     :title="$t('crud.ImportDialog.title')"
     :visible.sync="show"
-    width="600px"
+    width="800px"
     append-to-body
   >
     <el-steps :active="stepActive" :align-center="true" finish-status="success">

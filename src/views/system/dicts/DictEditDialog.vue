@@ -64,7 +64,7 @@ export default {
 
 <template>
   <el-dialog :title="title" :visible.sync="show" width="500px" :close-on-click-modal="false" @open="onDialogOpen">
-    <el-form ref="form" :model="form" :rules="rules" label-width="90px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="140px">
       <el-form-item :label="$t('dict.edit.form.dictKey')" prop="dictKey">
         <el-input v-model="form.dictKey" :placeholder="$t('dict.edit.form.dictKey.placeholder')" maxlength="30" />
       </el-form-item>

@@ -19,7 +19,7 @@ export default {
   'menu.column.cache.true': 'Yes',
   'menu.column.cache.false': 'No',
   'menu.column.dot.true': 'Yes',
-  'menu.confirm.delete': 'Are you sure you want to delete "{menuName}"{children}?',
+  'menu.confirm.delete': 'Are you sure you want to delete "{menuName}" and all its submenus?',
   // edit
   'menu.edit.title': 'Edit Menu',
   'menu.add.title': 'Add Menu',

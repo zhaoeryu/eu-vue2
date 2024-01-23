@@ -187,9 +187,15 @@ export default {
               <el-checkbox v-model="formExtra.checkedAll" @change="handleCheckedTreeNodeAll($event)">{{ $t('role.edit.form.menuPermission.checkedAll') }}</el-checkbox>
               <el-checkbox v-model="formExtra.checkStrictly">{{ $t('role.edit.form.menuPermission.checkStrictly') }}</el-checkbox>
             </div>
-            <el-input :placeholder="$t('role.edit.form.menuPermission.filterKeyword')" v-model="formExtra.menuFilterKeyword" style="width: 200px;" clearable>
-              <i slot="prefix" class="el-input__icon el-icon-search"></i>
-            </el-input>
+            <div>
+              <el-input
+                :placeholder="$t('role.edit.form.menuPermission.filterKeyword')"
+                v-model="formExtra.menuFilterKeyword"
+                prefix-icon="el-icon-search"
+                style="width: 200px;"
+                clearable
+              />
+            </div>
           </div>
           <el-tree
             :data="menuTree"

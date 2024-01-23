@@ -94,8 +94,8 @@ export default {
 </script>
 
 <template>
-  <el-dialog :title="title" :visible.sync="show" width="600px" :close-on-click-modal="false" @open="onDialogOpen">
-    <el-form ref="form" :model="form" :rules="rules" label-width="90px">
+  <el-dialog :title="title" :visible.sync="show" width="800px" :close-on-click-modal="false" @open="onDialogOpen">
+    <el-form ref="form" :model="form" :rules="rules" label-width="140px">
       <el-row>
         <el-col :span="24">
           <el-form-item :label="$t('menu.edit.form.parentId')" prop="parentId">

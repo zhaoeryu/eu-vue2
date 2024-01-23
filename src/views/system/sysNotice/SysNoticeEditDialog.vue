@@ -85,7 +85,7 @@ export default {
     width="700px"
     @open="onDialogOpen"
   >
-    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="140px">
       <el-form-item :label="$t('sysNotice.edit.form.title')" prop="title">
         <el-input v-model="form.title" :placeholder="$t('sysNotice.edit.form.title.placeholder')" clearable />
       </el-form-item>

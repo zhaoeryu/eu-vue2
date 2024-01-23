@@ -83,10 +83,10 @@ export default {
     :title="title"
     :visible.sync="show"
     :close-on-click-modal="false"
-    width="600px"
+    width="800px"
     @open="onDialogOpen"
   >
-    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="140px">
       <el-row :gutter="16">
         <el-col :span="24">
           <el-form-item :label="$t('dept.edit.form.parentId')" prop="parentId">

@@ -169,7 +169,8 @@ export default {
             add: false,
             del: false,
             export: false,
-            sort: false
+            sort: false,
+            import: false
           }"
           :ref-table="$refs.table"
           @refresh="onRefresh"

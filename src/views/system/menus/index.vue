@@ -211,8 +211,7 @@ export default {
      */
     onRowDelete(row) {
       this.$confirm(this.$t('menu.confirm.delete', {
-        menuName: row.menuName,
-        children: row.children && row.children.length ? '以及该菜单下面所有的菜单' : ''
+        menuName: row.menuName
       }), {
         title: this.$t('general.confirm.title'),
         confirmButtonText: this.$t('general.confirm.confirm'),

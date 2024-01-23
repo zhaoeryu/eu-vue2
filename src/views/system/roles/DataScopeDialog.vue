@@ -139,7 +139,7 @@ export default {
         <span> - [{{ form.roleName }}]</span>
       </div>
     </template>
-    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="140px">
       <el-form-item :label="$t('role.dataScopeDialog.form.dataScope')" prop="dataScope">
         <el-radio-group v-model="form.dataScope">
           <el-radio-button

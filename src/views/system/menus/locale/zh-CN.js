@@ -19,7 +19,7 @@ export default {
   'menu.column.cache.true': '是',
   'menu.column.cache.false': '否',
   'menu.column.dot.true': '是',
-  'menu.confirm.delete': '确定要删除"{menuName}"{children}吗？',
+  'menu.confirm.delete': '确定要删除"{menuName}"以及该菜单下面所有的菜单吗？',
   // edit
   'menu.edit.title': '修改菜单',
   'menu.add.title': '新增菜单',

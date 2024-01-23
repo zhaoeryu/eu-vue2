@@ -112,7 +112,7 @@ export default {
     width="700px"
     @open="onDialogOpen"
   >
-    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="140px">
       <el-row :gutter="16">
         <el-col :span="12">
           <el-form-item :label="$t('user.edit.form.nickname')" prop="nickname">

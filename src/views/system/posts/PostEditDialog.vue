@@ -74,7 +74,7 @@ export default {
     width="500px"
     @open="onDialogOpen"
   >
-    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="140px">
       <el-form-item :label="$t('posts.form.postName')" prop="postName">
         <el-input v-model="form.postName" :placeholder="$t('posts.form.postName.placeholder')" maxlength="20" />
       </el-form-item>
