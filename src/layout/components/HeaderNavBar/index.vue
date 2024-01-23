@@ -33,6 +33,22 @@
           </template>
         </message>
       </li>
+      <li>
+        <el-dropdown @command="onLocaleChange">
+          <div>
+            <svg-icon icon-class="en" />
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item
+                v-for="option in langOptions"
+                :key="option.value"
+                :command="option.value"
+              >{{ option.label }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </li>
       <li class="eu-phone__hide" @click="onScreenfull">
         <svg-icon :icon-class="isFullscreen ? 'fullscreen-exit':'fullscreen'" />
       </li>
@@ -48,6 +64,8 @@ import Message from '@/components/Message/index.vue'
 import screenfull from 'screenfull'
 import SidebarHeader from '@/layout/components/SidebarHeader/index.vue'
 import { mapGetters } from 'vuex'
+import { LOCALE_OPTIONS } from '@/locale'
+import { STORAGE_KEY_LOCALE } from '@/utils/constants'
 
 export default {
   name: 'HeaderNavBar',
@@ -63,6 +81,9 @@ export default {
     }),
     darkMode() {
       return this.theme.darkMode
+    },
+    langOptions() {
+      return LOCALE_OPTIONS
     }
   },
   mounted() {
@@ -108,6 +129,11 @@ export default {
     },
     toNewPage(url) {
       window.open(url)
+    },
+    onLocaleChange(locale) {
+      this.$i18n.locale = locale
+      localStorage.setItem(STORAGE_KEY_LOCALE, locale)
+      location.reload()
     }
   }
 }

@@ -1,6 +1,7 @@
+import i18n from '@/plugins/i18n'
 export default {
   shortcuts: [{
-    text: '最近一周',
+    text: i18n.t('elementDatePickerOptions.shortcuts.lastWeek'),
     onClick(picker) {
       const end = new Date();
       const start = new Date();
@@ -8,7 +9,7 @@ export default {
       picker.$emit('pick', [start, end]);
     }
   }, {
-    text: '最近一个月',
+    text: i18n.t('elementDatePickerOptions.shortcuts.lastMonth'),
     onClick(picker) {
       const end = new Date();
       const start = new Date();
@@ -16,7 +17,7 @@ export default {
       picker.$emit('pick', [start, end]);
     }
   }, {
-    text: '最近三个月',
+    text: i18n.t('elementDatePickerOptions.shortcuts.lastThreeMonths'),
     onClick(picker) {
       const end = new Date();
       const start = new Date();
@@ -24,7 +25,7 @@ export default {
       picker.$emit('pick', [start, end]);
     }
   }, {
-    text: '最近半年',
+    text: i18n.t('elementDatePickerOptions.shortcuts.lastSixMonths'),
     onClick(picker) {
       const end = new Date();
       const start = new Date();
@@ -32,7 +33,7 @@ export default {
       picker.$emit('pick', [start, end]);
     }
   }, {
-    text: '最近一年',
+    text: i18n.t('elementDatePickerOptions.shortcuts.lastYear'),
     onClick(picker) {
       const end = new Date();
       const start = new Date();

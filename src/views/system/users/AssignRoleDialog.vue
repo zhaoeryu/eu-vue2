@@ -53,7 +53,7 @@ export default {
         id: this.userId,
         roleIds: this.roleIds
       }).then(() => {
-        this.$message.success('分配角色成功')
+        this.$message.success(this.$t('user.assignRole.success'))
         this.show = false
         this.$emit('success')
       }).finally(() => {
@@ -68,7 +68,7 @@ export default {
 </script>
 
 <template>
-  <el-dialog title="分配角色" :visible.sync="show" width="700px" @close="onDialogClose">
+  <el-dialog :title="$t('user.assignRole.title')" :visible.sync="show" width="700px" @close="onDialogClose">
     <div class="assign-role-wrapper">
       <el-tag
         :key="tag.id"
@@ -78,14 +78,14 @@ export default {
         @close="onRemoveRole(tag)">
         {{tag.roleName}}
       </el-tag>
-      <el-select v-model="roleId" @change="onAssignRoleSelectChange" placeholder="请选择角色" filterable class="input-new-tag">
+      <el-select v-model="roleId" @change="onAssignRoleSelectChange" :placeholder="$t('user.assignRole.role.placeholder')" filterable class="input-new-tag">
         <el-option v-for="item in roleList" :disabled="assignRoleList.some(v => v.id === item.id)" :key="item.id" :label="item.roleName" :value="item.id" />
       </el-select>
     </div>
 
     <div slot="footer">
-      <el-button @click="show = false">取 消</el-button>
-      <el-button :loading="loading" type="primary" @click="onAssignRoleSave">确 定</el-button>
+      <el-button @click="show = false">{{ $t('general.form.cancel') }}</el-button>
+      <el-button :loading="loading" type="primary" @click="onAssignRoleSave">{{ $t('general.form.submit') }}</el-button>
     </div>
   </el-dialog>
 </template>

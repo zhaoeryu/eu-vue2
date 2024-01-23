@@ -1,3 +1,4 @@
+import i18n from '@/plugins/i18n'
 /**
  * 设备类型
  */
@@ -10,42 +11,42 @@ export const DeviceTypeEnums = {
  * 操作日志 - 业务类型
  */
 export const BusinessTypeEnums = {
-  OTHER: { label: '其他', value: 0 },
-  QUERY: { label: '查询', value: 1 },
-  INSERT: { label: '新增', value: 2 },
-  UPDATE: { label: '修改', value: 3 },
-  DELETE: { label: '删除', value: 4 },
-  EXPORT: { label: '导出', value: 5 },
-  EXPORT_TEMPLATE: { label: '导出模版', value: 6 },
-  IMPORT: { label: '导入', value: 7 },
-  LOGIN: { label: '登录', value: 8 },
-  LOGOUT: { label: '登出', value: 9 },
-  KICKOUT: { label: '踢人下线', value: 10 },
-  FORCE_LOGOUT: { label: '强制注销', value: 11 },
-  PAUSE_RESUME_JOB: { label: '暂停/恢复任务', value: 12 },
-  EXEC_JOB: { label: '执行任务', value: 13 }
+  OTHER: { label: i18n.t('const.BusinessTypeEnums.OTHER'), value: 0 },
+  QUERY: { label: i18n.t('const.BusinessTypeEnums.QUERY'), value: 1 },
+  INSERT: { label: i18n.t('const.BusinessTypeEnums.INSERT'), value: 2 },
+  UPDATE: { label: i18n.t('const.BusinessTypeEnums.UPDATE'), value: 3 },
+  DELETE: { label: i18n.t('const.BusinessTypeEnums.DELETE'), value: 4 },
+  EXPORT: { label: i18n.t('const.BusinessTypeEnums.EXPORT'), value: 5 },
+  EXPORT_TEMPLATE: { label: i18n.t('const.BusinessTypeEnums.EXPORT_TEMPLATE'), value: 6 },
+  IMPORT: { label: i18n.t('const.BusinessTypeEnums.IMPORT'), value: 7 },
+  LOGIN: { label: i18n.t('const.BusinessTypeEnums.LOGIN'), value: 8 },
+  LOGOUT: { label: i18n.t('const.BusinessTypeEnums.LOGOUT'), value: 9 },
+  KICKOUT: { label: i18n.t('const.BusinessTypeEnums.KICKOUT'), value: 10 },
+  FORCE_LOGOUT: { label: i18n.t('const.BusinessTypeEnums.FORCE_LOGOUT'), value: 11 },
+  PAUSE_RESUME_JOB: { label: i18n.t('const.BusinessTypeEnums.PAUSE_RESUME_JOB'), value: 12 },
+  EXEC_JOB: { label: i18n.t('const.BusinessTypeEnums.EXEC_JOB'), value: 13 }
 }
 
 /**
  * 菜单类型
  */
 export const MenuTypeEnums = {
-  DIR: { label: '目录', value: 1 },
-  MENU: { label: '菜单', value: 2 },
-  BUTTON: { label: '按钮', value: 3 }
+  DIR: { label: i18n.t('const.MenuTypeEnums.DIR'), value: 1 },
+  MENU: { label: i18n.t('const.MenuTypeEnums.MENU'), value: 2 },
+  BUTTON: { label: i18n.t('const.MenuTypeEnums.BUTTON'), value: 3 }
 }
 
 export const DataScopeEnums = {
-  ALL: { label: '全部数据权限', value: 1 },
-  CUSTOM: { label: '自定数据权限', value: 2 },
-  DEPT: { label: '部门数据权限', value: 3 },
-  DEPT_AND_CHILD: { label: '部门及以下数据权限', value: 4 },
-  SELF: { label: '仅本人数据权限', value: 5 }
+  ALL: { label: i18n.t('const.DataScopeEnums.ALL'), value: 1 },
+  CUSTOM: { label: i18n.t('const.DataScopeEnums.CUSTOM'), value: 2 },
+  DEPT: { label: i18n.t('const.DataScopeEnums.DEPT'), value: 3 },
+  DEPT_AND_CHILD: { label: i18n.t('const.DataScopeEnums.DEPT_AND_CHILD'), value: 4 },
+  SELF: { label: i18n.t('const.DataScopeEnums.SELF'), value: 5 }
 }
 
 export const NoticeTypeEnums = {
-  INFO: { label: '通知', value: 0 },
-  ANNOUNCEMENT: { label: '公告', value: 1 }
+  INFO: { label: i18n.t('const.NoticeTypeEnums.INFO'), value: 0 },
+  ANNOUNCEMENT: { label: i18n.t('const.NoticeTypeEnums.ANNOUNCEMENT'), value: 1 }
 }
 
 /**

@@ -77,10 +77,18 @@ export default {
   <el-row :gutter="16" class="eu-table-toolbar">
     <el-col :span="18" :xs="24" class="eu-table-toolbar__left">
       <slot name="left"></slot>
-      <el-button v-if="fullOptShow.add" v-permissions="fullPermission.add" type="primary" icon="el-icon-plus" plain @click="$emit('add')">添加</el-button>
-      <el-button v-if="fullOptShow.del" v-permissions="fullPermission.del" :disabled="multipleDisabled" type="danger" icon="el-icon-delete" plain @click="$emit('batchDel')">删除</el-button>
-      <el-button v-if="fullOptShow.export" v-permissions="fullPermission.export" type="warning" icon="el-icon-download" plain @click="$emit('export')">导出</el-button>
-      <el-button v-if="fullOptShow.import" v-permissions="fullPermission.import" icon="el-icon-upload" @click="$emit('import')">导入</el-button>
+      <el-button v-if="fullOptShow.add" v-permissions="fullPermission.add" type="primary" icon="el-icon-plus" plain @click="$emit('add')">
+        {{ $t('crud.EuTableToolbar.add') }}
+      </el-button>
+      <el-button v-if="fullOptShow.del" v-permissions="fullPermission.del" :disabled="multipleDisabled" type="danger" icon="el-icon-delete" plain @click="$emit('batchDel')">
+        {{ $t('crud.EuTableToolbar.del') }}
+      </el-button>
+      <el-button v-if="fullOptShow.export" v-permissions="fullPermission.export" type="warning" icon="el-icon-download" plain @click="$emit('export')">
+        {{ $t('crud.EuTableToolbar.export') }}
+      </el-button>
+      <el-button v-if="fullOptShow.import" v-permissions="fullPermission.import" icon="el-icon-upload" @click="$emit('import')">
+        {{ $t('crud.EuTableToolbar.import') }}
+      </el-button>
       <slot name="right"></slot>
     </el-col>
     <el-col :span="6" :xs="24" class="eu-table-toolbar__right">

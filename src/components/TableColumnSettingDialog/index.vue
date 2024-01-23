@@ -1,10 +1,10 @@
 <template>
-  <el-dialog title="列表设置" :visible.sync="show" :close-on-click-modal="false" width="560px" append-to-body>
+  <el-dialog :title="$t('crud.TableColumnSettingDialog.title')" :visible.sync="show" :close-on-click-modal="false" width="560px" append-to-body>
     <div class="table-column-setting-wrapper">
       <div class="table-column-setting-header">
-        <div>表头名称</div>
-        <div>是否显示</div>
-        <div>调整顺序</div>
+        <div>{{ $t('crud.TableColumnSettingDialog.column1') }}</div>
+        <div>{{ $t('crud.TableColumnSettingDialog.column2') }}</div>
+        <div>{{ $t('crud.TableColumnSettingDialog.column3') }}</div>
       </div>
       <ul class="table-column-setting-content">
         <li v-for="item in list" v-show="item.enabled" :key="item.id">
@@ -17,10 +17,10 @@
       </ul>
     </div>
     <template #footer>
-      <el-button @click="onRestore">重置预设</el-button>
+      <el-button @click="onRestore"><div>{{ $t('crud.TableColumnSettingDialog.reset') }}</div></el-button>
       <div>
-        <el-button @click="show = false">取 消</el-button>
-        <el-button type="primary" @click="onSave">确 定</el-button>
+        <el-button @click="show = false"><div>{{ $t('crud.TableColumnSettingDialog.cancel') }}</div></el-button>
+        <el-button type="primary" @click="onSave"><div>{{ $t('crud.TableColumnSettingDialog.submit') }}</div></el-button>
       </div>
     </template>
   </el-dialog>

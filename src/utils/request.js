@@ -7,6 +7,7 @@ import { blobValidate } from '@/utils/index'
 import { saveAs } from 'file-saver'
 import { defaultSetting } from '@/settings'
 import qs from 'qs'
+import i18n from '@/plugins/i18n'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 
@@ -70,11 +71,11 @@ service.interceptors.response.use(res => {
 }, error => {
   let { message } = error;
   if (message === 'Network Error') {
-    message = '后端接口连接异常';
+    message = i18n.t('request.error.network');
   } else if (message.includes('timeout')) {
-    message = '系统接口请求超时';
+    message = i18n.t('request.error.timeout');
   } else if (message.includes('Request failed with status code')) {
-    message = '系统接口' + message.substr(message.length - 3) + '异常';
+    message = i18n.t('request.error.failed', { msg: message.substr(message.length - 3) });
   }
   Message({ message: message, type: 'error', duration: 5 * 1000 })
   return Promise.reject(error)
@@ -82,7 +83,7 @@ service.interceptors.response.use(res => {
 
 // 通用下载方法
 export function download(url, params, filename, config) {
-  downloadLoadingInstance = Loading.service({ text: '正在下载数据，请稍候', spinner: 'el-icon-loading', background: 'rgba(0, 0, 0, 0.7)', })
+  downloadLoadingInstance = Loading.service({ text: i18n.t('request.download.loading'), spinner: 'el-icon-loading', background: 'rgba(0, 0, 0, 0.7)', })
   return service.post(url, params, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -100,7 +101,7 @@ export function download(url, params, filename, config) {
       const rspObj = JSON.parse(resText);
       const errMsg = errorCode[rspObj.code] || rspObj.msg || errorCode['default']
       if (rspObj.code === 200) {
-        Message.success(errMsg || '操作成功！')
+        Message.success(errMsg || i18n.t('request.download.success'))
       } else {
         Message.error(errMsg);
       }
@@ -108,7 +109,7 @@ export function download(url, params, filename, config) {
     downloadLoadingInstance.close();
   }).catch((r) => {
     console.error(r)
-    Message.error('下载文件出现错误，请联系管理员！')
+    Message.error(i18n.t('request.download.error'))
     downloadLoadingInstance.close();
   })
 }

@@ -3,13 +3,13 @@
     <div class="page-body">
       <div class="query-wrapper">
         <el-form :model="queryParams" :inline="true">
-          <el-form-item label="用户昵称">
-            <el-input v-model="queryParams.nickname" placeholder="输入要查找的用户昵称" />
+          <el-form-item :label="$t('monitor.online.query.nickname.label')">
+            <el-input v-model="queryParams.nickname" :placeholder="$t('monitor.online.query.nickname.placeholder')" />
           </el-form-item>
         </el-form>
         <div>
-          <el-button type="primary" icon="el-icon-search" @click="onQuery">查询</el-button>
-          <el-button icon="el-icon-refresh" plain @click="onRefresh">重置</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="onQuery">{{ $t('monitor.online.query.search') }}</el-button>
+          <el-button icon="el-icon-refresh" plain @click="onRefresh">{{ $t('monitor.online.query.reset') }}</el-button>
         </div>
       </div>
       <el-divider />
@@ -19,18 +19,20 @@
           style="width: 100%"
         >
           <el-table-column type="index" label="#"></el-table-column>
-          <el-table-column prop="username" label="登录名"></el-table-column>
-          <el-table-column prop="nickname" label="用户昵称"></el-table-column>
-          <el-table-column prop="deptName" label="部门"></el-table-column>
-          <el-table-column prop="loginIp" label="登录IP"></el-table-column>
-          <el-table-column prop="loginRegion" label="登录地点"></el-table-column>
-          <el-table-column prop="loginTime" label="登录时间" width="150"></el-table-column>
-          <el-table-column prop="browser" label="浏览器"></el-table-column>
-          <el-table-column prop="os" label="操作系统"></el-table-column>
-          <el-table-column v-permissions="['monitor:online:logout', 'monitor:online:kickout']" label="操作" fixed="right" width="140">
+          <el-table-column prop="username" :label="$t('monitor.online.column.username')"></el-table-column>
+          <el-table-column prop="nickname" :label="$t('monitor.online.column.nickname')"></el-table-column>
+          <el-table-column prop="deptName" :label="$t('monitor.online.column.deptName')"></el-table-column>
+          <el-table-column prop="loginIp" :label="$t('monitor.online.column.loginIp')"></el-table-column>
+          <el-table-column prop="loginRegion" :label="$t('monitor.online.column.loginRegion')"></el-table-column>
+          <el-table-column prop="loginTime" :label="$t('monitor.online.column.loginTime')" width="150"></el-table-column>
+          <el-table-column prop="browser" :label="$t('monitor.online.column.browser')"></el-table-column>
+          <el-table-column prop="os" :label="$t('monitor.online.column.os')"></el-table-column>
+          <el-table-column v-permissions="['monitor:online:logout', 'monitor:online:kickout']" :label="$t('monitor.online.column.operation')" fixed="right" width="140">
             <template #default="{ row }">
-              <el-button v-permissions="['monitor:online:logout']" type="text" @click="onLogout(row)">强制注销</el-button>
-              <el-button v-permissions="['monitor:online:kickout']" type="text" @click="onKictout(row)">踢Ta下线</el-button>
+              <el-button v-permissions="['monitor:online:logout']" type="text" @click="onLogout(row)">
+                {{ $t('monitor.online.column.operation.logout') }}</el-button>
+              <el-button v-permissions="['monitor:online:kickout']" type="text" @click="onKictout(row)">
+                {{ $t('monitor.online.column.operation.kickout') }}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -80,15 +82,15 @@ export default {
       this.onQuery()
     },
     onLogout(row) {
-      this.$confirm(`确认要强制注销"${ row.username }"吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('monitor.online.logout.confirm', { username: row.username }), this.$t('monitor.online.logout.title'), {
+        confirmButtonText: this.$t('monitor.online.logout.confirmButtonText'),
+        cancelButtonText: this.$t('monitor.online.logout.cancelButtonText'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             onlineLogout(row.id).then(() => {
-              this.$message.success('强制注销Ta下线成功')
+              this.$message.success(this.$t('monitor.online.logout.success'))
               done()
               this.onRefresh()
             }).finally(() => {
@@ -101,15 +103,15 @@ export default {
       });
     },
     onKictout(row) {
-      this.$confirm(`确认要踢"${ row.username }"下线吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('monitor.online.kickout.confirm', { username: row.username }), this.$t('monitor.online.kickout.title'), {
+        confirmButtonText: this.$t('monitor.online.kickout.confirmButtonText'),
+        cancelButtonText: this.$t('monitor.online.kickout.cancelButtonText'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             onlineKickout(row.id).then(() => {
-              this.$message.success('踢Ta下线成功')
+              this.$message.success(this.$t('monitor.online.kickout.success'))
               done()
               this.onRefresh()
             }).finally(() => {

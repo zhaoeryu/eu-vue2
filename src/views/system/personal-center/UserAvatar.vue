@@ -3,7 +3,7 @@
     <div class="user-avatar-img" @click="onUploadAvatar">
       <el-avatar shape="square" :size="100" :src="avatar"></el-avatar>
     </div>
-    <el-dialog title="修改头像" :visible.sync="dialogVisible" width="800px" @opened="modalOpened"  @close="closeDialog" custom-class="user-avatar-upload-dialog">
+    <el-dialog :title="$t('personal-center.UpdateAvatar.title')" :visible.sync="dialogVisible" width="800px" @opened="modalOpened"  @close="closeDialog" custom-class="user-avatar-upload-dialog">
       <el-row>
         <el-col :span="12" :style="{height: '350px'}">
           <vue-cropper
@@ -37,7 +37,7 @@
             accept="image/*"
           >
             <el-button style="width: 150px;">
-              选 择
+              {{ $t('personal-center.UpdateAvatar.trigger') }}
               <i class="el-icon-upload el-icon--right"></i>
             </el-button>
           </el-upload>
@@ -47,8 +47,8 @@
           <el-button icon="el-icon-refresh-right" @click="rotateRight()"></el-button>
         </div>
         <div style="flex: 1;">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button :loading="formLoading" type="primary" @click="onSave">保 存</el-button>
+          <el-button @click="dialogVisible = false">{{ $t('general.form.cancel') }}</el-button>
+          <el-button :loading="formLoading" type="primary" @click="onSave">{{ $t('general.form.submit') }}</el-button>
         </div>
       </template>
     </el-dialog>
@@ -123,7 +123,7 @@ export default {
     // 上传预处理
     beforeUpload(file) {
       if (file.type.indexOf('image/') === -1) {
-        this.$message.error('文件格式错误，请上传图片类型,如：JPG，PNG后缀的文件。');
+        this.$message.error(this.$t('personal-center.UpdateAvatar.format'));
       } else {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -154,7 +154,7 @@ export default {
           uploadAvatar({
             avatar: res.link
           }).then(() => {
-            this.$message.success('头像修改成功')
+            this.$message.success(this.$t('personal-center.UpdateAvatar.success'))
             this.$store.dispatch('user/GetInfo')
             this.dialogVisible = false
           }).finally(() => {

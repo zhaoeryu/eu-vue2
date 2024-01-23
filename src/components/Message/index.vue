@@ -8,11 +8,11 @@
     <div class="message-box-wrapper">
       <nav class="message-box-wrapper__header">
         <ul>
-          <li :class="{ active: active === 0 }" @click="onChecked(0)">通知{{ unReadMessageCount1 }}</li>
-          <li :class="{ active: active === 1 }" @click="onChecked(1)">公告{{ unReadMessageCount2 }}</li>
+          <li :class="{ active: active === 0 }" @click="onChecked(0)">{{ $t('message.head1.text') }}{{ unReadMessageCount1 }}</li>
+          <li :class="{ active: active === 1 }" @click="onChecked(1)">{{ $t('message.head2.text') }}{{ unReadMessageCount2 }}</li>
         </ul>
       </nav>
-      <div v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(255, 255, 255, 0.8)">
+      <div v-loading="loading" :element-loading-text="$t('message.loading')" element-loading-spinner="el-icon-loading" element-loading-background="rgba(255, 255, 255, 0.8)">
         <div class="message-box-wrapper__body">
           <ul v-if="showList.length">
             <li v-for="(item, index) in showList" :key="index" class="message-box-wrapper__body-item" :class="{ read: item.read }" @click="onItemChecked(item)">
@@ -24,11 +24,11 @@
               </div>
             </li>
           </ul>
-          <el-empty v-else description="暂无数据" />
+          <el-empty v-else :description="$t('message.noData')" />
         </div>
         <div v-if="showList.length" class="message-box-wrapper__footer">
-          <div @click="$refs.refMessageBoxPopover.doToggle()">关闭</div>
-          <div @click="onAllRead">全部已读</div>
+          <div @click="$refs.refMessageBoxPopover.doToggle()">{{ $t('message.close') }}</div>
+          <div @click="onAllRead">{{ $t('message.allRead') }}</div>
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@
       <ul class="nav-list">
         <li>
           <svg-icon icon-class="pushpin" style="display: inline-block;width: 1.3em;height: 1.3em;text-align: center;margin-right: 8px;" />
-          <span style="background: unset;">快捷</span>
+          <span style="background: unset;">{{ $t('usual-menus.first-nav') }}</span>
         </li>
         <li v-for="item in 5" :key="item">
           <i></i>
@@ -22,8 +22,8 @@
     </div>
     <div class="operation-body">
       <div class="operation-body__header">
-        <div>选择菜单</div>
-        <el-input placeholder="输入关键字进行搜索" v-model="menuFilterKeyword" style="width: 200px;" clearable>
+        <div>{{ $t('usual-menus.select-menu') }}</div>
+        <el-input :placeholder="$t('usual-menus.select-menu.placeholder')" v-model="menuFilterKeyword" style="width: 200px;" clearable>
           <i slot="prefix" class="el-input__icon el-icon-search"></i>
         </el-input>
       </div>
@@ -32,15 +32,15 @@
         show-checkbox
         ref="menu"
         node-key="id"
-        empty-text="暂无数据"
+        :empty-text="$t('usual-menus.no-data')"
         :check-strictly="true"
         :filter-node-method="onFilterNode"
         :default-expand-all="true"
         :props="{ label: 'menuName', children: 'children' }"
       ></el-tree>
       <div class="operation-body__footer">
-        <el-button>取消</el-button>
-        <el-button :loading="loading" type="primary" style="width: 150px;" @click="onSave">确定</el-button>
+        <el-button>{{ $t('general.form.cancel') }}</el-button>
+        <el-button :loading="loading" type="primary" style="width: 150px;" @click="onSave">{{ $t('general.form.submit') }}</el-button>
       </div>
     </div>
   </div>
@@ -124,7 +124,7 @@ export default {
       })
 
       this.$store.dispatch('routes/setUsualMenus', usualMenus).then(() => {
-        this.$message.success('保存成功')
+        this.$message.success(this.$t('general.confirm.save.success'))
       }).finally(() => {
         this.loading = false
       })

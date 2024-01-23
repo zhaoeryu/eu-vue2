@@ -1,0 +1,26 @@
+export default {
+  // list
+  'posts.query.postName': '岗位名称',
+  'posts.query.postName.placeholder': '输入要查找的岗位名称',
+  'posts.column.postName': '岗位名称',
+  'posts.column.code': '岗位编码',
+  'posts.column.status': '状态',
+  'posts.column.status.normal': '正常',
+  'posts.column.status.disabled': '停用',
+  'posts.importDialog.tip': '状态字段可选项：正常、禁用',
+  // edit
+  'posts.edit.title': '修改岗位',
+  'posts.add.title': '新增岗位',
+  'posts.edit.success': '修改成功',
+  'posts.add.success': '新增成功',
+  'posts.form.postName': '岗位名称',
+  'posts.form.postName.placeholder': '请输入岗位名称',
+  'posts.form.postName.required': '岗位名称不能为空',
+  'posts.form.code': '岗位编码',
+  'posts.form.code.placeholder': '请输入岗位编码',
+  'posts.form.code.required': '岗位编码不能为空',
+  'posts.form.status': '岗位状态',
+  'posts.form.status.required': '岗位状态不能为空',
+  'posts.form.status.normal': '正常',
+  'posts.form.status.disabled': '停用',
+}

@@ -25,23 +25,23 @@
       <el-dropdown-menu slot="dropdown" class="tabs-more" a="456">
         <el-dropdown-item command="refresh">
           <i class="el-icon-refresh"></i>
-          刷新
+          {{ $t('layout.AppContainerTabs.refresh') }}
         </el-dropdown-item>
         <el-dropdown-item command="closeOther">
           <i class="el-icon-close"></i>
-          关闭其他
+          {{ $t('layout.AppContainerTabs.closeOther') }}
         </el-dropdown-item>
         <el-dropdown-item command="closeLeft">
           <i class="el-icon-back"></i>
-          关闭左侧
+          {{ $t('layout.AppContainerTabs.closeLeft') }}
         </el-dropdown-item>
         <el-dropdown-item command="closeRight">
           <i class="el-icon-right"></i>
-          关闭右侧
+          {{ $t('layout.AppContainerTabs.closeRight') }}
         </el-dropdown-item>
         <el-dropdown-item command="closeAll">
           <i class="el-icon-close"></i>
-          关闭全部
+          {{ $t('layout.AppContainerTabs.closeAll') }}
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>

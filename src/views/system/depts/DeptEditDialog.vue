@@ -1,5 +1,6 @@
 <script>
 import { add, update } from '@/api/system/dept'
+import i18n from '@/plugins/i18n'
 
 export default {
   name: 'DeptEditDialog',
@@ -20,17 +21,17 @@ export default {
       },
       rules: {
         deptName: [
-          { required: true, message: '请输入部门名称', trigger: 'blur' }
+          { required: true, message: i18n.t('dept.edit.form.deptName.required'), trigger: 'blur' }
         ],
         status: [
-          { required: true, message: '请选择部门状态', trigger: 'change' }
+          { required: true, message: i18n.t('dept.edit.form.status.required'), trigger: 'change' }
         ]
       },
     }
   },
   computed: {
     title() {
-      return this.form.id ? '修改部门' : '新增部门'
+      return this.form.id ? this.$t('dept.edit.update.title') : this.$t('dept.edit.add.title')
     }
   },
   methods: {
@@ -58,7 +59,7 @@ export default {
         this.formLoading = true
         const reqPromise = this.form.id ? update(this.form) : add(this.form)
         reqPromise.then(() => {
-          this.$message.success(this.form.id ? '修改成功' : '新增成功')
+          this.$message.success(this.form.id ? this.$t('dept.edit.update.success') : this.$t('dept.edit.add.success'))
           this.show = false
           this.$emit('complete')
         }).finally(() => {
@@ -88,12 +89,12 @@ export default {
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-row :gutter="16">
         <el-col :span="24">
-          <el-form-item label="上级部门" prop="parentId">
+          <el-form-item :label="$t('dept.edit.form.parentId')" prop="parentId">
             <el-cascader
               v-model="form._parentIds"
               :options="list"
               :props="{ checkStrictly: true, value: 'id', label: 'deptName', children: 'children' }"
-              placeholder="请选择上级部门"
+              :placeholder="$t('dept.edit.form.parentId.placeholder')"
               clearable
               filterable
               style="width: 100%;"
@@ -101,30 +102,30 @@ export default {
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="部门名称" prop="deptName">
-            <el-input v-model="form.deptName" placeholder="请输入部门名称" maxlength="20" />
+          <el-form-item :label="$t('dept.edit.form.deptName')" prop="deptName">
+            <el-input v-model="form.deptName" :placeholder="$t('dept.edit.form.deptName.placeholder')" maxlength="20" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="部门状态" prop="status">
+          <el-form-item :label="$t('dept.edit.form.status')" prop="status">
             <el-radio-group v-model="form.status">
-              <el-radio :label="0">正常</el-radio>
-              <el-radio :label="1">停用</el-radio>
+              <el-radio :label="0">{{ $t('dept.edit.form.status.normal') }}</el-radio>
+              <el-radio :label="1">{{ $t('dept.edit.form.status.disabled') }}</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="16">
         <el-col :span="12">
-          <el-form-item label="排序" prop="sortNum">
+          <el-form-item :label="$t('dept.edit.form.sortNum')" prop="sortNum">
             <el-input-number v-model="form.sortNum" :min="0" :max="9999" />
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
     <div slot="footer">
-      <el-button @click="show = false">取 消</el-button>
-      <el-button :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">确 定</el-button>
+      <el-button @click="show = false">{{ $t('general.form.cancel') }}</el-button>
+      <el-button :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">{{ $t('general.form.submit') }}</el-button>
     </div>
   </el-dialog>
 </template>

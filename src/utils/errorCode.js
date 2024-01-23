@@ -1,6 +1,7 @@
+import i18n from '@/plugins/i18n'
 export default {
-  '401': '认证失败，无法访问系统资源',
-  '403': '当前操作没有权限',
-  '404': '访问资源不存在',
-  'default': '系统未知错误，请反馈给管理员'
+  '401': i18n.t('errorCode.401'),
+  '403': i18n.t('errorCode.403'),
+  '404': i18n.t('errorCode.404'),
+  'default': i18n.t('errorCode.default')
 }

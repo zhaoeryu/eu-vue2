@@ -4,11 +4,14 @@ import Vue from 'vue'
 import '@/theme/index.css'
 // import 'element-ui/lib/theme-chalk/index.css';
 
+import i18n from './i18n'
+
 // ElementUI
 import ElementUI from 'element-ui'
 // Vue.use(ElementUI)
 Vue.use(ElementUI, {
-  size: 'small'
+  size: 'small',
+  i18n: (key, value) => i18n.t(key, value)
 })
 
 // 图片预览

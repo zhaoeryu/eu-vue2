@@ -16,7 +16,7 @@
     :on-exceed="exceedHandle"
   >
     <!-- 触发文件选择框的内容 -->
-    <el-button v-if="!$slots.trigger" type="primary">点击上传</el-button>
+    <el-button v-if="!$slots.trigger" type="primary">{{ $t('crud.UploadFile.trigger') }}</el-button>
     <slot v-else name="trigger"></slot>
     <!-- 提示说明文字 -->
     <div v-if="tip && !$slots.tip" class="el-upload__tip">{{ tip }}</div>
@@ -203,7 +203,7 @@ export default {
         return true
       }
       if (isTip) {
-        this.$message.error(response.msg || '上传失败')
+        this.$message.error(response.msg || this.$t('crud.UploadFile.uploadFail'))
       }
       return false
     },
@@ -236,7 +236,7 @@ export default {
      * @param {Error} e 错误对象
      */
     errorHandle(e) {
-      this.$message.error(e.message && e.message.message || e.message || '上传失败')
+      this.$message.error(e.message && e.message.message || e.message || this.$t('crud.UploadFile.uploadFail'))
     },
     /**
      * 上传文件之前的回调，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
@@ -246,7 +246,7 @@ export default {
     beforeUploadHandle(file) {
       const isLtM = file.size / 1024 / 1024 < this.sizeLimit
       if (!isLtM) {
-        this.$message.error('上传文件大小不能超过 ' + this.sizeLimit + 'MB!')
+        this.$message.error(this.$t('crud.UploadFile.size.limit', { limit: this.sizeLimit }))
       }
       return isLtM
     },
@@ -254,7 +254,7 @@ export default {
      * 文件超出个数限制时的回调
      */
     exceedHandle() {
-      this.$message.warning(`最多上传${this.$refs.uploadFile.limit}个文件`)
+      this.$message.warning(this.$t('crud.UploadFile.number.limit', { limit: this.$refs.uploadFile.limit }))
     }
   }
 }

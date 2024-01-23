@@ -100,7 +100,7 @@ export default {
 
 <template>
   <el-dialog
-    title="设置排序规则"
+    :title="$t('crud.EuSortDialog.title')"
     :visible.sync="show"
     width="560px"
     append-to-body
@@ -114,7 +114,7 @@ export default {
       >
         <div style="cursor: pointer;" class="text-primary">
           <i style="font-weight: bold;" class="el-icon-plus"></i>
-          <span>&nbsp;添加排序规则</span>
+          <span>&nbsp;{{ $t('crud.EuSortDialog.addRuleBtn') }}</span>
         </div>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item
@@ -130,8 +130,8 @@ export default {
           <li v-for="(item, index) in sortResult" :key="item.fieldName">
             <div>{{ item.fieldLabel }}</div>
             <el-radio-group v-model="item.sort" size="mini">
-              <el-radio-button label="asc">升序</el-radio-button>
-              <el-radio-button label="desc">降序</el-radio-button>
+              <el-radio-button label="asc">{{ $t('crud.EuSortDialog.asc') }}</el-radio-button>
+              <el-radio-button label="desc">{{ $t('crud.EuSortDialog.desc') }}</el-radio-button>
             </el-radio-group>
             <div class="handle">
               <svg-icon icon-class="drag" />
@@ -142,10 +142,10 @@ export default {
       </div>
     </div>
     <template #footer>
-      <el-button @click="onClear">清空排序</el-button>
+      <el-button @click="onClear">{{ $t('crud.EuSortDialog.clear') }}</el-button>
       <div>
-        <el-button @click="show = false">取 消</el-button>
-        <el-button type="primary" class="eu-submit-btn" @click="onSave">排 序</el-button>
+        <el-button @click="show = false">{{ $t('crud.EuSortDialog.cancel') }}</el-button>
+        <el-button type="primary" class="eu-submit-btn" @click="onSave">{{ $t('crud.EuSortDialog.submit') }}</el-button>
       </div>
     </template>
   </el-dialog>

@@ -2,7 +2,7 @@
   <div
     style="height: 100%;"
     v-loading="loading"
-    element-loading-text="正在加载中..."
+    :element-loading-text="$t('layout.InnerIframe.loading')"
     element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(255, 255, 255, 0.8)"
   >

@@ -3,8 +3,8 @@
     <div class="page-body">
       <query-expand-wrapper :show="isQueryShow">
         <el-form :model="queryParams" :inline="true">
-          <el-form-item prop="menuName" label="菜单名称">
-            <el-input v-model="queryParams.menuName" placeholder="输入要查找的菜单名称" maxlength="20" />
+          <el-form-item prop="menuName" :label="$t('menu.query.menuName')">
+            <el-input v-model="queryParams.menuName" :placeholder="$t('menu.query.menuName.placeholder')" maxlength="20" />
           </el-form-item>
         </el-form>
       </query-expand-wrapper>
@@ -26,7 +26,7 @@
           :searchToggle.sync="isQueryShow"
         >
           <template #right>
-            <el-button icon="el-icon-sort" plain @click="onExpandCollapse">{{ isExpandAll ? '全部折叠' : '全部展开' }}</el-button>
+            <el-button icon="el-icon-sort" plain @click="onExpandCollapse">{{ isExpandAll ? $t('menu.query.expandAll') : $t('menu.query.collapseAll') }}</el-button>
           </template>
         </eu-table-toolbar>
         <el-table
@@ -39,36 +39,36 @@
           :default-expand-all="isExpandAll"
           :tree-props="{children: 'children'}"
         >
-          <el-table-column prop="menuName" label="菜单名称" width="180"></el-table-column>
-          <el-table-column prop="menuIcon" label="图标" width="60">
+          <el-table-column prop="menuName" :label="$t('menu.column.menuName')" width="180"></el-table-column>
+          <el-table-column prop="menuIcon" :label="$t('menu.column.menuIcon')" width="60">
             <template slot-scope="{ row }" v-if="row.menuIcon">
               <svg-icon :icon-class="row.menuIcon"/>
             </template>
           </el-table-column>
-          <el-table-column prop="sortNum" label="排序" width="60"></el-table-column>
-          <el-table-column prop="permission" label="权限标识"></el-table-column>
-          <el-table-column prop="component" label="组件路径"></el-table-column>
-          <el-table-column prop="status" label="状态" width="70">
+          <el-table-column prop="sortNum" :label="$t('menu.column.sortNum')" width="60"></el-table-column>
+          <el-table-column prop="permission" :label="$t('menu.column.permission')"></el-table-column>
+          <el-table-column prop="component" :label="$t('menu.column.component')"></el-table-column>
+          <el-table-column prop="status" :label="$t('menu.column.status')" width="70">
             <template #default="{ row }">
-              <el-tag v-if="row.status === 0">正常</el-tag>
-              <el-tag v-else-if="row.status === 1" type="danger">禁用</el-tag>
+              <el-tag v-if="row.status === 0">{{ $t('menu.column.status.normal') }}</el-tag>
+              <el-tag v-else-if="row.status === 1" type="danger">{{ $t('menu.column.status.disabled') }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="visible" label="是否可见" width="70">
+          <el-table-column prop="visible" :label="$t('menu.column.visible')" width="70">
             <template #default="{ row }">
-              <el-tag v-if="row.visible === true">是</el-tag>
-              <el-tag v-else-if="row.visible === false" type="warning">否</el-tag>
+              <el-tag v-if="row.visible === true">{{ $t('menu.column.visible.true') }}</el-tag>
+              <el-tag v-else-if="row.visible === false" type="warning">{{ $t('menu.column.visible.false') }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="cache" label="是否缓存" width="70">
+          <el-table-column prop="cache" :label="$t('menu.column.cache')" width="70">
             <template #default="{ row }">
-              <el-tag v-if="row.cache === true">是</el-tag>
-              <el-tag v-else-if="row.cache === false" type="warning">否</el-tag>
+              <el-tag v-if="row.cache === true">{{ $t('menu.column.cache.true') }}</el-tag>
+              <el-tag v-else-if="row.cache === false" type="warning">{{ $t('menu.column.cache.false') }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column prop="dot" label="dot" width="70">
             <template #default="{ row }">
-              <el-tag v-if="row.dot === true">是</el-tag>
+              <el-tag v-if="row.dot === true">{{ $t('menu.column.dot.true') }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column prop="badge" label="badge" width="80">
@@ -76,11 +76,11 @@
               <el-tag v-if="row.badge" class="el-tag__badge" type="danger" effect="dark">{{ row.badge }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column v-permissions="['system:menu:add', 'system:menu:edit', 'system:menu:del']" label="操作" width="130">
+          <el-table-column v-permissions="['system:menu:add', 'system:menu:edit', 'system:menu:del']" :label="$t('general.column.operation')" width="130">
             <template #default="{ row }">
-              <el-button v-permissions="['system:menu:add']" type="text" @click="onRowAdd(row)">新增</el-button>
-              <el-button v-permissions="['system:menu:edit']" type="text" @click="onRowUpdate(row)">修改</el-button>
-              <el-button v-permissions="['system:menu:del']" type="text" @click="onRowDelete(row)">删除</el-button>
+              <el-button v-permissions="['system:menu:add']" type="text" @click="onRowAdd(row)">{{ $t('general.add') }}</el-button>
+              <el-button v-permissions="['system:menu:edit']" type="text" @click="onRowUpdate(row)">{{ $t('general.edit') }}</el-button>
+              <el-button v-permissions="['system:menu:del']" type="text" @click="onRowDelete(row)">{{ $t('general.del') }}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -210,10 +210,13 @@ export default {
      * @returns {void}
      */
     onRowDelete(row) {
-      this.$confirm(`确定要删除"${ row.menuName }"${row.children && row.children.length ? '以及该菜单下面所有的菜单' : ''}吗？`, {
-        title: '提示',
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('menu.confirm.delete', {
+        menuName: row.menuName,
+        children: row.children && row.children.length ? '以及该菜单下面所有的菜单' : ''
+      }), {
+        title: this.$t('general.confirm.title'),
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
@@ -221,7 +224,7 @@ export default {
             // 删除当前菜单以及该菜单下所有子菜单
             const menuIds = [row.id, ...getChildrenFields(row, { fieldKey: 'id' })]
             batchDel(menuIds).then(() => {
-              this.$message.success('删除成功')
+              this.$message.success(this.$t('general.confirm.delete.success'))
               done()
               this.onRefresh()
             }).finally(() => {

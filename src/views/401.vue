@@ -3,12 +3,12 @@
     <div style="display: flex;justify-content: space-between;align-items: center;margin-bottom: 200px;">
       <img :src="require('@/assets/images/unauthorized.png')" alt="" width="200">
       <div class="not-found">
-        <div class="not-found__404">抱歉，您没有权限访问该页面</div>
+        <div class="not-found__404">{{ $t('401.title') }}</div>
         <div class="not-found__desc">
-          <p>解决办法：</p>
-          <p>您可以向上级领导申请开通该权限</p>
+          <p>{{ $t('401.desc1') }}</p>
+          <p>{{ $t('401.desc2') }}</p>
         </div>
-        <el-button type="primary" @click="$router.back()">回到上一个页面</el-button>
+        <el-button type="primary" @click="$router.back()">{{ $t('401.back') }}</el-button>
       </div>
     </div>
   </div>
@@ -49,7 +49,6 @@ body[eu-theme='dark'] {
   }
 }
 .el-button {
-  width: 150px;
   letter-spacing: 0.1em;
 }
 </style>

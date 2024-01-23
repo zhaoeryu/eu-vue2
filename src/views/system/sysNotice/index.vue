@@ -3,23 +3,23 @@
     <div class="page-body">
       <query-expand-wrapper :show="isQueryShow">
         <el-form :model="queryParams" :inline="true">
-          <el-form-item label="标题" prop="title">
-            <el-input v-model="queryParams.title" placeholder="请输入标题" clearable />
+          <el-form-item :label="$t('sysNotice.query.title')" prop="title">
+            <el-input v-model="queryParams.title" :placeholder="$t('sysNotice.query.title.placeholder')" clearable />
           </el-form-item>
-          <el-form-item label="公告类型" prop="type">
-            <el-select v-model="queryParams.type" placeholder="请选择公告类型" clearable filterable>
+          <el-form-item :label="$t('sysNotice.query.type')" prop="type">
+            <el-select v-model="queryParams.type" :placeholder="$t('sysNotice.query.type.placeholder')" clearable filterable>
               <el-option v-for="item in noticeTypeEnums" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>
-          <el-form-item label="公告状态" prop="status">
-            <el-select v-model="queryParams.status" placeholder="请选择公告状态" clearable filterable>
-              <el-option label="正常" :value="0" />
-              <el-option label="禁用" :value="1" />
+          <el-form-item :label="$t('sysNotice.query.status')" prop="status">
+            <el-select v-model="queryParams.status" :placeholder="$t('sysNotice.query.status.placeholder')" clearable filterable>
+              <el-option :label="$t('sysNotice.query.status.normal')" :value="0" />
+              <el-option :label="$t('sysNotice.query.status.disabled')" :value="1" />
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="onQuery">查询</el-button>
-            <el-button icon="el-icon-refresh" plain @click="onRefresh">重置</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="onQuery">{{ $t('general.query.search') }}</el-button>
+            <el-button icon="el-icon-refresh" plain @click="onRefresh">{{ $t('general.query.reset') }}</el-button>
           </el-form-item>
         </el-form>
       </query-expand-wrapper>
@@ -50,26 +50,26 @@
           style="width: 100%"
         >
           <el-table-column type="selection"></el-table-column>
-          <el-table-column prop="title" label="标题"></el-table-column>
-          <el-table-column prop="type" label="公告类型">
+          <el-table-column prop="title" :label="$t('sysNotice.column.title')"></el-table-column>
+          <el-table-column prop="type" :label="$t('sysNotice.column.type')">
             <template #default="{ row }">
               <el-tag>{{ parseRowType(row) }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="description" label="公告描述"></el-table-column>
-          <el-table-column prop="status" label="公告状态">
+          <el-table-column prop="description" :label="$t('sysNotice.column.description')"></el-table-column>
+          <el-table-column prop="status" :label="$t('sysNotice.column.status')">
             <template #default="{ row }">
-              <el-tag v-if="row.status === 0">正常</el-tag>
-              <el-tag v-else type="danger">禁用</el-tag>
+              <el-tag v-if="row.status === 0">{{ $t('sysNotice.column.status.normal') }}</el-tag>
+              <el-tag v-else type="danger">{{ $t('sysNotice.column.status.disabled') }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" label="创建时间"></el-table-column>
-          <el-table-column prop="updateTime" label="修改时间"></el-table-column>
-          <el-table-column v-permissions="['system:sysNotice:edit', 'system:sysNotice:del']" label="操作">
+          <el-table-column prop="createTime" :label="$t('sysNotice.column.createTime')"></el-table-column>
+          <el-table-column prop="updateTime" :label="$t('sysNotice.column.updateTime')"></el-table-column>
+          <el-table-column v-permissions="['system:sysNotice:edit', 'system:sysNotice:del']" :label="$t('general.column.operation')">
             <template #default="{ row }">
-              <el-button v-permissions="['system:sysNotice:edit']" type="text" @click="onRowUpdate(row)">修改</el-button>
-              <el-button v-permissions="['system:sysNotice:del']" type="text" @click="onRowDelete(row)">删除</el-button>
-              <el-button type="text" @click="onRowDetail(row)">详情</el-button>
+              <el-button v-permissions="['system:sysNotice:edit']" type="text" @click="onRowUpdate(row)">{{ $t('general.edit') }}</el-button>
+              <el-button v-permissions="['system:sysNotice:del']" type="text" @click="onRowDelete(row)">{{ $t('general.del') }}</el-button>
+              <el-button type="text" @click="onRowDetail(row)">{{ $t('sysNotice.button.detail') }}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -146,15 +146,17 @@ export default {
     },
     onBatchDel() {
       const ids = this.$refs.table.selection.map(item => item.id)
-      this.$confirm(`确认要删除选中的${ids.length}条记录吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('general.confirm.delete.batch.message', {
+        length: ids.length
+      }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             batchDel(ids).then(() => {
-              this.$message.success('删除成功')
+              this.$message.success(this.$t('general.confirm.delete.success'))
               done()
               this.onRefresh()
             }).finally(() => {
@@ -173,15 +175,17 @@ export default {
       this.$refs.sysNoticeEditDialog.open(row)
     },
     onRowDelete(row) {
-      this.$confirm(`确认要删除"${ row.title }"吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('general.confirm.delete.message', {
+        key: row.title
+      }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             batchDel([row.id]).then(() => {
-              this.$message.success('删除成功')
+              this.$message.success(this.$t('general.confirm.delete.success'))
               done()
               this.onRefresh()
             }).finally(() => {

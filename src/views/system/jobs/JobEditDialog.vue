@@ -1,5 +1,6 @@
 <script>
 import { add, update } from '@/api/system/job'
+import i18n from '@/plugins/i18n'
 
 export default {
   name: 'JobEditDialog',
@@ -26,41 +27,41 @@ export default {
       },
       rules: {
         jobName: [
-          { required: true, message: '请输入任务名称', trigger: 'blur' }
+          { required: true, message: i18n.t('job.edit.form.jobName.required'), trigger: 'blur' }
         ],
         jobGroup: [
-          { required: true, message: '请输入任务组', trigger: 'blur' }
+          { required: true, message: i18n.t('job.edit.form.jobGroup.required'), trigger: 'blur' }
         ],
         cron: [
-          { required: true, message: '请输入cron表达式', trigger: 'blur' }
+          { required: true, message: i18n.t('job.edit.form.cron.required'), trigger: 'blur' }
         ],
         invokeClassName: [
-          { required: true, message: '请输入任务执行类的全类名', trigger: 'blur' }
+          { required: true, message: i18n.t('job.edit.form.invokeClassName.required'), trigger: 'blur' }
         ],
         springBeanName: [
-          { required: true, message: '请输入任务执行类的SpringBean名', trigger: 'blur' }
+          { required: true, message: i18n.t('job.edit.form.springBeanName.required'), trigger: 'blur' }
         ],
         methodName: [
-          { required: true, message: '请输入任务执行的方法名', trigger: 'blur' }
+          { required: true, message: i18n.t('job.edit.form.methodName.required'), trigger: 'blur' }
         ],
         status: [
-          { required: true, message: '请选择任务状态', trigger: 'blur' }
+          { required: true, message: i18n.t('job.edit.form.status.required'), trigger: 'blur' }
         ],
         misfirePolicy: [
-          { required: true, message: '请选择执行策略', trigger: 'blur' }
+          { required: true, message: i18n.t('job.edit.form.misfirePolicy.required'), trigger: 'blur' }
         ],
         concurrent: [
-          { required: true, message: '请选择是否允许并发', trigger: 'blur' }
+          { required: true, message: i18n.t('job.edit.form.concurrent.required'), trigger: 'blur' }
         ],
         pauseAfterFailure: [
-          { required: true, message: '请选择失败后是否暂停', trigger: 'blur' }
+          { required: true, message: i18n.t('job.edit.form.pauseAfterFailure.required'), trigger: 'blur' }
         ],
       },
     }
   },
   computed: {
     title() {
-      return this.form.id ? '修改任务' : '新增任务'
+      return this.form.id ? this.$t('job.edit.title') : this.$t('job.add.title')
     }
   },
   methods: {
@@ -78,7 +79,7 @@ export default {
         this.formLoading = true
         const reqPromise = this.form.id ? update(this.form) : add(this.form)
         reqPromise.then(() => {
-          this.$message.success(this.form.id ? '修改成功' : '新增成功')
+          this.$message.success(this.form.id ? this.$t('job.edit.success') : this.$t('job.add.success'))
           this.show = false
           this.$emit('complete')
         }).finally(() => {
@@ -102,34 +103,34 @@ export default {
     <el-form ref="form" :model="form" :rules="rules" label-width="130px" :hide-required-asterisk="true">
       <el-row>
         <el-col :span="12">
-          <el-form-item label="任务名称" prop="jobName">
-            <el-input v-model="form.jobName" placeholder="请输入任务名称" maxlength="20" />
+          <el-form-item :label="$t('job.edit.form.jobName')" prop="jobName">
+            <el-input v-model="form.jobName" :placeholder="$t('job.edit.form.jobName.placeholder')" maxlength="20" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="任务组" prop="jobGroup">
-            <el-input v-model="form.jobGroup" placeholder="请输入任务组" maxlength="20" />
+          <el-form-item :label="$t('job.edit.form.jobGroup')" prop="jobGroup">
+            <el-input v-model="form.jobGroup" :placeholder="$t('job.edit.form.jobGroup.placeholder')" maxlength="20" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="cron表达式" prop="cron">
-            <el-input v-model="form.cron" placeholder="请输入cron表达式" maxlength="20" />
+          <el-form-item :label="$t('job.edit.form.cron')" prop="cron">
+            <el-input v-model="form.cron" :placeholder="$t('job.edit.form.cron.placeholder')" maxlength="20" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="任务状态" prop="status">
+          <el-form-item :label="$t('job.edit.form.status')" prop="status">
             <el-radio-group v-model="form.status">
-              <el-radio :label="0">正常</el-radio>
-              <el-radio :label="1">暂停</el-radio>
+              <el-radio :label="0">{{ $t('job.edit.form.status.normal') }}</el-radio>
+              <el-radio :label="1">{{ $t('job.edit.form.status.stopped') }}</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="执行方式" style="height: 32px;">
+          <el-form-item :label="$t('job.edit.form.invokeMode')" style="height: 32px;">
             <el-radio-group v-model="invokeMode">
               <el-radio-button label="springBean">SpringBean</el-radio-button>
               <el-radio-button label="class">Class</el-radio-button>
@@ -138,54 +139,54 @@ export default {
         </el-col>
         <el-col v-if="invokeMode === 'springBean'" :span="12">
           <el-form-item label="SpringBean" prop="springBeanName">
-            <el-input v-model="form.springBeanName" placeholder="请输入任务执行类的SpringBean名" maxlength="64" />
+            <el-input v-model="form.springBeanName" :placeholder="$t('job.edit.form.springBeanName.placeholder')" maxlength="64" />
           </el-form-item>
         </el-col>
         <el-col v-else-if="invokeMode === 'class'" :span="12">
           <el-form-item label="Class" prop="invokeClassName">
-            <el-input v-model="form.invokeClassName" placeholder="请输入任务执行类的全类名" maxlength="255" />
+            <el-input v-model="form.invokeClassName" :placeholder="$t('job.edit.form.invokeClassName.placeholder')" maxlength="255" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="执行方法" prop="methodName">
-            <el-input v-model="form.methodName" placeholder="请输入任务执行的方法名" maxlength="64" />
+          <el-form-item :label="$t('job.edit.form.methodName')" prop="methodName">
+            <el-input v-model="form.methodName" :placeholder="$t('job.edit.form.methodName.placeholder')" maxlength="64" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="方法参数" prop="methodParams">
-            <el-input v-model="form.methodParams" placeholder="请输入任务执行方法参数(选填)" maxlength="512" />
+          <el-form-item :label="$t('job.edit.form.methodParams')" prop="methodParams">
+            <el-input v-model="form.methodParams" :placeholder="$t('job.edit.form.methodParams.placeholder')" maxlength="512" />
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="执行策略" prop="misfirePolicy">
+      <el-form-item :label="$t('job.edit.form.misfirePolicy')" prop="misfirePolicy">
         <el-radio-group v-model="form.misfirePolicy">
-          <el-radio :label="0">默认</el-radio>
-          <el-radio :label="1">立即触发执行</el-radio>
-          <el-radio :label="2">触发一次执行</el-radio>
-          <el-radio :label="3">不触发立即执行</el-radio>
+          <el-radio :label="0">{{ $t('job.edit.form.misfirePolicy.default') }}</el-radio>
+          <el-radio :label="1">{{ $t('job.edit.form.misfirePolicy.fireNow') }}</el-radio>
+          <el-radio :label="2">{{ $t('job.edit.form.misfirePolicy.fireOnce') }}</el-radio>
+          <el-radio :label="3">{{ $t('job.edit.form.misfirePolicy.ignore') }}</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="告警邮箱" prop="alarmEmail">
-            <el-input v-model="form.alarmEmail" placeholder="请输入任务失败后的告警邮箱(选填)" maxlength="20" />
+          <el-form-item :label="$t('job.edit.form.alarmEmail')" prop="alarmEmail">
+            <el-input v-model="form.alarmEmail" :placeholder="$t('job.edit.form.alarmEmail.placeholder')" maxlength="20" />
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="允许并发" prop="concurrent">
+          <el-form-item :label="$t('job.edit.form.concurrent')" prop="concurrent">
             <el-switch v-model="form.concurrent" :active-value="1" :inactive-value="0" />
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="失败后暂停" prop="pauseAfterFailure">
+          <el-form-item :label="$t('job.edit.form.pauseAfterFailure')" prop="pauseAfterFailure">
             <el-switch v-model="form.pauseAfterFailure" :active-value="1" :inactive-value="0" />
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
     <div slot="footer">
-      <el-button @click="show = false">取 消</el-button>
-      <el-button :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">确 定</el-button>
+      <el-button @click="show = false">{{ $t('general.form.cancel') }}</el-button>
+      <el-button :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">{{ $t('general.form.submit') }}</el-button>
     </div>
   </el-dialog>
 </template>

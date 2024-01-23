@@ -3,12 +3,12 @@
     <div class="page-body">
       <query-expand-wrapper :show="isQueryShow">
         <el-form :model="queryParams" :inline="true">
-          <el-form-item label="角色名称" prop="roleName">
-            <el-input v-model="queryParams.roleName" placeholder="输入要查找的角色名称" maxlength="20" />
+          <el-form-item :label="$t('role.query.roleName')" prop="roleName">
+            <el-input v-model="queryParams.roleName" :placeholder="$t('role.query.roleName.placeholder')" maxlength="20" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="onQuery">查询</el-button>
-            <el-button icon="el-icon-refresh" plain @click="onRefresh">重置</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="onQuery">{{ $t('general.query.search') }}</el-button>
+            <el-button icon="el-icon-refresh" plain @click="onRefresh">{{ $t('general.query.reset') }}</el-button>
           </el-form-item>
         </el-form>
       </query-expand-wrapper>
@@ -39,22 +39,22 @@
           style="width: 100%"
         >
           <el-table-column type="selection" :selectable="onSelectable"></el-table-column>
-          <el-table-column prop="roleName" label="角色名称"></el-table-column>
-          <el-table-column prop="description" label="角色描述"></el-table-column>
-          <el-table-column prop="roleKey" label="权限字符串"></el-table-column>
-          <el-table-column prop="status" label="状态">
+          <el-table-column prop="roleName" :label="$t('role.column.roleName')"></el-table-column>
+          <el-table-column prop="description" :label="$t('role.column.description')"></el-table-column>
+          <el-table-column prop="roleKey" :label="$t('role.column.roleKey')"></el-table-column>
+          <el-table-column prop="status" :label="$t('role.column.status')">
             <template #default="{ row }">
-              <el-tag v-if="row.status === 0">正常</el-tag>
-              <el-tag v-else-if="row.status === 1" type="danger">禁用</el-tag>
+              <el-tag v-if="row.status === 0">{{ $t('role.column.status.normal') }}</el-tag>
+              <el-tag v-else-if="row.status === 1" type="danger">{{ $t('role.column.status.disable') }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column v-permissions="['system:role:edit', 'system:role:del']" label="操作" width="220">
+          <el-table-column v-permissions="['system:role:edit', 'system:role:del']" :label="$t('general.column.operation')" width="220">
             <template #default="{ row }">
               <template v-if="row.roleKey !== 'admin'">
-                <el-button v-permissions="['system:role:edit']" type="text" @click="onRowUpdate(row)">修改</el-button>
-                <el-button v-permissions="['system:role:del']" type="text" @click="onRowDelete(row)">删除</el-button>
-                <el-button v-permissions="['system:role:edit']" type="text" @click="onRowRoleMember(row)">分配用户</el-button>
-                <el-button v-permissions="['system:role:edit']" type="text" @click="onRowDataScope(row)">数据权限</el-button>
+                <el-button v-permissions="['system:role:edit']" type="text" @click="onRowUpdate(row)">{{ $t('general.edit') }}</el-button>
+                <el-button v-permissions="['system:role:del']" type="text" @click="onRowDelete(row)">{{ $t('general.del') }}</el-button>
+                <el-button v-permissions="['system:role:edit']" type="text" @click="onRowRoleMember(row)">{{ $t('role.button.roleMember') }}</el-button>
+                <el-button v-permissions="['system:role:edit']" type="text" @click="onRowDataScope(row)">{{ $t('role.button.dataScope') }}</el-button>
               </template>
             </template>
           </el-table-column>
@@ -79,7 +79,7 @@
       @complete="onRefresh"
     >
       <template #importTip>
-        <li>状态字段可选项：正常、禁用</li>
+        <li>{{ $t('role.importDialog.tip') }}</li>
       </template>
     </import-dialog>
   </div>
@@ -145,15 +145,17 @@ export default {
     },
     onBatchDel() {
       const ids = this.$refs.table.selection.map(item => item.id)
-      this.$confirm(`确认要删除选中的${ids.length}条记录吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('general.confirm.delete.batch.message', {
+        length: ids.length
+      }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             batchDel(ids).then(() => {
-              this.$message.success('删除成功')
+              this.$message.success(this.$t('general.confirm.delete.success'))
               done()
               this.onRefresh()
             }).finally(() => {
@@ -172,15 +174,17 @@ export default {
       this.$refs.roleEditDialog.open(row)
     },
     onRowDelete(row) {
-      this.$confirm(`确认要删除"${ row.roleName }"吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('general.confirm.delete.message', {
+        key: row.roleName
+      }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             batchDel([row.id]).then(() => {
-              this.$message.success('删除成功')
+              this.$message.success(this.$t('general.confirm.delete.success'))
               done()
               this.onRefresh()
             }).finally(() => {

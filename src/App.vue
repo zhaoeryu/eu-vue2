@@ -8,6 +8,7 @@
 import { watermark } from 'watermark-dom'
 import { mapGetters } from 'vuex'
 import { darkMode } from '@/utils/darkMode'
+import { defaultSetting } from '@/settings'
 export default {
   name: 'App',
   computed: {
@@ -21,7 +22,7 @@ export default {
       handler(val) {
         if (val) {
           // 加载水印
-          const username = 'Eu 后台管理'
+          const username = defaultSetting.title
           watermark.load({
             watermark_txt: username,
             watermark_alpha: 0.05

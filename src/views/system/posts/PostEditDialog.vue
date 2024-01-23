@@ -1,5 +1,6 @@
 <script>
 import { add, update } from '@/api/system/post'
+import i18n from '@/plugins/i18n'
 
 export default {
   name: 'PostEditDialog',
@@ -15,20 +16,20 @@ export default {
       },
       rules: {
         postName: [
-          { required: true, message: '请输入岗位名称', trigger: 'blur' }
+          { required: true, message: i18n.t('posts.form.postName.required'), trigger: 'blur' }
         ],
         code: [
-          { required: true, message: '请输入岗位编码', trigger: 'blur' }
+          { required: true, message: i18n.t('posts.form.code.required'), trigger: 'blur' }
         ],
         status: [
-          { required: true, message: '请选择岗位状态', trigger: 'blur' }
+          { required: true, message: i18n.t('posts.form.status.required'), trigger: 'blur' }
         ]
       },
     }
   },
   computed: {
     title() {
-      return this.form.id ? '修改岗位' : '新增岗位'
+      return this.form.id ? this.$t('posts.edit.title') : this.$t('posts.add.title')
     }
   },
   methods: {
@@ -46,7 +47,7 @@ export default {
         this.formLoading = true
         const reqPromise = this.form.id ? update(this.form) : add(this.form)
         reqPromise.then(() => {
-          this.$message.success(this.form.id ? '修改成功' : '新增成功')
+          this.$message.success(this.form.id ? this.$t('posts.edit.success') : this.$t('posts.add.success'))
           this.show = false
           this.$emit('complete')
         }).finally(() => {
@@ -74,22 +75,22 @@ export default {
     @open="onDialogOpen"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="岗位名称" prop="postName">
-        <el-input v-model="form.postName" placeholder="请输入岗位名称" maxlength="20" />
+      <el-form-item :label="$t('posts.form.postName')" prop="postName">
+        <el-input v-model="form.postName" :placeholder="$t('posts.form.postName.placeholder')" maxlength="20" />
       </el-form-item>
-      <el-form-item label="岗位编码" prop="code">
-        <el-input v-model="form.code" placeholder="请输入岗位编码" maxlength="20" />
+      <el-form-item :label="$t('posts.form.code')" prop="code">
+        <el-input v-model="form.code" :placeholder="$t('posts.form.code.placeholder')" maxlength="20" />
       </el-form-item>
-      <el-form-item label="岗位状态" prop="status">
+      <el-form-item :label="$t('posts.form.status')" prop="status">
         <el-radio-group v-model="form.status">
-          <el-radio :label="0">正常</el-radio>
-          <el-radio :label="1">停用</el-radio>
+          <el-radio :label="0">{{ $t('posts.form.status.normal') }}</el-radio>
+          <el-radio :label="1">{{ $t('posts.form.status.disabled') }}</el-radio>
         </el-radio-group>
       </el-form-item>
     </el-form>
     <div slot="footer">
-      <el-button @click="show = false">取 消</el-button>
-      <el-button :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">确 定</el-button>
+      <el-button @click="show = false">{{ $t('general.form.cancel') }}</el-button>
+      <el-button :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">{{ $t('general.form.submit') }}</el-button>
     </div>
   </el-dialog>
 </template>

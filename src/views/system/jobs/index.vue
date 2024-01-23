@@ -3,12 +3,12 @@
     <div class="page-body">
       <query-expand-wrapper :show="isQueryShow">
         <el-form :model="queryParams" :inline="true">
-          <el-form-item label="任务名称">
-            <el-input v-model="queryParams.jobName" placeholder="输入要查找的任务名称" />
+          <el-form-item :label="$t('job.query.jobName')">
+            <el-input v-model="queryParams.jobName" :placeholder="$t('job.query.jobName.placeholder')" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="onQuery">查询</el-button>
-            <el-button icon="el-icon-refresh" plain @click="onRefresh">重置</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="onQuery">{{ $t('general.query.search') }}</el-button>
+            <el-button icon="el-icon-refresh" plain @click="onRefresh">{{ $t('general.query.reset') }}</el-button>
           </el-form-item>
         </el-form>
       </query-expand-wrapper>
@@ -38,9 +38,9 @@
           style="width: 100%"
         >
           <el-table-column type="selection"></el-table-column>
-          <el-table-column prop="jobName" label="任务名称"></el-table-column>
-          <el-table-column prop="jobGroup" label="任务分组"></el-table-column>
-          <el-table-column prop="cron" label="cron"></el-table-column>
+          <el-table-column prop="jobName" :label="$t('job.column.jobName')"></el-table-column>
+          <el-table-column prop="jobGroup" :label="$t('job.column.jobGroup')"></el-table-column>
+          <el-table-column prop="cron" :label="$t('job.column.cron')"></el-table-column>
           <!--        <el-table-column prop="misfirePolicy" label="执行策略">-->
           <!--          <template #default="{ row }">-->
           <!--            <el-tag v-if="row.misfirePolicy === 0">默认</el-tag>-->
@@ -55,14 +55,14 @@
           <!--            <el-tag v-else-if="row.concurrent === 1" type="danger">是</el-tag>-->
           <!--          </template>-->
           <!--        </el-table-column>-->
-          <el-table-column label="执行类">
+          <el-table-column :label="$t('job.column.invokeClassName')">
             <template #default="{ row }">
               <span v-if="row.invokeClassName">{{ row.invokeClassName }}</span>
               <span v-else>[Spring] {{ row.springBeanName }}</span>
             </template>
           </el-table-column>
           <!--        <el-table-column prop="springBeanName" label="SpringBean"></el-table-column>-->
-          <el-table-column prop="methodName" label="执行方法">
+          <el-table-column prop="methodName" :label="$t('job.column.methodName')">
             <template #default="{ row }">
               <span>{{ row.methodName }}</span>
               <template v-if="row.methodParams">
@@ -77,17 +77,21 @@
           <!--          </template>-->
           <!--        </el-table-column>-->
           <!--        <el-table-column prop="alarmEmail" label="告警邮箱"></el-table-column>-->
-          <el-table-column prop="status" label="状态">
+          <el-table-column prop="status" :label="$t('job.column.status')">
             <template #default="{ row }">
               <el-switch v-model="row.status" :active-value="0" :inactive-value="1" @change="onStatusChange(row)" />
             </template>
           </el-table-column>
-          <el-table-column v-permissions="['system:job:run', 'system:job-log:list', 'system:job:edit', 'system:job:del']" label="操作" width="200">
+          <el-table-column v-permissions="['system:job:run', 'system:job-log:list', 'system:job:edit', 'system:job:del']" :label="$t('general.column.operation')" width="200">
             <template #default="{ row }">
-              <el-button v-permissions="['system:job:run']" type="text" @click="onRowRun(row)">立即执行</el-button>
-              <el-button v-permissions="['system:job-log:list']" type="text" @click="onRowLog(row)">日志</el-button>
-              <el-button v-permissions="['system:job:edit']" type="text" @click="onRowUpdate(row)">修改</el-button>
-              <el-button v-permissions="['system:job:del']" type="text" @click="onRowDelete(row)">删除</el-button>
+              <el-button v-permissions="['system:job:run']" type="text" @click="onRowRun(row)">
+                {{ $t('job.column.operation.exec') }}</el-button>
+              <el-button v-permissions="['system:job-log:list']" type="text" @click="onRowLog(row)">
+                {{ $t('job.column.operation.log') }}</el-button>
+              <el-button v-permissions="['system:job:edit']" type="text" @click="onRowUpdate(row)">
+                {{ $t('general.edit') }}</el-button>
+              <el-button v-permissions="['system:job:del']" type="text" @click="onRowDelete(row)">
+                {{ $t('general.del') }}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -158,15 +162,15 @@ export default {
     },
     onBatchDel() {
       const ids = this.$refs.table.selection.map(item => item.id)
-      this.$confirm(`确认要删除选中的${ids.length}条记录吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('job.message.delete.batch.confirm', { length: ids.length }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             batchDel(ids).then(() => {
-              this.$message.success('删除成功')
+              this.$message.success(this.$t('general.confirm.delete.success'))
               done()
               this.onRefresh()
             }).finally(() => {
@@ -185,15 +189,15 @@ export default {
       this.$refs.jobEditDialog.open(row)
     },
     onRowDelete(row) {
-      this.$confirm(`确认要删除"${ row.jobName }"吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('job.message.delete.confirm', { jobName: row.jobName }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             batchDel([row.id]).then(() => {
-              this.$message.success('删除成功')
+              this.$message.success(this.$t('general.confirm.delete.success'))
               done()
               this.onRefresh()
             }).finally(() => {
@@ -206,15 +210,15 @@ export default {
       });
     },
     onRowRun(row) {
-      this.$confirm('确认要立即执行吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('job.message.exec.confirm'), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             execJob(row.id).then(() => {
-              this.$message.success('执行成功')
+              this.$message.success(this.$t('job.message.exec.success'))
               done()
             }).finally(() => {
               instance.confirmButtonLoading = false;
@@ -227,15 +231,15 @@ export default {
     },
     onStatusChange(row) {
       const status = row.status
-      this.$confirm(`确认要${status === 0 ? '恢复' : '暂停'}"${ row.jobName }"吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('job.message.status.confirm', { status: status === 0 ? '恢复' : '暂停', jobName: row.jobName }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             pauseOrResume(row).then(() => {
-              this.$message.success(`${status === 0 ? '恢复' : '暂停'}成功`)
+              this.$message.success(this.$t('job.message.exec.success'))
               done()
               this.onRefresh()
             }).finally(() => {

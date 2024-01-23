@@ -3,15 +3,15 @@
     <div style="display: flex;justify-content: space-between;align-items: center;margin-bottom: 200px;">
       <img :src="require('@/assets/images/notfound.png')" alt="" width="200">
       <div class="not-found">
-        <div class="not-found__404">抱歉，页面暂时无法访问</div>
+        <div class="not-found__404">{{ $t('404.title') }}</div>
         <div class="not-found__desc">
-          <p>可能有以下原因：</p>
-          <p>网址错误：请检查地址是否完整或存在多余字符</p>
-          <p>网络问题：请检查网络是否已连接</p>
-          <p>网址失效：可能页面已被删除</p>
+          <p>{{ $t('404.desc1') }}</p>
+          <p>{{ $t('404.desc2') }}</p>
+          <p>{{ $t('404.desc3') }}</p>
+          <p>{{ $t('404.desc4') }}</p>
         </div>
-        <el-button type="info" @click="$router.push('/')">回到首页</el-button>
-        <el-button type="primary" @click="$router.back()">返回上一页</el-button>
+        <el-button type="info" @click="$router.push('/')">{{ $t('404.back') }}</el-button>
+        <el-button type="primary" @click="$router.back()">{{ $t('404.back.prev') }}</el-button>
       </div>
     </div>
   </div>
@@ -52,7 +52,6 @@ body[eu-theme='dark'] {
   }
 }
 .el-button {
-  width: 150px;
   letter-spacing: 0.1em;
 }
 </style>

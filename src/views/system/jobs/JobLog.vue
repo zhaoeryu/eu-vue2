@@ -2,11 +2,11 @@
   <el-dialog :title="title" :visible.sync="show" width="1200px" top="7vh">
     <div class="query-wrapper">
       <el-form :model="queryParams" :inline="true">
-        <el-form-item label="执行时间">
+        <el-form-item :label="$t('job.log.query.execTime')">
           <el-date-picker
             v-model="queryParams.startTime"
             type="datetime"
-            placeholder="选择开始时间"
+            :placeholder="$t('job.log.query.startTime.placeholder')"
             align="left"
             value-format="yyyy-MM-dd HH:mm:ss"
             :picker-options="pickerOptions">
@@ -15,19 +15,20 @@
           <el-date-picker
             v-model="queryParams.endTime"
             type="datetime"
-            placeholder="选择结束时间"
+            :placeholder="$t('job.log.query.endTime.placeholder')"
             align="left"
             value-format="yyyy-MM-dd HH:mm:ss"
             :picker-options="pickerOptions">
           </el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="onQuery">查询</el-button>
-          <el-button icon="el-icon-refresh" plain @click="onRefresh">重置</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="onQuery">{{ $t('general.query.search') }}</el-button>
+          <el-button icon="el-icon-refresh" plain @click="onRefresh">{{ $t('general.query.reset') }}</el-button>
         </el-form-item>
       </el-form>
       <div>
-        <el-button v-permissions="['system:job-log:export']" type="warning" icon="el-icon-download" plain @click="onExport">导出</el-button>
+        <el-button v-permissions="['system:job-log:export']" type="warning" icon="el-icon-download" plain @click="onExport">
+          {{ $t('crud.EuTableToolbar.export') }}</el-button>
       </div>
     </div>
     <div v-loading="loading">
@@ -36,14 +37,14 @@
         style="width: 100%"
       >
         <el-table-column prop="id" label="ID" width="160"></el-table-column>
-        <el-table-column prop="jobName" label="任务名称"></el-table-column>
-        <el-table-column label="执行类">
+        <el-table-column prop="jobName" :label="$t('job.log.column.jobName')"></el-table-column>
+        <el-table-column :label="$t('job.log.column.invokeClassName')">
           <template #default="{ row }">
             <span v-if="row.invokeClassName">{{ row.invokeClassName }}</span>
             <span v-else>[Spring] {{ row.springBeanName }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="methodName" label="执行方法">
+        <el-table-column prop="methodName" :label="$t('job.log.column.methodName')">
           <template #default="{ row }">
             <span>{{ row.methodName }}</span>
             <template v-if="row.methodParams">
@@ -51,25 +52,26 @@
             </template>
           </template>
         </el-table-column>
-        <el-table-column prop="success" label="执行结果">
+        <el-table-column prop="success" :label="$t('job.log.column.success')">
           <template #default="{ row }">
-            <el-tag v-if="row.success" type="success">成功</el-tag>
-            <el-tag v-else type="danger">失败</el-tag>
+            <el-tag v-if="row.success" type="success">{{ $t('job.log.column.success.true') }}</el-tag>
+            <el-tag v-else type="danger">{{ $t('job.log.column.success.false') }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="执行时间" width="280">
+        <el-table-column :label="$t('job.log.column.startTime')" width="280">
           <template #default="{ row }">
             <span>{{ row.startTime }} ~ {{ row.endTime }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="执行时长">
+        <el-table-column :label="$t('job.log.column.execTime')">
           <template #default="{ row }">
             <span>{{ row.execTime }}ms</span>
           </template>
         </el-table-column>
-        <el-table-column v-permissions="['system:job-log:del']" label="操作">
+        <el-table-column v-permissions="['system:job-log:del']" :label="$t('general.column.operation')">
           <template #default="{ row }">
-            <el-button v-permissions="['system:job-log:del']" type="text" @click="onRowDelete(row)">删除</el-button>
+            <el-button v-permissions="['system:job-log:del']" type="text" @click="onRowDelete(row)">
+              {{ $t('general.del') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -85,6 +87,7 @@
 
 <script>
 import { batchDel, page } from '@/api/system/jobLog'
+import i18n from '@/plugins/i18n'
 
 export default {
   name: 'JobLog',
@@ -108,19 +111,19 @@ export default {
 
       pickerOptions: {
         shortcuts: [{
-          text: '今天',
+          text: i18n.t('job.log.pickerOptions.shortcuts.today'),
           onClick(picker) {
             picker.$emit('pick', new Date());
           }
         }, {
-          text: '昨天',
+          text: i18n.t('job.log.pickerOptions.shortcuts.yesterday'),
           onClick(picker) {
             const date = new Date();
             date.setTime(date.getTime() - 3600 * 1000 * 24);
             picker.$emit('pick', date);
           }
         }, {
-          text: '一周前',
+          text: i18n.t('job.log.pickerOptions.shortcuts.lastWeek'),
           onClick(picker) {
             const date = new Date();
             date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
@@ -132,7 +135,7 @@ export default {
   },
   computed: {
     title() {
-      return `执行日志 - ${this.job.jobName}`
+      return `${this.$t('job.log.title')} - ${this.job.jobName}`
     }
   },
   methods: {
@@ -160,15 +163,15 @@ export default {
       this.download('/api/system/job-log/export', this.queryParams, `jobLog_${new Date().getTime()}.xlsx`)
     },
     onRowDelete(row) {
-      this.$confirm(`确认要删除"${ row.id }"吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('job.log.message.delete.confirm', { id: row.id }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             batchDel([row.id]).then(() => {
-              this.$message.success('删除成功')
+              this.$message.success(this.$t('general.confirm.delete.success'))
               done()
               this.onRefresh()
             }).finally(() => {

@@ -8,7 +8,7 @@
     @show="onShow"
   >
     <div class="icon-select-body">
-      <el-input v-model="keyword" style="width: 250px;" placeholder="输入要查找的图标拼音" />
+      <el-input v-model="keyword" style="width: 250px;" :placeholder="$t('crud.IconSelect.placeholder')" />
       <el-divider></el-divider>
       <div style="max-height: 300px;overflow-y: auto;">
         <el-row>

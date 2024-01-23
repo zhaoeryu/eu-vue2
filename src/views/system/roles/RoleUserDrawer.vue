@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     title() {
-      let title = '分配用户'
+      let title = this.$t('role.userDrawer.title')
       if (this.role.roleName) {
         title += ` - ${this.role.roleName}`
       }
@@ -74,9 +74,11 @@ export default {
     },
     onBatchDel() {
       const ids = this.$refs.table.selection.map(item => item.id)
-      this.$confirm(`确认要取消授权选中的${ids.length}条记录吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('role.userDrawer.cancelAuthConfirm', {
+        length: ids.length
+      }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
@@ -85,7 +87,7 @@ export default {
               roleId: this.roleId,
               userIds: ids
             }).then(() => {
-              this.$message.success('删除成功')
+              this.$message.success(this.$t('general.confirm.delete.success'))
               done()
               this.onRefresh()
             }).finally(() => {
@@ -109,9 +111,11 @@ export default {
       return getParentFieldsByLeafId(this.deptTree, deptId, { fieldKey: 'deptName' }).join('/')
     },
     onCancelAuth(row) {
-      this.$confirm(`确认要取消授权用户【${row.username}】吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('role.userDrawer.cancelAuthConfirm.single', {
+        username: row.username
+      }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
@@ -120,7 +124,7 @@ export default {
               roleId: this.roleId,
               userIds: [row.id]
             }).then(() => {
-              this.$message.success('取消授权成功')
+              this.$message.success(this.$t('role.userDrawer.cancelAuthSuccess'))
               done()
               this.onRefresh()
             }).finally(() => {
@@ -146,15 +150,15 @@ export default {
     <div class="page-container">
       <query-expand-wrapper :show="isQueryShow">
         <el-form :model="queryParams" :inline="true">
-          <el-form-item label="用户名称">
-            <el-input v-model="queryParams.nickname" placeholder="输入要查找的用户名称" clearable />
+          <el-form-item :label="$t('role.userDrawer.query.nickname')">
+            <el-input v-model="queryParams.nickname" :placeholder="$t('role.userDrawer.query.nickname.placeholder')" clearable />
           </el-form-item>
-          <el-form-item label="手机号">
-            <el-input v-model="queryParams.mobile" placeholder="输入要查找的手机号" clearable />
+          <el-form-item :label="$t('role.userDrawer.query.mobile')">
+            <el-input v-model="queryParams.mobile" :placeholder="$t('role.userDrawer.query.mobile.placeholder')" clearable />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="onQuery">查询</el-button>
-            <el-button icon="el-icon-refresh" plain @click="onRefresh">重置</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="onQuery">{{ $t('general.query.search') }}</el-button>
+            <el-button icon="el-icon-refresh" plain @click="onRefresh">{{ $t('general.query.reset') }}</el-button>
           </el-form-item>
         </el-form>
       </query-expand-wrapper>
@@ -173,8 +177,8 @@ export default {
         >
           <template #left>
             <template v-permissions="['system:user:assignRole']">
-              <el-button type="primary" icon="el-icon-plus" plain @click="onAdd">添加授权用户</el-button>
-              <el-button :disabled="multipleDisabled" type="danger" icon="el-icon-delete" plain @click="onBatchDel">批量取消授权</el-button>
+              <el-button type="primary" icon="el-icon-plus" plain @click="onAdd">{{ $t('role.userDrawer.button.addAuthUser') }}</el-button>
+              <el-button :disabled="multipleDisabled" type="danger" icon="el-icon-delete" plain @click="onBatchDel">{{ $t('role.userDrawer.button.batch.cancelAuth') }}</el-button>
             </template>
           </template>
         </eu-table-toolbar>
@@ -185,23 +189,23 @@ export default {
           style="width: 100%"
         >
           <el-table-column type="selection" :selectable="onSelectable"></el-table-column>
-          <el-table-column prop="username" label="登录名" width="100"></el-table-column>
-          <el-table-column prop="nickname" label="用户昵称" width="100"></el-table-column>
-          <el-table-column prop="deptId" label="部门">
+          <el-table-column prop="username" :label="$t('role.userDrawer.column.username')" width="100"></el-table-column>
+          <el-table-column prop="nickname" :label="$t('role.userDrawer.column.nickname')" width="100"></el-table-column>
+          <el-table-column prop="deptId" :label="$t('role.userDrawer.column.deptId')">
             <template #default="{ row }">
               <span>{{ convertToDeptName(row.deptId) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="mobile" label="手机号码"></el-table-column>
-          <el-table-column prop="status" label="状态" width="80">
+          <el-table-column prop="mobile" :label="$t('role.userDrawer.column.mobile')"></el-table-column>
+          <el-table-column prop="status" :label="$t('role.userDrawer.column.status')" width="80">
             <template v-slot:default="{ row }">
-              <el-tag :type="row.status === 0 ? 'success' : 'danger'">{{ row.status === 0 ? '正常' : '禁用' }}</el-tag>
+              <el-tag :type="row.status === 0 ? 'success' : 'danger'">{{ row.status === 0 ? $t('role.userDrawer.column.status.normal') : $t('role.userDrawer.column.status.disable') }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="lastActiveTime" label="最后活跃时间"></el-table-column>
-          <el-table-column v-permissions="['system:user:assignRole']" label="操作" fixed="right" width="150">
+          <el-table-column prop="lastActiveTime" :label="$t('role.userDrawer.column.lastActiveTime')"></el-table-column>
+          <el-table-column v-permissions="['system:user:assignRole']" :label="$t('general.column.operation')" fixed="right" width="150">
             <template v-slot:default="{ row }">
-              <el-button type="text" size="small" @click="onCancelAuth(row)">取消授权</el-button>
+              <el-button type="text" size="small" @click="onCancelAuth(row)">{{ $t('role.userDrawer.button.cancelAuth.title') }}</el-button>
             </template>
           </el-table-column>
         </el-table>

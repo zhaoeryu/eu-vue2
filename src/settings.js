@@ -1,6 +1,6 @@
 export const defaultTheme = {
   // 布局: column vertical
-  layout: 'vertical',
+  layout: 'column',
   // [vertical]是否只保持一个子菜单的展开
   uniqueOpened: true,
   // 是否使用标签页
@@ -45,4 +45,6 @@ export const defaultSetting = {
   githubUrl: 'https://github.com/zhaoeryu',
   // gitee源码地址
   giteeUrl: 'https://gitee.com/zhaoeryu',
+  // 默认语言
+  locale: 'zh',
 }

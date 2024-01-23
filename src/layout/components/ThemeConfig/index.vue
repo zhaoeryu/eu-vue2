@@ -1,6 +1,6 @@
 <template>
   <el-drawer
-    title="主题配置"
+    :title="$t('layout.ThemeConfig.title')"
     :visible.sync="innerShow"
     size="300px"
     direction="rtl"
@@ -10,22 +10,22 @@
     <div style="display: flex;flex-direction: column;height: 100%;overflow: hidden;">
       <div style="flex: 1;overflow-y: auto;">
         <el-form ref="form" :model="form" label-position="left">
-          <el-form-item label="布局" class="eu-form-item__layout">
+          <el-form-item :label="$t('layout.ThemeConfig.form.layout')" class="eu-form-item__layout">
             <el-radio-group v-model="form.layout">
               <el-radio-button label="column">
-                <el-tooltip content="分栏布局：推荐子菜单较多的场景使用" placement="top">
+                <el-tooltip :content="$t('layout.ThemeConfig.form.layout.column')" placement="top">
                   <svg-icon icon-class="layout-column" />
                 </el-tooltip>
               </el-radio-button>
               <el-radio-button label="vertical">
-                <el-tooltip content="垂直布局" placement="top">
+                <el-tooltip :content="$t('layout.ThemeConfig.form.layout.vertical')" placement="top">
                   <svg-icon icon-class="layout-vertical" />
                 </el-tooltip>
               </el-radio-button>
             </el-radio-group>
           </el-form-item>
           <template v-if="form.layout === 'vertical'">
-            <el-form-item label="是否只保持一个子菜单的展开">
+            <el-form-item :label="$t('layout.ThemeConfig.form.layout.uniqueOpened')">
               <el-switch v-model="form.uniqueOpened" />
             </el-form-item>
             <el-divider />
@@ -33,25 +33,25 @@
           <!--          <el-form-item label="头部">-->
           <!--            <el-switch v-model="form.showHeader" />-->
           <!--          </el-form-item>-->
-          <el-form-item label="标签页">
+          <el-form-item :label="$t('layout.ThemeConfig.form.showTabsBar')">
             <el-switch v-model="form.showTabsBar" />
           </el-form-item>
           <!--          <el-form-item label="固定头部">-->
           <!--            <el-switch v-model="form.fixedHeader" />-->
           <!--          </el-form-item>-->
-          <el-form-item label="固定标签">
+          <el-form-item :label="$t('layout.ThemeConfig.form.fixedTabsBar')">
             <el-switch v-model="form.fixedTabsBar" />
           </el-form-item>
-          <el-form-item label="进度条">
+          <el-form-item :label="$t('layout.ThemeConfig.form.showProgressBar')">
             <el-switch v-model="form.showProgressBar" />
           </el-form-item>
-          <el-form-item label="开启快捷菜单">
+          <el-form-item :label="$t('layout.ThemeConfig.form.useUsualMenu')">
             <el-switch v-model="form.useUsualMenu" />
           </el-form-item>
-          <el-form-item label="开启水印">
+          <el-form-item :label="$t('layout.ThemeConfig.form.enabledWatermark')">
             <el-switch v-model="form.enabledWatermark" />
           </el-form-item>
-          <el-form-item label="暗黑模式">
+          <el-form-item :label="$t('layout.ThemeConfig.form.darkMode')">
             <el-radio-group v-model="form.darkMode">
               <el-radio-button label="light">
                 <template #default>
@@ -74,8 +74,8 @@
       </div>
 
       <div class="el-drawer__footer">
-        <el-button type="primary" @click="onSubmit">保存</el-button>
-        <el-button @click="onRestoreDefault">恢复默认</el-button>
+        <el-button type="primary" @click="onSubmit">{{ $t('layout.ThemeConfig.submit') }}</el-button>
+        <el-button @click="onRestoreDefault">{{ $t('layout.ThemeConfig.restore') }}</el-button>
       </div>
     </div>
   </el-drawer>

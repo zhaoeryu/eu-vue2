@@ -65,7 +65,9 @@ export default {
     },
     onBatchAuth() {
       const userIds = this.$refs.table.selection.map(item => item.id)
-      this.$confirm(`确定要给这 ${userIds.length} 个用户分配角色吗？`, '提示', {
+      this.$confirm(this.$t('role.addAuthUserDialog.confirm', {
+        length: userIds.length
+      }), this.$t('general.confirm.title'), {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
@@ -74,7 +76,7 @@ export default {
               roleId: this.roleId,
               userIds
             }).then(() => {
-              this.$message.success('授权成功')
+              this.$message.success(this.$t('role.addAuthUserDialog.success'))
               done()
               this.show = false
               this.$emit('complete')
@@ -92,23 +94,23 @@ export default {
 </script>
 
 <template>
-  <el-dialog title="授权用户" :visible.sync="show" width="1000px" @close="onDialogClose" append-to-body>
+  <el-dialog :title="$t('role.addAuthUserDialog.title')" :visible.sync="show" width="1000px" @close="onDialogClose" append-to-body>
     <div>
       <div class="page-body query-wrapper">
         <el-form :model="queryParams" :inline="true">
-          <el-form-item label="用户名称">
-            <el-input v-model="queryParams.nickname" placeholder="输入要查找的用户名称" clearable />
+          <el-form-item :label="$t('role.addAuthUserDialog.query.nickname')">
+            <el-input v-model="queryParams.nickname" :placeholder="$t('role.addAuthUserDialog.query.nickname.placeholder')" clearable />
           </el-form-item>
-          <el-form-item label="手机号">
-            <el-input v-model="queryParams.mobile" placeholder="输入要查找的手机号" clearable />
+          <el-form-item :label="$t('role.addAuthUserDialog.query.mobile')">
+            <el-input v-model="queryParams.mobile" :placeholder="$t('role.addAuthUserDialog.query.mobile.placeholder')" clearable />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="onQuery">查询</el-button>
-            <el-button icon="el-icon-refresh" plain @click="onRefresh">重置</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="onQuery">{{ $t('general.query.search') }}</el-button>
+            <el-button icon="el-icon-refresh" plain @click="onRefresh">{{ $t('general.query.reset') }}</el-button>
           </el-form-item>
         </el-form>
         <div v-permissions="['system:user:assignRole']">
-          <el-button :disabled="multipleDisabled" type="primary" icon="el-icon-plus" plain @click="onBatchAuth">批量授权</el-button>
+          <el-button :disabled="multipleDisabled" type="primary" icon="el-icon-plus" plain @click="onBatchAuth">{{ $t('role.addAuthUserDialog.button.batchAuth') }}</el-button>
         </div>
       </div>
       <el-table
@@ -118,20 +120,20 @@ export default {
         style="width: 100%"
       >
         <el-table-column type="selection" :selectable="onSelectable"></el-table-column>
-        <el-table-column prop="username" label="登录名" width="100"></el-table-column>
-        <el-table-column prop="nickname" label="用户昵称" width="100"></el-table-column>
-        <el-table-column prop="deptId" label="部门">
+        <el-table-column prop="username" :label="$t('role.addAuthUserDialog.column.username')" width="100"></el-table-column>
+        <el-table-column prop="nickname" :label="$t('role.addAuthUserDialog.column.nickname')" width="100"></el-table-column>
+        <el-table-column prop="deptId" :label="$t('role.addAuthUserDialog.column.deptId')">
           <template #default="{ row }">
             <span>{{ convertToDeptName(row.deptId) }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="mobile" label="手机号码"></el-table-column>
-        <el-table-column prop="status" label="状态" width="80">
+        <el-table-column prop="mobile" :label="$t('role.addAuthUserDialog.column.mobile')"></el-table-column>
+        <el-table-column prop="status" :label="$t('role.addAuthUserDialog.column.status')" width="80">
           <template v-slot:default="{ row }">
-            <el-tag :type="row.status === 0 ? 'success' : 'danger'">{{ row.status === 0 ? '正常' : '禁用' }}</el-tag>
+            <el-tag :type="row.status === 0 ? 'success' : 'danger'">{{ row.status === 0 ? $t('role.addAuthUserDialog.column.status.normal') : $t('role.addAuthUserDialog.column.status.disable') }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="lastActiveTime" label="最后活跃时间"></el-table-column>
+        <el-table-column prop="lastActiveTime" :label="$t('role.addAuthUserDialog.column.lastActiveTime')"></el-table-column>
       </el-table>
       <pagination
         :total="total"

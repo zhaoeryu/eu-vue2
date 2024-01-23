@@ -4,33 +4,34 @@
     <bubbles />
     <div class="login-body">
       <div class="left-container">
-        <p class="left-container__title">开箱即用的后台管理系统</p>
-        <p class="left-container__desc">内置了常见的系统解决方案</p>
+        <p class="left-container__title">{{ $t('login.banner.title') }}</p>
+        <p class="left-container__desc">{{ $t('login.banner.desc') }}</p>
         <img :src="require('@/assets/images/login_banner.png')" width="250" alt="" style="margin-top: 20px;">
       </div>
       <!-- 登录表单 -->
       <el-form :model="form" :rules="rules" ref="form">
-        <h3>登录{{ defaultSetting.title }}</h3>
+        <h3>{{ $t('login.form.title') }}&nbsp;{{ defaultSetting.title }}</h3>
         <el-form-item prop="username">
-          <el-input v-model="form.username" placeholder="请输入用户名" maxlength="20"></el-input>
+          <el-input v-model="form.username" :placeholder="$t('login.form.username.placeholder')" maxlength="20"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="form.password" placeholder="请输入密码" maxlength="30" show-password></el-input>
+          <el-input v-model="form.password" :placeholder="$t('login.form.password.placeholder')" maxlength="30" show-password></el-input>
         </el-form-item>
         <!-- 验证码 -->
         <el-form-item prop="verifyCode" class="verify-code-form-item">
-          <el-input v-model="form.verifyCode" placeholder="请输入验证码" maxlength="4" style="margin-right: 16px;" ></el-input>
+          <el-input v-model="form.verifyCode" :placeholder="$t('login.form.captcha.placeholder')" maxlength="4" style="margin-right: 16px;" ></el-input>
           <div class="verify-code" @click="getCaptcha">
             <img v-if="captchaImg" :src="captchaImg" >
-            <span v-else>点击获取</span>
+            <span v-else>{{ $t('login.form.captcha.refresh') }}</span>
           </div>
         </el-form-item>
         <!-- 记住我 -->
         <el-form-item prop="rememberMe">
-          <el-checkbox v-model="form.rememberMe">记住我</el-checkbox>
+          <el-checkbox v-model="form.rememberMe">{{ $t('login.form.remember.label') }}</el-checkbox>
         </el-form-item>
         <el-form-item style="margin-bottom: 0;">
-          <el-button :loading="loginLoading" @click="onSubmit" style="width: 100%;background-color: #155bd4;border-color: #155bd4;" type="primary">登 录</el-button>
+          <el-button :loading="loginLoading" @click="onSubmit" style="width: 100%;background-color: #155bd4;border-color: #155bd4;" type="primary">
+            {{ $t('login.form.submit') }}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -63,13 +64,13 @@ export default {
       },
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
+          { required: true, message: this.$t('login.form.username.rule'), trigger: 'blur' }
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' }
+          { required: true, message: this.$t('login.form.password.rule'), trigger: 'blur' }
         ],
         verifyCode: [
-          { required: true, message: '请输入验证码', trigger: 'blur' }
+          { required: true, message: this.$t('login.form.captcha.rule'), trigger: 'blur' }
         ]
       },
       loginLoading: false,

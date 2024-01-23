@@ -19,7 +19,7 @@ export default {
 
 <template>
   <el-dialog
-    title="通知公告"
+    :title="$t('sysNotice.viewDialog.title')"
     :visible.sync="show"
     width="80%"
     append-to-body
@@ -27,8 +27,8 @@ export default {
     <div style="line-height: 2em;">
       <div style="font-weight: 500;font-size: 16px;">{{ notice.title }}</div>
       <div style="color: #909399;font-size: 12px;">
-        <span>发布人：{{ notice.publisher || '未知' }}，</span>
-        <span>发布时间：{{ notice.createTime || ' -- ' }}</span>
+        <span>{{ $t('sysNotice.viewDialog.publisher') }}：{{ notice.publisher || $t('sysNotice.viewDialog.noPublisher') }}，</span>
+        <span>{{ $t('sysNotice.viewDialog.createTime') }}：{{ notice.createTime || ' -- ' }}</span>
       </div>
     </div>
     <el-divider />

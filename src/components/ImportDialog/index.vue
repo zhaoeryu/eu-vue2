@@ -48,7 +48,7 @@ export default {
       this.show = true
     },
     onExportTemplate() {
-      this.download(this.tplExportUrl, {}, `模版_${new Date().getTime()}.xlsx`)
+      this.download(this.tplExportUrl, {}, `${this.$t('crud.ImportDialog.tplFilePrefix')}_${new Date().getTime()}.xlsx`)
     },
     onSuccessCallback(response) {
       if (response.code !== 200) {
@@ -68,31 +68,31 @@ export default {
 
 <template>
   <el-dialog
-    title="导入Excel数据"
+    :title="$t('crud.ImportDialog.title')"
     :visible.sync="show"
     width="600px"
     append-to-body
   >
     <el-steps :active="stepActive" :align-center="true" finish-status="success">
-      <el-step title="上传Excel"></el-step>
-      <el-step title="完成"></el-step>
+      <el-step :title="$t('crud.ImportDialog.steps1Title')"></el-step>
+      <el-step :title="$t('crud.ImportDialog.steps2Title')"></el-step>
     </el-steps>
     <div v-if="stepActive === 0">
       <div style="padding: 10px 40px;">
         <div class="import-mode">
-          <span>导入模式：</span>
+          <span>{{ $t('crud.ImportDialog.importMode') }}</span>
           <el-radio-group v-model="importMode">
-            <el-radio :label="0">仅新增数据</el-radio>
-            <el-radio :label="1">仅更新数据</el-radio>
-            <el-radio :label="2">新增和更新数据</el-radio>
+            <el-radio :label="0">{{ $t('crud.ImportDialog.importMode.add') }}</el-radio>
+            <el-radio :label="1">{{ $t('crud.ImportDialog.importMode.update') }}</el-radio>
+            <el-radio :label="2">{{ $t('crud.ImportDialog.importMode.addAndUpdate') }}</el-radio>
           </el-radio-group>
         </div>
         <ul class="import-tip">
           <li>
-            <span>为保证数据导入顺利，推荐您使用</span>
-            <span style="cursor: pointer;color: var(--color-primary);" @click="onExportTemplate">标准模板</span>
+            <span>{{ $t('crud.ImportDialog.tip') }}</span>
+            <span style="cursor: pointer;color: var(--color-primary);" @click="onExportTemplate">{{ $t('crud.ImportDialog.tip.standardTpl') }}</span>
           </li>
-          <li>支持 {{ sizeLimit }}MB 以内的xls、xlsx格式文件</li>
+          <li>{{ $t('crud.ImportDialog.tip.support', { sizeLimit }) }}</li>
           <slot name="importTip"></slot>
         </ul>
       </div>
@@ -101,7 +101,7 @@ export default {
         :upload-api="uploadUrl"
         :single-mode="true"
         :size-limit="sizeLimit"
-        :tip="`单个文件不超过${sizeLimit}MB`"
+        :tip="`${$t('crud.ImportDialog.upload.tip', { sizeLimit })}`"
         :data="uploadData"
         :on-success-callback="onSuccessCallback"
         accept=".xls,.xlsx"
@@ -110,7 +110,7 @@ export default {
       >
         <template #trigger>
           <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div class="el-upload__text" v-html="$t('crud.ImportDialog.upload.text')"></div>
         </template>
       </upload-file>
     </div>
@@ -118,19 +118,19 @@ export default {
       <el-result icon="success">
         <template #subTitle>
           <p>
-            <span>导入完成,更新</span>
+            <span>{{ $t('crud.ImportDialog.success.update') }}</span>
             <span class="text-success" style="padding: 0 0.5em;">{{ uploadResult.updateCount }}</span>
-            <span>条数据，新增</span>
+            <span>{{ $t('crud.ImportDialog.success.add') }}</span>
             <span class="text-success" style="padding: 0 0.5em;">{{uploadResult.addCount }}</span>
-            <span>条数据</span>
+            <span>{{ $t('crud.ImportDialog.success.suffix') }}</span>
           </p>
         </template>
       </el-result>
     </div>
     <template v-if="stepActive > 0" #footer>
-      <el-button @click="stepActive = 0">上一步</el-button>
+      <el-button @click="stepActive = 0">{{ $t('crud.ImportDialog.complete.prev') }}</el-button>
       <div style="flex: 1;">
-        <el-button class="eu-submit-btn" type="primary" @click="onComplete">完成</el-button>
+        <el-button class="eu-submit-btn" type="primary" @click="onComplete">{{ $t('crud.ImportDialog.complete.submit') }}</el-button>
       </div>
     </template>
   </el-dialog>

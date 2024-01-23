@@ -3,6 +3,7 @@ import { getDeptIdsByRoleId, update } from '@/api/system/role'
 import { DataScopeEnums } from '@/utils/enums'
 import { list as deptList } from '@/api/system/dept'
 import { handleTreeData } from '@/utils'
+import i18n from '@/plugins/i18n'
 
 export default {
   name: 'DataScopeDialog',
@@ -15,7 +16,7 @@ export default {
         dataScope: null
       },
       rules: {
-        dataScope: [{ required: true, message: '请选择数据范围', trigger: 'change' }]
+        dataScope: [{ required: true, message: i18n.t('role.dataScopeDialog.form.dataScope.required'), trigger: 'change' }]
       },
       formExtra: {
         expand: false,
@@ -31,7 +32,7 @@ export default {
   },
   computed: {
     title() {
-      return '分配数据权限'
+      return this.$t('role.dataScopeDialog.title')
     }
   },
   watch: {
@@ -88,7 +89,7 @@ export default {
 
         this.formLoading = true
         update(reqPayload).then(() => {
-          this.$message.success('分配成功')
+          this.$message.success(this.$t('role.dataScopeDialog.success'))
           this.show = false
           this.$emit('complete')
         }).finally(() => {
@@ -139,7 +140,7 @@ export default {
       </div>
     </template>
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="权限范围" prop="dataScope">
+      <el-form-item :label="$t('role.dataScopeDialog.form.dataScope')" prop="dataScope">
         <el-radio-group v-model="form.dataScope">
           <el-radio-button
             v-for="item in dataScopeEnums"
@@ -148,14 +149,14 @@ export default {
           >{{ item.label }}</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="form.dataScope === dataScopeEnums.CUSTOM.value" label="数据权限">
+      <el-form-item v-if="form.dataScope === dataScopeEnums.CUSTOM.value" :label="$t('role.dataScopeDialog.form.dataPermission')">
         <div style="display: flex;margin-bottom: 12px;">
           <div style="flex: 1;">
-            <el-checkbox v-model="formExtra.expand" @change="handleCheckedTreeExpand($event)">展开/折叠</el-checkbox>
-            <el-checkbox v-model="formExtra.checkedAll" @change="handleCheckedTreeNodeAll($event)">全选/全不选</el-checkbox>
-            <el-checkbox v-model="formExtra.checkStrictly">父子联动</el-checkbox>
+            <el-checkbox v-model="formExtra.expand" @change="handleCheckedTreeExpand($event)">{{ $t('role.dataScopeDialog.form.dataPermission.expand') }}</el-checkbox>
+            <el-checkbox v-model="formExtra.checkedAll" @change="handleCheckedTreeNodeAll($event)">{{ $t('role.dataScopeDialog.form.dataPermission.checkedAll') }}</el-checkbox>
+            <el-checkbox v-model="formExtra.checkStrictly">{{ $t('role.dataScopeDialog.form.dataPermission.checkStrictly') }}</el-checkbox>
           </div>
-          <el-input placeholder="输入关键字进行搜索" v-model="formExtra.filterKeyword" style="width: 200px;" clearable>
+          <el-input :placeholder="$t('role.dataScopeDialog.form.dataPermission.filterKeyword')" v-model="formExtra.filterKeyword" style="width: 200px;" clearable>
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
           </el-input>
         </div>
@@ -164,7 +165,7 @@ export default {
           show-checkbox
           ref="deptTree"
           node-key="id"
-          empty-text="暂无数据"
+          :empty-text="$t('role.dataScopeDialog.form.dataPermission.emptyText')"
           :check-strictly="!formExtra.checkStrictly"
           :filter-node-method="onFilterNode"
           default-expand-all
@@ -173,8 +174,8 @@ export default {
       </el-form-item>
     </el-form>
     <div slot="footer">
-      <el-button @click="show = false">取 消</el-button>
-      <el-button :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">确 定</el-button>
+      <el-button @click="show = false">{{ $t('general.form.cancel') }}</el-button>
+      <el-button :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">{{ $t('general.form.submit') }}</el-button>
     </div>
   </el-dialog>
 </template>

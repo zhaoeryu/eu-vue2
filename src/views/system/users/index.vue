@@ -3,7 +3,7 @@
     <el-row :gutter="16">
       <el-col :md="4" :sm="6" :xs="24">
         <div class="page-body">
-          <el-input placeholder="输入关键字进行过滤" v-model="deptFilterKeyword" style="margin-bottom: 12px;"></el-input>
+          <el-input :placeholder="$t('user.query.deptKeyword.placeholder')" v-model="deptFilterKeyword" style="margin-bottom: 12px;"></el-input>
           <el-tree
             ref="deptTree"
             v-loading="deptLoading"
@@ -22,30 +22,30 @@
         <div class="page-body">
           <query-expand-wrapper :show="isQueryShow">
             <el-form :model="queryParams" :inline="true">
-              <el-form-item label="用户名称">
-                <el-input v-model="queryParams.nickname" placeholder="输入要查找的用户名称" clearable />
+              <el-form-item :label="$t('user.query.nickname')">
+                <el-input v-model="queryParams.nickname" :placeholder="$t('user.query.nickname.placeholder')" clearable />
               </el-form-item>
-              <el-form-item label="手机号">
-                <el-input v-model="queryParams.mobile" placeholder="输入要查找的手机号" clearable />
+              <el-form-item :label="$t('user.query.mobile')">
+                <el-input v-model="queryParams.mobile" :placeholder="$t('user.query.mobile.placeholder')" clearable />
               </el-form-item>
-              <el-form-item label="登录名">
-                <el-input v-model="queryParams.username" placeholder="输入要查找的登录名" clearable />
+              <el-form-item :label="$t('user.query.username')">
+                <el-input v-model="queryParams.username" :placeholder="$t('user.query.username.placeholder')" clearable />
               </el-form-item>
-              <el-form-item label="最后活跃时间">
+              <el-form-item :label="$t('user.query.lastActiveTime')">
                 <el-date-picker
                   v-model="queryParams.lastActiveTime"
                   type="datetimerange"
                   :picker-options="$DataTimeRangePickerOptions"
-                  range-separator="至"
-                  start-placeholder="开始时间"
-                  end-placeholder="结束时间"
+                  range-separator="~"
+                  :start-placeholder="$t('user.query.lastActiveTime.start-placeholder')"
+                  :end-placeholder="$t('user.query.lastActiveTime.end-placeholder')"
                   value-format="yyyy-MM-dd HH:mm:ss"
                   align="right">
                 </el-date-picker>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" icon="el-icon-search" @click="onQuery">查询</el-button>
-                <el-button icon="el-icon-refresh" @click="onRefresh">重置</el-button>
+                <el-button type="primary" icon="el-icon-search" @click="onQuery">{{ $t('general.query.search') }}</el-button>
+                <el-button icon="el-icon-refresh" @click="onRefresh">{{ $t('general.query.reset') }}</el-button>
               </el-form-item>
             </el-form>
           </query-expand-wrapper>
@@ -77,30 +77,32 @@
               style="width: 100%"
             >
               <el-table-column type="selection" label="#" :selectable="onSelectable"></el-table-column>
-              <el-table-column prop="username" label="登录名" width="100"></el-table-column>
-              <el-table-column prop="nickname" label="用户昵称" width="100"></el-table-column>
-              <el-table-column prop="deptId" label="部门">
+              <el-table-column prop="username" :label="$t('user.column.username')" width="100"></el-table-column>
+              <el-table-column prop="nickname" :label="$t('user.column.nickname')" width="100"></el-table-column>
+              <el-table-column prop="deptId" :label="$t('user.column.deptId')">
                 <template #default="{ row }">
                   <span>{{ convertToDeptName(row.deptId) }}</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="mobile" label="手机号码"></el-table-column>
-              <el-table-column prop="status" label="状态" width="80">
+              <el-table-column prop="mobile" :label="$t('user.column.mobile')"></el-table-column>
+              <el-table-column prop="status" :label="$t('user.column.status')" width="80">
                 <template v-slot:default="{ row }">
                   <el-switch v-model="row.status" :disabled="row.username === 'admin'" :active-value="0" :inactive-value="1" @change="onStatusChange(row)" />
                 </template>
               </el-table-column>
-              <el-table-column prop="lastActiveTime" label="最后活跃时间"></el-table-column>
-              <el-table-column label="操作" fixed="right" width="150">
+              <el-table-column prop="lastActiveTime" :label="$t('user.column.lastActiveTime')"></el-table-column>
+              <el-table-column :label="$t('general.column.operation')" fixed="right" width="150">
                 <template v-slot:default="{ row }">
                   <template v-if="row.username !== 'admin'">
-                    <el-button v-permissions="['system:user:edit']" type="text" @click="onRowUpdate(row)">修改</el-button>
-                    <el-button v-permissions="['system:user:del']" type="text" @click="onRowDelete(row)">删除</el-button>
+                    <el-button v-permissions="['system:user:edit']" type="text" @click="onRowUpdate(row)">{{ $t('general.edit') }}</el-button>
+                    <el-button v-permissions="['system:user:del']" type="text" @click="onRowDelete(row)">{{ $t('general.del') }}</el-button>
                     <el-dropdown v-permissions="['system:user:resetPwd', 'system:user:assignRole']" @command="(command) => onHandleCommand(command, row)" trigger="click" style="margin-left: 10px;">
-                      <el-button type="text">更多</el-button>
+                      <el-button type="text">{{ $t('user.column.operation.more') }}</el-button>
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item v-permissions="['system:user:resetPwd']" command="handleResetPwd" icon="el-icon-key">重置密码</el-dropdown-item>
-                        <el-dropdown-item v-permissions="['system:user:assignRole']" command="handleAuthRole" icon="el-icon-circle-check">分配角色</el-dropdown-item>
+                        <el-dropdown-item v-permissions="['system:user:resetPwd']" command="handleResetPwd" icon="el-icon-key">
+                          {{ $t('user.column.operation.resetPwd') }}</el-dropdown-item>
+                        <el-dropdown-item v-permissions="['system:user:assignRole']" command="handleAuthRole" icon="el-icon-circle-check">
+                          {{ $t('user.column.operation.assignRole') }}</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </template>
@@ -242,17 +244,17 @@ export default {
       }
     },
     onResetPassword(row) {
-      this.$prompt(`请输入"${ row.nickname }"的新密码`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt(this.$t('user.confirm.resetPwd.message', { nickname: row.nickname }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         closeOnClickModal: false,
         inputPattern: /^.{6,20}$/,
-        inputErrorMessage: '用户密码长度必须介于 6 ~ 20 之间',
+        inputErrorMessage: this.$t('user.confirm.resetPwd.errorMessage'),
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             resetPwd(row.id, instance.inputValue).then(() => {
-              this.$message.success(`密码重置成功，新密码是：${instance.inputValue}`);
+              this.$message.success(this.$t('user.confirm.resetPwd.successMessage', { newPassword: instance.inputValue }));
               done()
             }).finally(() => {
               instance.confirmButtonLoading = false;
@@ -267,15 +269,15 @@ export default {
       this.$refs.assignRoleDialog.open(row.id)
     },
     onRowDelete(row) {
-      this.$confirm(`确认要删除"${ row.nickname }"吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('general.confirm.delete.message', { key: row.nickname }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             batchDel([row.id]).then(() => {
-              this.$message.success('删除成功')
+              this.$message.success(this.$t('general.confirm.delete.success'))
               done()
               this.onRefresh()
             }).finally(() => {
@@ -310,15 +312,15 @@ export default {
     },
     onBatchDel() {
       const ids = this.$refs.table.selection.map(item => item.id)
-      this.$confirm(`确认要删除选中的${ids.length}条记录吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('general.confirm.delete.batch.message', { length: ids.length }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             batchDel(ids).then(() => {
-              this.$message.success('删除成功')
+              this.$message.success(this.$t('general.confirm.delete.success'))
               done()
               this.onRefresh()
             }).finally(() => {
@@ -335,9 +337,12 @@ export default {
     },
     onStatusChange(row) {
       const status = row.status
-      this.$confirm(`确认要${status === 0 ? '启用' : '禁用'}"${ row.nickname }"吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('user.confirm.toggleStatus.message', {
+        status: status === 0 ? '启用' : '禁用',
+        nickname: row.nickname
+      }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
@@ -346,7 +351,9 @@ export default {
               id: row.id,
               status
             }).then(() => {
-              this.$message.success(`${status === 0 ? '启用' : '禁用'}成功`)
+              this.$message.success(this.$t('user.confirm.toggleStatus.success', {
+                status: status === 0 ? '启用' : '禁用'
+              }))
               done()
               this.onRefresh()
             }).finally(() => {

@@ -1,6 +1,7 @@
 <script>
 import IconSelect from '@/components/IconSelect/index.vue'
 import { add, update } from '@/api/system/menu'
+import i18n from '@/plugins/i18n'
 
 export default {
   name: 'MenuEditDialog',
@@ -36,18 +37,18 @@ export default {
         _parentIds: []
       },
       rules: {
-        menuType: [{ required: true, message: '请选择菜单类型', trigger: 'change' }],
-        menuName: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }],
-        status: [{ required: true, message: '请选择菜单状态', trigger: 'change' }],
-        sortNum: [{ required: true, message: '请输入排序', trigger: 'blur' }],
-        path: [{ required: true, message: '请输入路由地址', trigger: 'blur' }],
-        component: [{ required: true, message: '请输入组件路径', trigger: 'blur' }],
+        menuType: [{ required: true, message: i18n.t('menu.edit.form.menuType.required'), trigger: 'change' }],
+        menuName: [{ required: true, message: i18n.t('menu.edit.form.menuName.required'), trigger: 'blur' }],
+        status: [{ required: true, message: i18n.t('menu.edit.form.status.required'), trigger: 'change' }],
+        sortNum: [{ required: true, message: i18n.t('menu.edit.form.sortNum.required'), trigger: 'blur' }],
+        path: [{ required: true, message: i18n.t('menu.edit.form.path.required'), trigger: 'blur' }],
+        component: [{ required: true, message: i18n.t('menu.edit.form.component.required'), trigger: 'blur' }],
       },
     }
   },
   computed: {
     title() {
-      return this.form.id ? '修改菜单' : '新增菜单'
+      return this.form.id ? this.$t('menu.edit.title') : this.$t('menu.add.title')
     }
   },
   methods: {
@@ -73,7 +74,7 @@ export default {
         this.formLoading = true
         const reqPromise = this.form.id ? update(this.form) : add(this.form)
         reqPromise.then(() => {
-          this.$message.success(this.form.id ? '修改成功' : '新增成功')
+          this.$message.success(this.form.id ? this.$t('menu.edit.success') : this.$t('menu.add.success'))
           this.show = false
           this.$emit('complete')
         }).finally(() => {
@@ -97,12 +98,12 @@ export default {
     <el-form ref="form" :model="form" :rules="rules" label-width="90px">
       <el-row>
         <el-col :span="24">
-          <el-form-item label="上级菜单" prop="parentId">
+          <el-form-item :label="$t('menu.edit.form.parentId')" prop="parentId">
             <el-cascader
               v-model="form._parentIds"
               :options="list"
               :props="{ checkStrictly: true, value: 'id', label: 'menuName', children: 'children' }"
-              placeholder="请选择上级菜单"
+              :placeholder="$t('menu.edit.form.parentId.placeholder')"
               clearable
               filterable
               style="width: 100%;"
@@ -110,42 +111,42 @@ export default {
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="菜单类型" prop="menuType">
+          <el-form-item :label="$t('menu.edit.form.menuType')" prop="menuType">
             <el-radio-group v-model="form.menuType">
-              <el-radio :label="1">目录</el-radio>
-              <el-radio :label="2">菜单</el-radio>
-              <el-radio :label="3">按钮</el-radio>
+              <el-radio :label="1">{{ $t('const.MenuTypeEnums.DIR') }}</el-radio>
+              <el-radio :label="2">{{ $t('const.MenuTypeEnums.MENU') }}</el-radio>
+              <el-radio :label="3">{{ $t('const.MenuTypeEnums.BUTTON') }}</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="菜单名称" prop="menuName">
-            <el-input v-model="form.menuName" placeholder="请输入菜单名称" maxlength="20" />
+          <el-form-item :label="$t('menu.edit.form.menuName')" prop="menuName">
+            <el-input v-model="form.menuName" :placeholder="$t('menu.edit.form.menuName.placeholder')" maxlength="20" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="菜单状态" prop="status">
+          <el-form-item :label="$t('menu.edit.form.status')" prop="status">
             <el-radio-group v-model="form.status">
-              <el-radio-button :label="0">正常</el-radio-button>
-              <el-radio-button :label="1">停用</el-radio-button>
+              <el-radio-button :label="0">{{ $t('menu.edit.form.status.normal') }}</el-radio-button>
+              <el-radio-button :label="1">{{ $t('menu.edit.form.status.disabled') }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="显示排序" prop="sortNum">
-            <el-input-number v-model="form.sortNum" placeholder="请输入显示排序" :min="0" :max="9999" style="width: 100%;" />
+          <el-form-item :label="$t('menu.edit.form.sortNum')" prop="sortNum">
+            <el-input-number v-model="form.sortNum" :placeholder="$t('menu.edit.form.sortNum.placeholder')" :min="0" :max="9999" style="width: 100%;" />
           </el-form-item>
         </el-col>
         <el-col v-if="form.menuType !== 3" :span="12">
-          <el-form-item label="路由地址" prop="path">
-            <el-input v-model="form.path" placeholder="请输入路由地址" maxlength="255" />
+          <el-form-item :label="$t('menu.edit.form.path')" prop="path">
+            <el-input v-model="form.path" :placeholder="$t('menu.edit.form.path.placeholder')" maxlength="255" />
           </el-form-item>
         </el-col>
         <el-col v-if="form.menuType !== 3" :span="12">
-          <el-form-item label="菜单图标" prop="menuIcon" class="el-form-item_menu-icon">
+          <el-form-item :label="$t('menu.edit.form.menuIcon')" prop="menuIcon" class="el-form-item_menu-icon">
             <icon-select :active-icon.sync="form.menuIcon">
               <template #reference>
-                <el-input v-model="form.menuIcon" placeholder="请选择菜单图标" readonly>
+                <el-input v-model="form.menuIcon" :placeholder="$t('menu.edit.form.menuIcon.placeholder')" readonly>
                   <template #prefix>
                     <svg-icon v-if="form.menuIcon" :icon-class="form.menuIcon" />
                   </template>
@@ -156,46 +157,46 @@ export default {
         </el-col>
         <template v-if="form.menuType === 2">
           <el-col :span="12">
-            <el-form-item label="是否内嵌" prop="embed">
+            <el-form-item :label="$t('menu.edit.form.embed')" prop="embed">
               <el-switch v-model="form.embed" :active-value="true" :inactive-value="false" />
             </el-form-item>
           </el-col>
           <template v-if="form.embed">
             <el-col :span="24">
-              <el-form-item label="内嵌链接" prop="embedUrl">
-                <el-input v-model="form.embedUrl" placeholder="请输入内嵌链接" maxlength="255" />
+              <el-form-item :label="$t('menu.edit.form.embedUrl')" prop="embedUrl">
+                <el-input v-model="form.embedUrl" :placeholder="$t('menu.edit.form.embedUrl.placeholder')" maxlength="255" />
               </el-form-item>
             </el-col>
           </template>
           <template v-else>
             <el-col :span="12">
-              <el-form-item label="组件路径" prop="component">
-                <el-input v-model="form.component" placeholder="以'@/views/'作为相对路径" maxlength="64" />
+              <el-form-item :label="$t('menu.edit.form.component')" prop="component">
+                <el-input v-model="form.component" :placeholder="$t('menu.edit.form.component.placeholder')" maxlength="64" />
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="组件Name" prop="componentName">
-                <el-input v-model="form.componentName" placeholder="请输入组件Name" maxlength="20" />
+              <el-form-item :label="$t('menu.edit.form.componentName')" prop="componentName">
+                <el-input v-model="form.componentName" :placeholder="$t('menu.edit.form.componentName.placeholder')" maxlength="20" />
               </el-form-item>
             </el-col>
           </template>
         </template>
         <el-col v-if="form.menuType !== 1" :span="12">
-          <el-form-item label="权限标识" prop="permission">
-            <el-input v-model="form.permission" placeholder="请输入权限标识" maxlength="255" />
+          <el-form-item :label="$t('menu.edit.form.permission')" prop="permission">
+            <el-input v-model="form.permission" :placeholder="$t('menu.edit.form.permission.placeholder')" maxlength="255" />
           </el-form-item>
         </el-col>
         <el-col v-if="form.menuType !== 3" :span="12">
-          <el-form-item label="菜单栏显示" prop="hidden">
+          <el-form-item :label="$t('menu.edit.form.visible')" prop="hidden">
             <el-switch v-model="form.visible" :active-value="true" :inactive-value="false" />
           </el-form-item>
         </el-col>
         <el-col v-if="form.menuType === 1" :span="12">
-          <el-form-item label="保持显示" prop="alwaysShow">
+          <el-form-item :label="$t('menu.edit.form.alwaysShow')" prop="alwaysShow">
             <template #label>
-              <el-tooltip class="item" effect="dark" content="当该目录的子菜单只有一项时，该目录是否保持显示。true：显示该目录，false：该目录隐藏直接显示子菜单" placement="top">
+              <el-tooltip class="item" effect="dark" :content="$t('menu.edit.form.alwaysShow.tooltip')" placement="top">
                 <span>
-                  <span>保持显示</span>
+                  <span>{{ $t('menu.edit.form.alwaysShow') }}</span>
                   <i class="el-icon-info" />
                 </span>
               </el-tooltip>
@@ -205,17 +206,17 @@ export default {
         </el-col>
         <template v-if="form.menuType === 2">
           <el-col :span="12">
-            <el-form-item label="是否缓存" prop="cache">
+            <el-form-item :label="$t('menu.edit.form.cache')" prop="cache">
               <el-switch v-model="form.cache" :active-value="true" :inactive-value="false" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="显示Header" prop="showHeader">
+            <el-form-item :label="$t('menu.edit.form.showHeader')" prop="showHeader">
               <el-switch v-model="form.showHeader" :active-value="true" :inactive-value="false" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="显示Footer" prop="showFooter">
+            <el-form-item :label="$t('menu.edit.form.showFooter')" prop="showFooter">
               <el-switch v-model="form.showFooter" :active-value="true" :inactive-value="false" />
             </el-form-item>
           </el-col>
@@ -226,15 +227,15 @@ export default {
           </el-col>
           <el-col :span="12">
             <el-form-item label="badge" prop="badge">
-              <el-input v-model="form.badge" placeholder="请输入badge" maxlength="5" />
+              <el-input v-model="form.badge" :placeholder="$t('menu.edit.form.badge.placeholder')" maxlength="5" />
             </el-form-item>
           </el-col>
         </template>
       </el-row>
     </el-form>
     <div slot="footer">
-      <el-button @click="show = false">取 消</el-button>
-      <el-button :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">确 定</el-button>
+      <el-button @click="show = false">{{ $t('general.form.cancel') }}</el-button>
+      <el-button :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">{{ $t('general.form.submit') }}</el-button>
     </div>
   </el-dialog>
 </template>

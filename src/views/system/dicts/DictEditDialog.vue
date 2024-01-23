@@ -1,5 +1,6 @@
 <script>
 import { add, update } from '@/api/system/dict'
+import i18n from '@/plugins/i18n'
 
 export default {
   name: 'DictEditDialog',
@@ -15,17 +16,17 @@ export default {
       },
       rules: {
         dictKey: [
-          { required: true, message: '请输入字典KEY', trigger: 'blur' }
+          { required: true, message: i18n.t('dict.edit.form.dictKey.required'), trigger: 'blur' }
         ],
         status: [
-          { required: true, message: '请选择字典状态', trigger: 'blur' }
+          { required: true, message: i18n.t('dict.edit.form.status.required'), trigger: 'blur' }
         ]
       },
     }
   },
   computed: {
     title() {
-      return this.form.id ? '修改字典' : '新增字典'
+      return this.form.id ? this.$t('dict.edit.title') : this.$t('dict.add.title')
     }
   },
   methods: {
@@ -42,7 +43,7 @@ export default {
         this.formLoading = true
         const reqPromise = this.form.id ? update(this.form) : add(this.form)
         reqPromise.then(() => {
-          this.$message.success(`${ this.form.id ? '修改' : '新增' }成功！`)
+          this.$message.success(`${ this.form.id ? this.$t('dict.edit.success') : this.$t('dict.add.success') }`)
           this.show = false
           this.$emit('complete')
         }).finally(() => {
@@ -64,22 +65,22 @@ export default {
 <template>
   <el-dialog :title="title" :visible.sync="show" width="500px" :close-on-click-modal="false" @open="onDialogOpen">
     <el-form ref="form" :model="form" :rules="rules" label-width="90px">
-      <el-form-item label="字典KEY" prop="dictKey">
-        <el-input v-model="form.dictKey" placeholder="请输入字典KEY" maxlength="30" />
+      <el-form-item :label="$t('dict.edit.form.dictKey')" prop="dictKey">
+        <el-input v-model="form.dictKey" :placeholder="$t('dict.edit.form.dictKey.placeholder')" maxlength="30" />
       </el-form-item>
-      <el-form-item label="字典状态" prop="status">
+      <el-form-item :label="$t('dict.edit.form.status')" prop="status">
         <el-radio-group v-model="form.status">
-          <el-radio :label="0">正常</el-radio>
-          <el-radio :label="1">停用</el-radio>
+          <el-radio :label="0">{{ $t('dict.edit.form.status.normal') }}</el-radio>
+          <el-radio :label="1">{{ $t('dict.edit.form.status.disable') }}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" maxlength="200" />
+      <el-form-item :label="$t('dict.edit.form.remark')" prop="remark">
+        <el-input v-model="form.remark" type="textarea" :placeholder="$t('dict.edit.form.remark.placeholder')" maxlength="200" />
       </el-form-item>
     </el-form>
     <div slot="footer">
-      <el-button @click="show = false">取 消</el-button>
-      <el-button :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">确 定</el-button>
+      <el-button @click="show = false">{{ $t('general.form.cancel') }}</el-button>
+      <el-button :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">{{ $t('general.form.submit') }}</el-button>
     </div>
   </el-dialog>
 </template>

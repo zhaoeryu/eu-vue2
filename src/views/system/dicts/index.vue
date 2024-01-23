@@ -3,12 +3,12 @@
     <div class="page-body">
       <query-expand-wrapper :show="isQueryShow">
         <el-form :model="queryParams" :inline="true">
-          <el-form-item label="字典KEY" prop="dictKey">
-            <el-input v-model="queryParams.dictKey" placeholder="输入要查找的字典KEY" />
+          <el-form-item :label="$t('dict.query.dictKey')" prop="dictKey">
+            <el-input v-model="queryParams.dictKey" :placeholder="$t('dict.query.dictKey.placeholder')" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="onQuery">查询</el-button>
-            <el-button icon="el-icon-refresh" plain @click="onRefresh">重置</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="onQuery">{{ $t('general.query.search') }}</el-button>
+            <el-button icon="el-icon-refresh" plain @click="onRefresh">{{ $t('general.query.reset') }}</el-button>
           </el-form-item>
         </el-form>
       </query-expand-wrapper>
@@ -39,19 +39,22 @@
           style="width: 100%"
         >
           <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column prop="dictKey" label="字典KEY"></el-table-column>
-          <el-table-column prop="remark" label="备注"></el-table-column>
-          <el-table-column prop="status" label="是否启用">
+          <el-table-column prop="dictKey" :label="$t('dict.column.dictKey')"></el-table-column>
+          <el-table-column prop="remark" :label="$t('dict.column.remark')"></el-table-column>
+          <el-table-column prop="status" :label="$t('dict.column.status')">
             <template #default="{ row }">
-              <el-tag v-if="row.status === 0">正常</el-tag>
-              <el-tag v-else type="danger">禁用</el-tag>
+              <el-tag v-if="row.status === 0">{{ $t('dict.column.status.normal') }}</el-tag>
+              <el-tag v-else type="danger">{{ $t('dict.column.status.disable') }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column v-permissions="['system:dict-detail:list', 'system:dict:edit', 'system:dict:del']" label="操作">
+          <el-table-column v-permissions="['system:dict-detail:list', 'system:dict:edit', 'system:dict:del']" :label="$t('general.column.operation')">
             <template #default="{ row }">
-              <el-button v-permissions="['system:dict-detail:list']" type="text" @click="onRowDetail(row)">详情</el-button>
-              <el-button v-permissions="['system:dict:edit']" type="text" @click="onRowUpdate(row)">修改</el-button>
-              <el-button v-permissions="['system:dict:del']" type="text" @click="onRowDelete(row)">删除</el-button>
+              <el-button v-permissions="['system:dict-detail:list']" type="text" @click="onRowDetail(row)">
+                {{ $t('dict.column.operation.detail') }}</el-button>
+              <el-button v-permissions="['system:dict:edit']" type="text" @click="onRowUpdate(row)">
+                {{ $t('general.edit') }}</el-button>
+              <el-button v-permissions="['system:dict:del']" type="text" @click="onRowDelete(row)">
+                {{ $t('general.del') }}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -134,13 +137,13 @@ export default {
     },
     onBatchDel() {
       const ids = this.$refs.table.selection.map(item => item.id)
-      this.$confirm(`确定删除选中的${ids.length}个字典吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('dict.confirm.delete.batch.title', { length: ids.length }), this.$t('general.confirm.title'), {
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning'
       }).then(() => {
         batchDel(ids).then(() => {
-          this.$message.success('删除成功！')
+          this.$message.success(this.$t('general.confirm.delete.success'))
           this.onRefresh()
         })
       })
@@ -155,14 +158,14 @@ export default {
       this.$refs.detailDrawer.open(row.id, row.dictKey)
     },
     onRowDelete(row) {
-      this.$confirm(`确定要删除字典"${ row.dictKey }"吗？`, {
-        title: '提示',
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('dict.confirm.delete.title', { dictKey: row.dictKey }), {
+        title: this.$t('general.confirm.title'),
+        confirmButtonText: this.$t('general.confirm.confirm'),
+        cancelButtonText: this.$t('general.confirm.cancel'),
         type: 'warning'
       }).then(() => {
         batchDel([row.id]).then(() => {
-          this.$message.success('删除成功！')
+          this.$message.success(this.$t('general.confirm.delete.success'))
           this.onRefresh()
         })
       }).catch(() => {

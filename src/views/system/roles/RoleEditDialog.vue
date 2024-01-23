@@ -2,6 +2,7 @@
 import { add, getMenuIdsByRoleId, update } from '@/api/system/role'
 import { list as menuList } from '@/api/system/menu'
 import { handleTreeData } from '@/utils'
+import i18n from '@/plugins/i18n'
 
 export default {
   name: 'RoleEditDialog',
@@ -19,9 +20,9 @@ export default {
         dataScope: 1,
       },
       rules: {
-        roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
-        roleKey: [{ required: true, message: '请输入权限字符串', trigger: 'blur' }],
-        status: [{ required: true, message: '请选择角色状态', trigger: 'blur' }]
+        roleName: [{ required: true, message: i18n.t('role.edit.form.roleName.required'), trigger: 'blur' }],
+        roleKey: [{ required: true, message: i18n.t('role.edit.form.roleKey.required'), trigger: 'blur' }],
+        status: [{ required: true, message: i18n.t('role.edit.form.status.required'), trigger: 'blur' }]
       },
       formExtra: {
         expand: false,
@@ -37,7 +38,7 @@ export default {
   },
   computed: {
     title() {
-      return this.form.id ? '修改角色' : '新增角色'
+      return this.form.id ? this.$t('role.edit.title') : this.$t('role.add.title')
     }
   },
   watch: {
@@ -100,7 +101,7 @@ export default {
 
         const reqPromise = this.form.id ? update(reqPayload) : add(reqPayload)
         reqPromise.then(() => {
-          this.$message.success(this.form.id ? '修改成功' : '新增成功')
+          this.$message.success(this.form.id ? this.$t('role.edit.success') : this.$t('role.add.success'))
           this.show = false
           this.$emit('complete')
         }).finally(() => {
@@ -148,45 +149,45 @@ export default {
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-steps :active="formStepActive" :align-center="true" finish-status="success">
-        <el-step title="角色信息"></el-step>
-        <el-step title="功能权限"></el-step>
+        <el-step :title="$t('role.edit.step.roleInfo')"></el-step>
+        <el-step :title="$t('role.edit.step.funcPermission')"></el-step>
       </el-steps>
       <template v-if="formStepActive === 0">
         <el-row :gutter="16">
           <el-col :span="12">
-            <el-form-item label="角色名称" prop="roleName">
-              <el-input v-model="form.roleName" placeholder="请输入角色名称" maxlength="20" />
+            <el-form-item :label="$t('role.edit.form.roleName')" prop="roleName">
+              <el-input v-model="form.roleName" :placeholder="$t('role.edit.form.roleName.placeholder')" maxlength="20" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="角色描述" prop="description">
-              <el-input v-model="form.description" placeholder="请输入角色描述" maxlength="30" />
+            <el-form-item :label="$t('role.edit.form.description')" prop="description">
+              <el-input v-model="form.description" :placeholder="$t('role.edit.form.description.placeholder')" maxlength="30" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="权限字符串" prop="roleKey">
-              <el-input v-model="form.roleKey" placeholder="请输入权限字符串" maxlength="30" />
+            <el-form-item :label="$t('role.edit.form.roleKey')" prop="roleKey">
+              <el-input v-model="form.roleKey" :placeholder="$t('role.edit.form.roleKey.placeholder')" maxlength="30" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="角色状态" prop="status">
+            <el-form-item :label="$t('role.edit.form.status')" prop="status">
               <el-radio-group v-model="form.status">
-                <el-radio :label="0">正常</el-radio>
-                <el-radio :label="1">停用</el-radio>
+                <el-radio :label="0">{{ $t('role.edit.form.status.normal') }}</el-radio>
+                <el-radio :label="1">{{ $t('role.edit.form.status.disable') }}</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
         </el-row>
       </template>
       <template v-else-if="formStepActive === 1">
-        <el-form-item label="菜单权限">
+        <el-form-item :label="$t('role.edit.form.menuPermission')">
           <div style="display: flex;margin-bottom: 12px;">
             <div style="flex: 1;">
-              <el-checkbox v-model="formExtra.expand" @change="handleCheckedTreeExpand($event)">展开/折叠</el-checkbox>
-              <el-checkbox v-model="formExtra.checkedAll" @change="handleCheckedTreeNodeAll($event)">全选/全不选</el-checkbox>
-              <el-checkbox v-model="formExtra.checkStrictly">父子联动</el-checkbox>
+              <el-checkbox v-model="formExtra.expand" @change="handleCheckedTreeExpand($event)">{{ $t('role.edit.form.menuPermission.expand') }}</el-checkbox>
+              <el-checkbox v-model="formExtra.checkedAll" @change="handleCheckedTreeNodeAll($event)">{{ $t('role.edit.form.menuPermission.checkedAll') }}</el-checkbox>
+              <el-checkbox v-model="formExtra.checkStrictly">{{ $t('role.edit.form.menuPermission.checkStrictly') }}</el-checkbox>
             </div>
-            <el-input placeholder="输入关键字进行搜索" v-model="formExtra.menuFilterKeyword" style="width: 200px;" clearable>
+            <el-input :placeholder="$t('role.edit.form.menuPermission.filterKeyword')" v-model="formExtra.menuFilterKeyword" style="width: 200px;" clearable>
               <i slot="prefix" class="el-input__icon el-icon-search"></i>
             </el-input>
           </div>
@@ -195,7 +196,7 @@ export default {
             show-checkbox
             ref="menu"
             node-key="id"
-            empty-text="暂无数据"
+            :empty-text="$t('role.edit.form.menuPermission.emptyText')"
             :check-strictly="!formExtra.checkStrictly"
             :filter-node-method="onFilterNode"
             :props="{ label: 'menuName', children: 'children' }"
@@ -204,11 +205,11 @@ export default {
       </template>
     </el-form>
     <template #footer>
-      <el-button v-if="formStepActive > 0" @click="formStepActive--">上一步</el-button>
+      <el-button v-if="formStepActive > 0" @click="formStepActive--">{{ $t('role.edit.button.prev') }}</el-button>
       <div style="flex: 1;">
-        <el-button @click="show = false">取 消</el-button>
-        <el-button v-if="formStepActive < 1" class="eu-submit-btn" type="primary" @click="onNext">下一步</el-button>
-        <el-button v-else :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">确 定</el-button>
+        <el-button @click="show = false">{{ $t('general.form.cancel') }}</el-button>
+        <el-button v-if="formStepActive < 1" class="eu-submit-btn" type="primary" @click="onNext">{{ $t('role.edit.button.next') }}</el-button>
+        <el-button v-else :loading="formLoading" class="eu-submit-btn" type="primary" @click="onSubmit">{{ $t('general.form.submit') }}</el-button>
       </div>
     </template>
   </el-dialog>
