@@ -62,7 +62,7 @@ export default {
   computed: {
     ...mapGetters({
       visitedViews: 'tabsView/visitedViews',
-      routes: 'routes/sidebarRoutes'
+      routes: 'routes/routes'
     })
   },
   watch: {

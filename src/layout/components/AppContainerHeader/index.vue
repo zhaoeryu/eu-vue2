@@ -12,7 +12,7 @@ export default {
   name: 'AppContainerHeader',
   computed: {
     ...mapGetters({
-      routes: 'routes/sidebarRoutes'
+      routes: 'routes/routes'
     }),
     activeMenus() {
       const activeMenus = this.$route.matched.filter(item => !['', '/'].includes(item.path))

@@ -10,7 +10,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      routes: 'routes/sidebarRoutes',
+      routes: 'routes/routes',
       usualMenus: 'routes/usualMenus',
       theme: 'settings/theme',
       sidebarCollapsed: 'settings/sidebarCollapsed'

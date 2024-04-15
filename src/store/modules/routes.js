@@ -15,7 +15,6 @@ import MiddleDirectory from '@/layout/components/MiddleDirectory.vue'
 
 const state = () => ({
   routes: constantRouteList,
-  sidebarRoutes: [],
   // 快捷菜单
   usualMenus: JSON.parse(localStorage.getItem(STORAGE_KEY_USUAL_MENUS)) || []
 })
@@ -26,10 +25,7 @@ const getters = {
 }
 const mutations = {
   SET_ROUTES: (state, routes) => {
-    state.routes = constantRouteList.concat(routes)
-  },
-  SET_SIDEBAR_ROUTES: (state, routes) => {
-    state.sidebarRoutes = routes
+    state.routes = routes
   },
   SET_USUAL_MENUS: (state, usualMenus) => {
     state.usualMenus = usualMenus
@@ -48,6 +44,8 @@ const actions = {
         // 将后台返回的菜单数据转换为vue-router的格式
         const routers = convertMenuToVueRouterFormat(menus)
 
+        routers.unshift(...constantRouteList)
+
         // 兜底方案（放到最后）：当用户访问的路由不存在时，跳转到404页面
         routers.push({
           path: '*',
@@ -56,9 +54,7 @@ const actions = {
         })
 
         const routes = routers
-        const sidebarRoutes = routers
         commit('SET_ROUTES', routes)
-        commit('SET_SIDEBAR_ROUTES', sidebarRoutes)
         resolve(routes)
       })
     })

@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      routes: 'routes/sidebarRoutes',
+      routes: 'routes/routes',
       isMobileDevice: 'settings/isMobileDevice',
       theme: 'settings/theme',
       sidebarCollapsed: 'settings/sidebarCollapsed'

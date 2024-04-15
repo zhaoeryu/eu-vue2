@@ -45,9 +45,9 @@
               <svg-icon :icon-class="row.menuIcon"/>
             </template>
           </el-table-column>
-          <el-table-column prop="sortNum" :label="$t('menu.column.sortNum')" width="60"></el-table-column>
+          <el-table-column prop="sortNum" :label="$t('menu.column.sortNum')" width="90"></el-table-column>
+          <el-table-column prop="path" :label="$t('menu.column.path')"></el-table-column>
           <el-table-column prop="permission" :label="$t('menu.column.permission')"></el-table-column>
-          <el-table-column prop="component" :label="$t('menu.column.component')"></el-table-column>
           <el-table-column prop="status" :label="$t('menu.column.status')" width="70">
             <template #default="{ row }">
               <el-tag v-if="row.status === 0">{{ $t('menu.column.status.normal') }}</el-tag>

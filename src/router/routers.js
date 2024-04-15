@@ -1,8 +1,34 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Layout from '@/layout/index.vue'
 Vue.use(Router)
 
 export const constantRouteList = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Layout,
+    meta: {
+      title: '工作台',
+      icon: 'workbench'
+    },
+    redirect: '/workbench',
+    children: [
+      {
+        path: '/workbench',
+        name: 'Workbench',
+        component: (resolve) => require(['@/views/workbench'], resolve),
+        meta: {
+          title: '工作台',
+          icon: 'workbench',
+          affix: true,
+          showHeader: true,
+          showFooter: true
+        }
+      }
+    ],
+    hidden: false,
+  },
   {
     path: '/login',
     name: 'Login',
