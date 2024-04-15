@@ -31,10 +31,10 @@ export default {
         username: [
           { required: true, message: i18n.t('user.edit.form.username.required'), trigger: 'blur' }
         ],
-        mobile: [
-          { required: true, message: i18n.t('user.edit.form.mobile.required'), trigger: 'blur' },
-          { pattern: /^1[3456789]\d{9}$/, message: i18n.t('user.edit.form.mobile.pattern'), trigger: 'blur' }
-        ],
+        // mobile: [
+        //   { required: true, message: i18n.t('user.edit.form.mobile.required'), trigger: 'blur' },
+        //   { pattern: /^1[3456789]\d{9}$/, message: i18n.t('user.edit.form.mobile.pattern'), trigger: 'blur' }
+        // ],
         sex: [
           { required: true, message: i18n.t('user.edit.form.sex.required'), trigger: 'blur' }
         ],
@@ -74,8 +74,10 @@ export default {
 
         this.formLoading = true
         const reqPromise = this.form.id ? update(this.form) : add(this.form)
-        reqPromise.then(() => {
-          this.$message.success(this.form.id ? this.$t('user.edit.success') : this.$t('user.add.success'))
+        reqPromise.then(res => {
+          this.$message.success(this.form.id ? this.$t('user.edit.success') : this.$t('user.add.success', {
+            password: res.data
+          }))
           this.show = false
           this.$emit('complete')
         }).finally(() => {

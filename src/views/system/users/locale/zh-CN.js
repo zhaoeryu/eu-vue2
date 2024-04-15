@@ -31,7 +31,7 @@ export default {
   'user.edit.title': '修改用户',
   'user.edit.success': '修改成功',
   'user.add.title': '新增用户',
-  'user.add.success': '新增成功',
+  'user.add.success': '新增成功, 默认密码为：{password}',
   'user.edit.form.nickname': '用户昵称',
   'user.edit.form.nickname.placeholder': '请输入用户昵称',
   'user.edit.form.nickname.required': '请输入用户昵称',

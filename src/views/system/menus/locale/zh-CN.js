@@ -7,6 +7,7 @@ export default {
   'menu.column.menuName': '菜单名称',
   'menu.column.menuIcon': '图标',
   'menu.column.sortNum': '排序',
+  'menu.column.path': '访问路径',
   'menu.column.permission': '权限标识',
   'menu.column.component': '组件路径',
   'menu.column.status': '状态',

@@ -7,6 +7,7 @@ export default {
   'menu.column.menuName': 'Menu Name',
   'menu.column.menuIcon': 'Icon',
   'menu.column.sortNum': 'Sort Order',
+  'menu.column.path': 'Route Path',
   'menu.column.permission': 'Permission Identifier',
   'menu.column.component': 'Component Path',
   'menu.column.status': 'Status',

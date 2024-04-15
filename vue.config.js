@@ -43,6 +43,13 @@ module.exports = defineConfig({
     }
   },
   chainWebpack: config => {
+    // 设置网站标题
+    config
+      .plugin('html')
+      .tap(args => {
+        args[0].title= 'EuBackend'
+        return args
+      })
     // svgIcon
     config.module
       .rule('svg')
