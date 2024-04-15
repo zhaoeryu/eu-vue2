@@ -22,7 +22,7 @@ export const constantRouteList = [
           title: '工作台',
           icon: 'workbench',
           affix: true,
-          showHeader: true,
+          showHeader: false,
           showFooter: true
         }
       }
