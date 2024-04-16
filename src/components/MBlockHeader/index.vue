@@ -40,16 +40,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-body[eu-theme='dark'] {
-  .m-block-header {
-    background-color: var(--color-bg-3);
-  }
-}
 * ~ .m-block-header {
   margin-top: 16px;
 }
 .m-block-header {
-  background-color: #f7f7f7;
+  background-color: var(--color-fill-2);
   display: flex;
   justify-content: flex-start;
   align-content: center;
@@ -66,7 +61,7 @@ body[eu-theme='dark'] {
       content: "";
       width: 3px;
       height: 14px;
-      background-color: #155bd4;
+      background-color: var(--color-primary);
       margin-right: 8px;
     }
     h3 {
@@ -79,7 +74,7 @@ body[eu-theme='dark'] {
     }
   }
   .m-block-header__pop {
-    color: #ccc;
+    color: var(--color-text-2);
     font-size: 16px;
     margin-left: 8px;
     cursor: pointer;

@@ -153,7 +153,7 @@ export default {
   flex-direction: column;
 
   ::v-deep .el-radio-button__inner {
-    background-color: unset;
+    background-color: unset !important;
     padding: 0;
     border: none;
   }

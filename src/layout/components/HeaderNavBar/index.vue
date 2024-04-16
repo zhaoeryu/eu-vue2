@@ -36,7 +36,7 @@
       <li>
         <el-dropdown @command="onLocaleChange">
           <div>
-            <svg-icon icon-class="en" />
+            <svg-icon icon-class="language" />
           </div>
           <template #dropdown>
             <el-dropdown-menu>
@@ -181,6 +181,12 @@ export default {
 @media (max-width: $screen-md) {
   .eu-phone__hide {
     display: none;
+  }
+}
+
+::v-deep {
+  .el-dropdown {
+    color: inherit;
   }
 }
 </style>

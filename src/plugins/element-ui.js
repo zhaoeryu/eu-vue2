@@ -2,6 +2,7 @@ import Vue from 'vue'
 
 // ElementUI样式
 import '@/theme/index.css'
+import '@/theme/dark_color.css'
 // import 'element-ui/lib/theme-chalk/index.css';
 
 import i18n from './i18n'

@@ -46,8 +46,8 @@ export default {
   'crud.TableColumnSettingDialog.cancel': 'Cancel',
   'crud.TableColumnSettingDialog.submit': 'Confirm',
   'crud.TableColumnSettingDialog.column1': 'Column name',
-  'crud.TableColumnSettingDialog.column2': 'Whether to display',
-  'crud.TableColumnSettingDialog.column3': 'Adjust the order',
+  'crud.TableColumnSettingDialog.column2': 'Display',
+  'crud.TableColumnSettingDialog.column3': 'Drag to sort',
   // UploadFile.vue
   'crud.UploadFile.trigger': 'Click to upload',
   'crud.UploadFile.uploadFail': 'Upload failed',

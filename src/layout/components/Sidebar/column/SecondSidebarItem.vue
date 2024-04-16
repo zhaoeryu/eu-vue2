@@ -119,7 +119,7 @@ li {
   position: relative;
   &.eu-menu-item {
     height: 36px;
-    border-radius: 2px;
+    border-radius: 6px;
     margin: 0 8px 4px;
     display: flex;
     align-items: center;
@@ -149,7 +149,7 @@ li {
       height: 32px;
       line-height: 32px;
       padding: 0 8px;
-      color: #4d5466;
+      color: var(--theme-nav-second-color);
       .el-icon-arrow-right {
         transform: rotate(0deg);
         transition: transform .3s;

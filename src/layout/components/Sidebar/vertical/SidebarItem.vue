@@ -164,8 +164,8 @@ export default {
 
       // 悬浮状态
       &:hover {
-        background-color: var(--theme-nav-second-active-bg);
-        color: var(--theme-nav-second-active-color);
+        background-color: var(--theme-nav-second-hover-bg);
+        //color: var(--theme-nav-second-active-color);
       }
     }
     .el-submenu__icon-arrow {

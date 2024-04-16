@@ -14,7 +14,7 @@ import { MenuTypeEnums } from '@/utils/enums'
 import MiddleDirectory from '@/layout/components/MiddleDirectory.vue'
 
 const state = () => ({
-  routes: constantRouteList,
+  routes: [],
   // 快捷菜单
   usualMenus: JSON.parse(localStorage.getItem(STORAGE_KEY_USUAL_MENUS)) || []
 })

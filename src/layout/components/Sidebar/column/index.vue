@@ -166,7 +166,7 @@ export default {
   background-color: var(--theme-nav-second-bg);
   font-size: 14px;
   font-weight: 400;
-  border-radius: 2px;
+  border-radius: 6px;
   padding: 12px 0;
 }
 .eu-nav-pop-scroll-wrapper {

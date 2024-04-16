@@ -212,10 +212,10 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ebeef5;
+    border-bottom: 1px solid var(--color-border-2);
   }
   .operation-body__footer {
-    border-top: 1px solid #ebeef5;
+    border-top: 1px solid var(--color-border-2);
     padding: 0 20px;
     box-sizing: border-box;
     height: 60px;
@@ -231,8 +231,8 @@ export default {
   right: calc(70% - var(--sidebar-first-width, 124px));
   width: 150px;
   transform: translateX(-15%);
-  background: var(--theme-nav-pop-bg);
-  color: var(--theme-nav-pop-color);
+  background: #5f5f66;
+  color: #FFF;
   padding: 20px 30px;
   box-sizing: border-box;
   border-radius: 2px;
@@ -249,7 +249,7 @@ export default {
     top: 95px;
     left: -12px;
     border-color: transparent;
-    border-right-color: var(--theme-nav-pop-bg, #5f5f66) !important;
+    border-right-color: var(--color-border-2, #5f5f66) !important;
   }
 }
 </style>

@@ -234,7 +234,7 @@ export default {
             position: relative;
             transition: padding .3s cubic-bezier(.645,.045,.355,1)!important;
             margin-right: 5px;
-            border-radius: 2px 2px 0 0;
+            border-radius: 6px 6px 0 0;
             user-select: none;
             &:after {
               content: '';
@@ -247,15 +247,15 @@ export default {
               background-color: var(--color-primary) !important;
             }
             &.is-active {
-              background: rgba(21,91,212,.08) !important;
+              background: var(--theme-base-bg) !important;
               color: var(--color-primary) !important;
               &:after {
                 width: 100%;
               }
             }
             &:not(.is-active):hover {
-              background-color: rgba(21,91,212,.08);
-              color: var(--color-primary) !important;
+              background-color: var(--theme-base-bg);
+              color: inherit !important;
               &:after {
                 width: 100%;
                 transition: all .3s cubic-bezier(.645,.045,.355,1),border 0s,color .1s,font-size 0s;

@@ -2,12 +2,12 @@
 
 body {
   // 页面背景色
-  --theme-base-bg: #F2F3F5;
+  --theme-base-bg: #F2F4F7;
   // 页面二级背景色
   --theme-base-second-bg: #FFF;
 
   // 主要文字颜色
-  --theme-text-primary-color: #303133;
+  --theme-text-primary-color: #667085;
   // 次要文字颜色
   --theme-text-second-color: #606266;
 
@@ -18,39 +18,26 @@ body {
   //--theme-nav-first-color: hsla(0,0%,100%,.7);
   --theme-nav-first-color: #333;
   // 菜单栏选中的背景色
-  --theme-nav-first-active-bg: #155bd4;
+  --theme-nav-first-active-bg: var(--color-primary);
   // 菜单栏选中的文字颜色
   --theme-nav-first-active-color: #FFF;
   // 菜单栏悬浮的背景色
-  --theme-nav-first-hover-bg: #155bd4;
+  --theme-nav-first-hover-bg: rgba(var(--primary),.1);
   // 菜单栏悬浮的文字颜色
-  --theme-nav-first-hover-color: #FFF;
+  --theme-nav-first-hover-color: #333;
 
   // 二级菜单栏的背景色
   --theme-nav-second-bg: #FFF;
   // 二级菜单栏的文字颜色
   --theme-nav-second-color: #333;
   // 二级菜单栏选中的背景色
-  --theme-nav-second-active-bg: rgba(21,91,212,.08);
+  --theme-nav-second-active-bg: rgba(var(--primary),.1);
   // 二级菜单栏选中的文字颜色
-  --theme-nav-second-active-color: #155bd4;
+  --theme-nav-second-active-color: var(--color-primary);
   // 二级菜单栏悬浮的背景色
   --theme-nav-second-hover-bg: #f7f7f7;
   // 二级菜单栏悬浮的文字颜色
-  --theme-nav-second-hover-color: #155bd4;
-
-  // Popover二级菜单栏的背景色
-  --theme-nav-pop-bg: #5f5f66;
-  // Popover二级菜单栏的文字颜色
-  --theme-nav-pop-color: #FFF;
-  // Popover二级菜单栏选中的背景色
-  --theme-nav-pop-active-bg: hsla(0,0%,100%,.2);
-  // Popover二级菜单栏选中的文字颜色
-  --theme-nav-pop-active-color: #FFF;
-  // Popover二级菜单栏悬浮的背景色
-  --theme-nav-pop-hover-bg: hsla(0,0%,100%,.2);
-  // Popover二级菜单栏悬浮的文字颜色
-  --theme-nav-pop-hover-color: #FFF;
+  --theme-nav-second-hover-color: var(--color-primary);
 
   // 分栏菜单
   // 菜单栏总宽度
@@ -67,5 +54,10 @@ body {
   --sidebar-vertical-width: 220px;
 
   // 主题色
-  --color-primary: #155bd4;
+  --primary: 21, 91, 212;
+  --color-primary: rgb(var(--primary));
+  --color-success: #5bd415;
+  --color-warning: #ed6a18;
+  --color-danger: #d42f15;
+  --color-info: #909399;
 }

@@ -58,6 +58,5 @@ export const constantRouteList = [
 export default new Router({
   mode: 'history',
   // 滚动行为：每次切换路由时，滚动条都会返回到顶部
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouteList
+  scrollBehavior: () => ({ y: 0 })
 })

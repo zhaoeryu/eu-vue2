@@ -43,7 +43,7 @@ export default {
 <style scoped lang="scss">
 li {
   height: 40px;
-  border-radius: 2px;
+  border-radius: 6px;
   white-space: nowrap;
   cursor: pointer;
   display: flex;
@@ -65,13 +65,13 @@ li {
       margin-right: 8px;
     }
   }
-  &.active,&.hover {
+  &.active {
     background-color: var(--theme-nav-first-active-bg);
     >a {
       color: var(--theme-nav-first-active-color);
     }
   }
-  &:not(.active):hover {
+  &:not(.active):hover,&:not(.active).hover {
     background-color: var(--theme-nav-first-hover-bg);
     >a {
       color: var(--theme-nav-first-hover-color);

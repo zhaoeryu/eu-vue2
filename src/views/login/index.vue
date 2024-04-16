@@ -30,7 +30,7 @@
           <el-checkbox v-model="form.rememberMe">{{ $t('login.form.remember.label') }}</el-checkbox>
         </el-form-item>
         <el-form-item style="margin-bottom: 0;">
-          <el-button :loading="loginLoading" @click="onSubmit" style="width: 100%;background-color: #155bd4;border-color: #155bd4;" type="primary">
+          <el-button :loading="loginLoading" @click="onSubmit" style="width: 100%;" type="primary">
             {{ $t('login.form.submit') }}</el-button>
         </el-form-item>
       </el-form>

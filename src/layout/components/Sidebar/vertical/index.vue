@@ -71,6 +71,7 @@ export default {
 }
 ::v-deep .el-menu {
   background-color: var(--theme-nav-first-bg);
+  border-right: unset !important;
 }
 ::v-deep .eu-menu {
   height: 100%;
@@ -105,7 +106,7 @@ export default {
   // 菜单项
   .el-submenu .el-submenu__title,.el-menu-item {
     margin: 0 8px 4px;
-    border-radius: 2px;
+    border-radius: 6px;
     height: 40px;
     line-height: 40px;
     padding: 0 8px !important;
@@ -113,10 +114,16 @@ export default {
     align-items: center;
     transition: unset;
     color: var(--theme-nav-first-color);
-    &:not(.is-active):hover {
-      background-color: var(--theme-nav-first-active-bg);
-      color: var(--theme-nav-first-active-color);
-    }
+    //&:not(.is-active):hover {
+    //  background-color: var(--theme-nav-first-active-bg);
+    //  color: var(--theme-nav-first-active-color);
+    //}
+  }
+
+  .el-menu-item:focus, .el-menu-item:hover, .el-submenu__title:hover {
+    background-color: var(--theme-nav-first-hover-bg);
+    color: var(--theme-nav-first-hover-color);
+    font-weight: 500;
   }
 
   .el-submenu__icon-arrow {
