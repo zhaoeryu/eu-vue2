@@ -5,31 +5,6 @@ Vue.use(Router)
 
 export const constantRouteList = [
   {
-    path: '/',
-    name: 'Home',
-    component: Layout,
-    meta: {
-      title: '工作台',
-      icon: 'workbench'
-    },
-    redirect: '/workbench',
-    children: [
-      {
-        path: '/workbench',
-        name: 'Workbench',
-        component: (resolve) => require(['@/views/workbench'], resolve),
-        meta: {
-          title: '工作台',
-          icon: 'workbench',
-          affix: true,
-          showHeader: false,
-          showFooter: true
-        }
-      }
-    ],
-    hidden: false,
-  },
-  {
     path: '/login',
     name: 'Login',
     component: (resolve) => require(['@/views/login'], resolve),
@@ -55,8 +30,37 @@ export const constantRouteList = [
   }
 ]
 
+export const layoutRouteList = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Layout,
+    meta: {
+      title: '工作台',
+      icon: 'workbench'
+    },
+    redirect: '/workbench',
+    children: [
+      {
+        path: '/workbench',
+        name: 'Workbench',
+        component: (resolve) => require(['@/views/workbench'], resolve),
+        meta: {
+          title: '工作台',
+          icon: 'workbench',
+          affix: true,
+          showHeader: false,
+          showFooter: true
+        }
+      }
+    ],
+    hidden: false,
+  }
+]
+
 export default new Router({
   mode: 'history',
   // 滚动行为：每次切换路由时，滚动条都会返回到顶部
-  scrollBehavior: () => ({ y: 0 })
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRouteList
 })

@@ -1,4 +1,4 @@
-import { constantRouteList } from '@/router/routers'
+import { layoutRouteList } from '@/router/routers'
 import { getRouters } from '@/api/system/menu'
 import Layout from '@/layout/index.vue'
 import { STORAGE_KEY_USUAL_MENUS } from '@/utils/constants'
@@ -44,7 +44,7 @@ const actions = {
         // 将后台返回的菜单数据转换为vue-router的格式
         const routers = convertMenuToVueRouterFormat(menus)
 
-        routers.unshift(...constantRouteList)
+        routers.unshift(...layoutRouteList)
 
         // 兜底方案（放到最后）：当用户访问的路由不存在时，跳转到404页面
         routers.push({
