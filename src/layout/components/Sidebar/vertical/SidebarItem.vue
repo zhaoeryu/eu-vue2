@@ -56,7 +56,16 @@ export default {
         // 如果设置了自定义的路径，则直接返回
         return this.item.fullPath
       }
-      return isExternal(this.curItemPath) ? this.curItemPath : this.fullRootPath + this.curItemPath
+      // 如果是外链，直接返回
+      if (isExternal(this.curItemPath)) {
+        return this.curItemPath
+      }
+      // 如果是隐藏子菜单且有重定向，则返回重定向地址
+      if (this.isHiddenChildren && this.item.redirect) {
+        return this.item.redirect
+      }
+      // 正常返回
+      return this.fullRootPath + this.curItemPath
     },
     isRoot() {
       return this.level === 0
