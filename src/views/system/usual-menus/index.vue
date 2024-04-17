@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { list as menuList } from '@/api/system/menu'
+import { getRouters } from '@/api/system/menu'
 import { getParentFieldsByLeafId, handleTreeData, isExternal, pathTrim } from '@/utils'
 import { mapGetters } from 'vuex'
 export default {
@@ -74,7 +74,7 @@ export default {
     }
   },
   mounted() {
-    menuList().then(res => {
+    getRouters().then(res => {
       this.menuOriginList = res.data.filter(item => item.menuType !== 3)
       this.menuTree = handleTreeData(this.menuOriginList)
       this.$nextTick(() => {

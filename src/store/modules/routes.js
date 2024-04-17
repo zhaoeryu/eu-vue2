@@ -20,7 +20,6 @@ const state = () => ({
 })
 const getters = {
   routes: (state) => state.routes,
-  sidebarRoutes: (state) => state.sidebarRoutes,
   usualMenus: (state) => state.usualMenus
 }
 const mutations = {
