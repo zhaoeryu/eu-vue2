@@ -74,7 +74,7 @@ function convertMenuToVueRouterFormat(menus) {
 
   // 对arr进行深拷贝
   const newMenus = JSON.parse(JSON.stringify(menus))
-  const newRouters = newMenus.map(item => {
+  const newRouters = newMenus.sort((a, b) => a.sortNum - b.sortNum).map(item => {
     return {
       // 以下是自己需要的数据
       id: item.id,

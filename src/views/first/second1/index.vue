@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'Second3',
+  name: 'Second1',
   data() {
     return {}
   }
@@ -9,7 +9,7 @@ export default {
 
 <template>
   <div class="page-container">
-    <div class="index__title">second3</div>
+    <div class="index__title">second1</div>
   </div>
 </template>
 

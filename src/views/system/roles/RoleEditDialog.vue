@@ -224,7 +224,7 @@ export default {
 <style scoped lang="scss">
 ::v-deep {
   .el-dialog__footer {
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid var(--color-border-2);
     display: flex;
   }
   .el-dialog__body {
@@ -241,9 +241,9 @@ export default {
     height: 20px;
     &.is-text {
       color: #fff;
-      background-color: #2b6bff;
+      background-color: var(--color-primary);
       border-radius: 50%;
-      border: 1px solid #2b6bff;
+      border: 1px solid var(--color-primary);
     }
   }
   .el-step__title {
@@ -253,18 +253,18 @@ export default {
     }
   }
   .el-step__line {
-    background-color: unset;
+    background-color: unset !important;
   }
   .is-success {
     .el-step__line:before {
-      background: #2b6bff;
+      background: var(--color-primary);
     }
   }
   .is-process {
     font-weight: unset;
     color: var(--color-primary);
     .el-step__line:before {
-      background: -webkit-linear-gradient(left,var(--color-primary),#ebeff7);
+      background: -webkit-linear-gradient(left,var(--color-primary), var(--theme-base-second-bg));
       color: transparent;
     }
   }
