@@ -80,7 +80,7 @@ export default {
     <div v-if="stepActive === 0">
       <div style="padding: 10px 40px;">
         <div class="import-mode">
-          <span>{{ $t('crud.ImportDialog.importMode') }}</span>
+          <span>{{ $t('crud.ImportDialog.importMode') }}&nbsp;&nbsp;</span>
           <el-radio-group v-model="importMode">
             <el-radio :label="0">{{ $t('crud.ImportDialog.importMode.add') }}</el-radio>
             <el-radio :label="1">{{ $t('crud.ImportDialog.importMode.update') }}</el-radio>
@@ -169,7 +169,7 @@ export default {
     }
   }
   .el-step__line {
-    background-color: unset;
+    background-color: unset !important;
   }
   .is-success {
     .el-step__line:before {

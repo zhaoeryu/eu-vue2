@@ -47,7 +47,7 @@
         <div>
           <el-tabs v-model="tabActive">
             <el-tab-pane :label="$t('personal-center.tab1.title')" name="userinfo">
-              <el-form ref="formBasic" :model="userForm" :rules="userRules" label-width="90px" :hide-required-asterisk="true">
+              <el-form ref="formBasic" :model="userForm" :rules="userRules" label-width="140px" :hide-required-asterisk="true">
                 <el-form-item :label="$t('personal-center.tab1.nickname')" prop="nickname">
                   <el-input v-model="userForm.nickname" :placeholder="$t('personal-center.tab1.nickname.placeholder')" maxlength="10" />
                 </el-form-item>
@@ -69,7 +69,7 @@
               </div>
             </el-tab-pane>
             <el-tab-pane :label="$t('personal-center.tab2.title')" name="updatePassword">
-              <el-form ref="formPassword" :model="updatePasswordForm" :rules="updatePasswordRules" label-width="90px" :hide-required-asterisk="true">
+              <el-form ref="formPassword" :model="updatePasswordForm" :rules="updatePasswordRules" label-width="140px" :hide-required-asterisk="true">
                 <el-form-item :label="$t('personal-center.tab2.oldPassword')" prop="oldPassword">
                   <el-input v-model="updatePasswordForm.oldPassword" :placeholder="$t('personal-center.tab2.password.placeholder')" maxlength="30" show-password />
                 </el-form-item>

@@ -82,10 +82,10 @@ export default {
     :title="title"
     :visible.sync="show"
     :close-on-click-modal="false"
-    width="700px"
+    width="800px"
     @open="onDialogOpen"
   >
-    <el-form ref="form" :model="form" :rules="rules" label-width="140px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="150px">
       <el-form-item :label="$t('sysNotice.edit.form.title')" prop="title">
         <el-input v-model="form.title" :placeholder="$t('sysNotice.edit.form.title.placeholder')" clearable />
       </el-form-item>

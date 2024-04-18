@@ -13,7 +13,7 @@ export default {
   'crud.EuTableToolbar.export': 'Export',
   'crud.EuTableToolbar.import': 'Import',
   // IconSelect.vue
-  'crud.IconSelect.placeholder': 'Enter the icon pinyin to find',
+  'crud.IconSelect.placeholder': 'Enter icon pinyin',
   // ImportDialog.vue
   'crud.ImportDialog.title': 'Import',
   'crud.ImportDialog.tplFilePrefix': 'Template',

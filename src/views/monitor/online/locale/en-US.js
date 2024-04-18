@@ -1,6 +1,6 @@
 export default {
   'monitor.online.query.nickname.label': 'User nickname',
-  'monitor.online.query.nickname.placeholder': 'Please enter user nickname',
+  'monitor.online.query.nickname.placeholder': 'Enter user nickname',
   'monitor.online.query.search': 'Search',
   'monitor.online.query.reset': 'Reset',
   'monitor.online.column.username': 'Login name',

@@ -130,7 +130,7 @@ export default {
     :title="title"
     :visible.sync="show"
     :close-on-click-modal="false"
-    width="700px"
+    width="800px"
     @open="onDialogOpen"
   >
     <template #title>
@@ -142,21 +142,21 @@ export default {
     <el-form ref="form" :model="form" :rules="rules" label-width="140px">
       <el-form-item :label="$t('role.dataScopeDialog.form.dataScope')" prop="dataScope">
         <el-radio-group v-model="form.dataScope">
-          <el-radio-button
+          <el-radio
             v-for="item in dataScopeEnums"
             :key="item.value"
             :label="item.value"
-          >{{ item.label }}</el-radio-button>
+          >{{ item.label }}</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="form.dataScope === dataScopeEnums.CUSTOM.value" :label="$t('role.dataScopeDialog.form.dataPermission')">
-        <div style="display: flex;margin-bottom: 12px;">
-          <div style="flex: 1;">
+        <div style="display: flex;justify-content: space-between;margin-bottom: 12px;">
+          <div>
             <el-checkbox v-model="formExtra.expand" @change="handleCheckedTreeExpand($event)">{{ $t('role.dataScopeDialog.form.dataPermission.expand') }}</el-checkbox>
             <el-checkbox v-model="formExtra.checkedAll" @change="handleCheckedTreeNodeAll($event)">{{ $t('role.dataScopeDialog.form.dataPermission.checkedAll') }}</el-checkbox>
             <el-checkbox v-model="formExtra.checkStrictly">{{ $t('role.dataScopeDialog.form.dataPermission.checkStrictly') }}</el-checkbox>
           </div>
-          <el-input :placeholder="$t('role.dataScopeDialog.form.dataPermission.filterKeyword')" v-model="formExtra.filterKeyword" style="width: 200px;" clearable>
+          <el-input :placeholder="$t('role.dataScopeDialog.form.dataPermission.filterKeyword')" v-model="formExtra.filterKeyword" style="height: 32px;width: 200px;" clearable>
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
           </el-input>
         </div>
@@ -181,5 +181,14 @@ export default {
 </template>
 
 <style scoped lang="scss">
+::v-deep {
+  .el-radio-group {
+    display: flex;
+    flex-direction: column;
 
+    .el-radio ~ .el-radio {
+      margin-top: 1em;
+    }
+  }
+}
 </style>

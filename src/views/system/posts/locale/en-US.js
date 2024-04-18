@@ -1,7 +1,7 @@
 export default {
   // list
   'posts.query.postName': 'Post Name',
-  'posts.query.postName.placeholder': 'Enter the post name to search for',
+  'posts.query.postName.placeholder': 'Enter post name',
   'posts.column.postName': 'Post Name',
   'posts.column.code': 'Post Code',
   'posts.column.status': 'Status',

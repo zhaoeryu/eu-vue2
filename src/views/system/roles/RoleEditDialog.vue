@@ -142,12 +142,12 @@ export default {
     :title="title"
     :visible.sync="show"
     :close-on-click-modal="false"
-    width="700px"
+    width="800px"
     class="role-dialog"
     destroy-on-close
     @open="onDialogOpen"
   >
-    <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="130px">
       <el-steps :active="formStepActive" :align-center="true" finish-status="success">
         <el-step :title="$t('role.edit.step.roleInfo')"></el-step>
         <el-step :title="$t('role.edit.step.funcPermission')"></el-step>

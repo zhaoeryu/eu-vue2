@@ -99,8 +99,8 @@ export default {
 </script>
 
 <template>
-  <el-dialog :title="title" :visible.sync="show" width="800px" :close-on-click-modal="false" @open="onDialogOpen">
-    <el-form ref="form" :model="form" :rules="rules" label-width="130px" :hide-required-asterisk="true">
+  <el-dialog :title="title" :visible.sync="show" width="900px" :close-on-click-modal="false" @open="onDialogOpen">
+    <el-form ref="form" :model="form" :rules="rules" label-width="140px" :hide-required-asterisk="true">
       <el-row>
         <el-col :span="12">
           <el-form-item :label="$t('job.edit.form.jobName')" prop="jobName">

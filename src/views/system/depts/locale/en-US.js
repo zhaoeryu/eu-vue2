@@ -8,7 +8,7 @@ export default {
   'dept.edit.form.deptName': 'Department name',
   'dept.edit.form.deptName.placeholder': 'Please enter the department name',
   'dept.edit.form.deptName.required': 'Please enter the department name',
-  'dept.edit.form.status': 'Department status',
+  'dept.edit.form.status': 'Status',
   'dept.edit.form.status.normal': 'Normal',
   'dept.edit.form.status.disabled': 'Disabled',
   'dept.edit.form.status.required': 'Please select the department status',
