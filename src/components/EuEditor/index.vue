@@ -1,54 +1,121 @@
 <template>
   <div>
-    <div style="border: 1px solid #ccc; margin-top: 10px;">
-      <!-- 工具栏 -->
-      <Toolbar
-        style="border-bottom: 1px solid #ccc"
-        :editor="editor"
-        :defaultConfig="toolbarConfig"
-      />
-      <!-- 编辑器 -->
-      <Editor
-        v-model="html"
-        :defaultConfig="editorConfig"
-        style="height: 400px; overflow-y: hidden;"
-        @onCreated="onCreated"
-      />
-    </div>
+    <Editor
+      v-model="html"
+      :init="init"
+      :disabled="disabled"
+      ref="editorRef"
+      :key="key"
+    ></Editor>
   </div>
 </template>
 
 <script>
-// https://www.wangeditor.com/v5/for-frame.html#%E9%85%8D%E7%BD%AE
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
-import { i18nChangeLanguage } from '@wangeditor/editor'
+import { uploadFile } from '@/api/upload'
 import i18n from '@/plugins/i18n'
-if (i18n.locale === 'zh') {
-  i18nChangeLanguage('zh-CN')
-} else {
-  i18nChangeLanguage('en')
-}
+
+import tinymce from 'tinymce/tinymce'
+import Editor from '@tinymce/tinymce-vue'
+import 'tinymce/themes/silver/theme'
+import 'tinymce/icons/default';
+// 列表插件
+import 'tinymce/plugins/lists'
+import 'tinymce/plugins/advlist'
+// 上传图片插件
+import 'tinymce/plugins/image'
+import 'tinymce/plugins/imagetools'
+// 表格插件
+import 'tinymce/plugins/table'
+// 自动识别链接插件
+import 'tinymce/plugins/autolink'
+// 预览插件
+import 'tinymce/plugins/preview'
+import 'tinymce/plugins/code'
+import 'tinymce/plugins/fullscreen'
+import 'tinymce/plugins/link'
+import 'tinymce/plugins/searchreplace'
+
+tinymce._setBaseUrl('/tinymce')
+const content_style =
+  `
+  p { margin: 5px 0px;}
+`
+
+// 语言配置
+const LanguageConfig = i18n.locale === 'zh' ? {
+  // 根据自己文件的位置，填写正确的路径，注意/可以直接访问到public文件
+  language_url: '/tinymce/langs/zh_CN.js',
+  language: 'zh_CN',
+} : {}
 
 export default {
   name: 'EuEditor',
   props: {
-    value: String
+    value: String,
+    placeholder: {
+      type: String,
+      default: 'Please enter content...'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    height: {
+      type: String,
+      default: '400px'
+    }
   },
-  components: { Editor, Toolbar },
+  components: {
+    Editor
+  },
   data() {
     return {
-      editor: null,
-      toolbarConfig: {
-        // toolbarKeys: [ /* 显示哪些菜单，如何排序、分组 */ ],
-        // excludeKeys: [ /* 隐藏哪些菜单 */ ],
+      key: new Date().getTime(),
+      init: {
+        // inline: true,
+        placeholder: this.placeholder,
+        ...LanguageConfig,
+        ...(window.document.querySelector('body[eu-theme=\'dark\']') !== null ? {
+          skin_url: '/tinymce/skins/ui/oxide-dark',
+          skin: 'oxide-dark',
+        } : {
+          skin_url: '/tinymce/skins/ui/oxide',
+          skin: 'oxide',
+        }),
+        height: this.height,
+        // max_height: 500,
+        // max_width: 500,
+        // min_height: 100,
+        // min_width: 400,
+        formats: {
+          underline: { inline: 'u' },
+          strikethrough: { inline: 's' },
+        },
+        plugins: 'lists advlist image table autolink preview code fullscreen link searchreplace',
+        toolbar: 'fullscreen searchreplace | bold italic underline strikethrough forecolor backcolor | link unlink | alignleft aligncenter alignright alignjustify | bullist numlist | image table | formatselect | fontsizeselect | outdent indent',
+        // 溢出工具栏按钮将显示在主工具栏下方
+        toolbar_mode: 'wrap',
+        content_style: content_style,
+        // 隐藏右下角的powered by tinyMCE
+        branding: false,
+        // 如需ajax上传可参考https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_handler
+        // 配置了此方法,即可手动选择图片
+        images_upload_handler: (blobInfo, success, failure) => {
+          const formData = new FormData()
+          formData.append('file', blobInfo.blob());
+          uploadFile(formData).then(res => {
+            success(res.link)
+          }).catch(e => {
+            failure(e)
+          })
+        },
+        // eslint-disable-next-line no-unused-vars
+        urlconverter_callback: (url, node, on_save, name) => {
+          return url
+        },
+        resize: true,
+        remove_trailing_brs: false
       },
-      editorConfig: {
-        placeholder: '请输入内容...',
-        // autoFocus: false,
-
-        // 所有的菜单配置，都要在 MENU_CONF 属性下
-        MENU_CONF: {}
-      }
     }
   },
   computed: {
@@ -61,20 +128,13 @@ export default {
       }
     }
   },
-  methods: {
-    onCreated(editor) {
-      // 【注意】一定要用 Object.seal() 否则会报错
-      this.editor = Object.seal(editor)
-    }
-  },
-  beforeDestroy() {
-    const editor = this.editor
-    if (editor == null) {
-      return
-    }
-    editor.destroy()
-  },
 }
 </script>
 
-<style src="@wangeditor/editor/dist/css/style.css"></style>
+<style lang="scss" scoped>
+::v-deep {
+  .tox-tinymce {
+    border-radius: 6px;
+  }
+}
+</style>
