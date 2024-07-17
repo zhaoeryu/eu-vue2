@@ -4,6 +4,14 @@ import Vue from 'vue'
 import '@/assets/styles/index.scss'
 import '@/assets/icons'
 
+// Loading
+import EuLoading from '@/components/EuLoading'
+Vue.component('EuLoading', EuLoading)
+
+// CornerDecoration
+import MCornerDecoration from '@/components/MCornerDecoration'
+Vue.component('MCornerDecoration', MCornerDecoration)
+
 // 富文本
 import EuEditor from '@/components/EuEditor'
 Vue.component('EuEditor', EuEditor)
