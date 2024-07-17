@@ -80,7 +80,7 @@ export default {
       '--eu-menu-level': level
     }"
   >
-    <template v-if="!item.children.length || isHiddenChildren">
+    <template v-if="!item.children || !item.children.length || isHiddenChildren">
       <app-link :to="resolvedPath">
         <el-menu-item :index="resolvedPath">
           <svg-icon v-if="isRoot && item.meta.icon" :icon-class="item.meta.icon" />
