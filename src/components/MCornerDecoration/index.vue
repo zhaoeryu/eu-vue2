@@ -98,8 +98,8 @@ export default {
     &:before {
       content: "";
       position: absolute;
-      top: calc(0px - var(--decoration-sub-width) + var(--decoration-sub-border-width));
-      right: calc(0px - var(--decoration-sub-width) + var(--decoration-sub-border-width));
+      top: calc(0px - var(--decoration-sub-width) - var(--decoration-sub-border-width));
+      right: calc(0px - var(--decoration-sub-width) - var(--decoration-sub-border-width));
       width: var(--decoration-sub-width);
       height: var(--decoration-sub-width);
       border: var(--decoration-sub-border-width) solid transparent;
@@ -109,8 +109,8 @@ export default {
     &:after {
       content: "";
       position: absolute;
-      bottom: calc(0px - var(--decoration-sub-width) + var(--decoration-sub-border-width));
-      left: calc(0px - var(--decoration-sub-width) + var(--decoration-sub-border-width));
+      bottom: calc(0px - var(--decoration-sub-width) - var(--decoration-sub-border-width));
+      left: calc(0px - var(--decoration-sub-width) - var(--decoration-sub-border-width));
       width: var(--decoration-sub-width);
       height: var(--decoration-sub-width);
       border: var(--decoration-sub-border-width) solid transparent;
