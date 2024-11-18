@@ -46,5 +46,5 @@ export const defaultSetting = {
   // gitee源码地址
   giteeUrl: 'https://gitee.com/zhaoeryu',
   // 默认语言
-  locale: 'zh',
+  locale: 'zh_CN',
 }

@@ -42,7 +42,7 @@ const content_style =
 `
 
 // 语言配置
-const LanguageConfig = i18n.locale === 'zh' ? {
+const LanguageConfig = i18n.locale === 'zh_CN' ? {
   // 根据自己文件的位置，填写正确的路径，注意/可以直接访问到public文件
   language_url: '/tinymce/langs/zh_CN.js',
   language: 'zh_CN',

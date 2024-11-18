@@ -2,30 +2,25 @@ import { STORAGE_KEY_LOCALE } from '@/utils/constants'
 import { defaultSetting } from '@/settings'
 
 export const LOCALE_OPTIONS = [
-  { label: '中文', value: 'zh' },
-  { label: 'English', value: 'en' },
+  { label: '中文', value: 'zh_CN' },
+  { label: 'English', value: 'en_US' },
 ]
 
 export const defaultLocale = localStorage.getItem(STORAGE_KEY_LOCALE) || defaultSetting.locale
 
-export const en = importLocale('en-US');
-export const zh = importLocale('zh-CN');
+export const en_US = importLocale('en_US');
+export const zh_CN = importLocale('zh_CN');
 
 function importLocale(lang) {
+  const files = require.context('@/views', true, /\.js/)
+  const locales = files.keys()
+    .filter(key => key.endsWith(`/locale/${lang}.js`))
+    .map(key => files(key).default)
+    .reduce((acc, cur) => {
+      return { ...acc, ...cur }
+    }, {})
   return {
     ...require(`@/locale/${lang}/settings`).default,
-    ...require(`@/views/login/locale/${lang}`).default,
-    ...require(`@/views/monitor/online/locale/${lang}`).default,
-    ...require(`@/views/system/depts/locale/${lang}`).default,
-    ...require(`@/views/system/dicts/locale/${lang}`).default,
-    ...require(`@/views/system/jobs/locale/${lang}`).default,
-    ...require(`@/views/system/menus/locale/${lang}`).default,
-    ...require(`@/views/system/oper-logs/locale/${lang}`).default,
-    ...require(`@/views/system/personal-center/locale/${lang}`).default,
-    ...require(`@/views/system/posts/locale/${lang}`).default,
-    ...require(`@/views/system/roles/locale/${lang}`).default,
-    ...require(`@/views/system/sysNotice/locale/${lang}`).default,
-    ...require(`@/views/system/users/locale/${lang}`).default,
-    ...require(`@/views/system/usual-menus/locale/${lang}`).default
+    ...locales
   };
 }

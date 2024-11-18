@@ -7,7 +7,13 @@ import { blobValidate } from '@/utils/index'
 import { saveAs } from 'file-saver'
 import { defaultSetting } from '@/settings'
 import qs from 'qs'
-import i18n from '@/plugins/i18n'
+import i18n, { i18nConvertConnector } from '@/plugins/i18n'
+
+export const commonReqHeaders = {
+  'X-Eu-Front': EU_FRONT_KEY,
+  'X-Eu-Front-Version': defaultSetting.version,
+  'Accept-Language': i18nConvertConnector(i18n.locale)
+}
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 
@@ -23,10 +29,7 @@ const service = axios.create({
   //3.qs.stringify({ids: [1, 2, 3]}, {arrayFormat: ‘brackets‘})  --形式：ids[]=1&ids[]=2&ids[]=3
   //4.qs.stringify({ids: [1, 2, 3]}, {arrayFormat: ‘repeat‘})  --形式： ids=1&ids=2&ids=3
   paramsSerializer: params => qs.stringify(params, { indices: false }),
-  headers: {
-    'X-Eu-Front': EU_FRONT_KEY,
-    'X-Eu-Front-Version': defaultSetting.version,
-  }
+  headers: { ...commonReqHeaders }
 })
 
 service.interceptors.request.use(config => {

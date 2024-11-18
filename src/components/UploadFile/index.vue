@@ -31,6 +31,7 @@ import { REQUEST_HEADER_TOKEN } from '@/utils/constants'
 import { getToken } from '@/utils/auth'
 import { defaultSetting } from '@/settings'
 import { downloadFile } from '@/utils'
+import { commonReqHeaders } from '@/utils/request'
 
 export default {
   name: 'UploadFile',
@@ -92,7 +93,8 @@ export default {
   data() {
     return {
       headers: {
-        [REQUEST_HEADER_TOKEN]: getToken()
+        [REQUEST_HEADER_TOKEN]: getToken(),
+        ...commonReqHeaders
       },
       // 文件列表：用于和el-upload组件进行双向绑定
       files: [],
