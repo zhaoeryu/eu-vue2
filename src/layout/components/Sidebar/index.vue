@@ -33,10 +33,11 @@ export default {
   width: var(--sidebar-width, 264px);
   height: 100%;
   position: fixed;
-  top: 50px;
+  top: var(--layout-header-nav-height);
   left: 0;
   display: flex;
   z-index: 100;
   transition: width .15s linear;
+  flex-direction: column;
 }
 </style>

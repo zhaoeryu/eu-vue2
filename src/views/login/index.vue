@@ -10,7 +10,7 @@
       </div>
       <!-- 登录表单 -->
       <el-form :model="form" :rules="rules" ref="form">
-        <h3>{{ $t('login.form.title') }}&nbsp;{{ defaultSetting.title }}</h3>
+        <h3 style="font-size: 24px;">{{ $t('login.form.title') }}&nbsp;{{ defaultSetting.title }}</h3>
         <el-form-item prop="username">
           <el-input v-model="form.username" :placeholder="$t('login.form.username.placeholder')" maxlength="20"></el-input>
         </el-form-item>

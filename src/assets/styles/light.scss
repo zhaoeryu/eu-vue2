@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
-body {
+:root {
+  // 页面默认字体大小
+  --theme-normal-text-size: 14px;
   // 页面背景色
   --theme-base-bg: #F2F4F7;
   // 页面二级背景色
@@ -39,6 +41,13 @@ body {
   // 二级菜单栏悬浮的文字颜色
   --theme-nav-second-hover-color: var(--color-primary);
 
+  // 顶部布局高度
+  --layout-header-nav-height: 50px;
+  // 侧边栏顶部高度
+  --layout-sidebar-header-height: 0;
+  // 侧边栏底部高度
+  --layout-sidebar-bottom-height: 0;
+
   // 分栏菜单
   // 菜单栏总宽度
   --sidebar-width: 264px;
@@ -51,7 +60,7 @@ body {
 
   // 垂直菜单
   // 菜单栏总宽度
-  --sidebar-vertical-width: 220px;
+  --sidebar-vertical-width: 150px;
 
   // 主题色
   --primary: 21, 91, 212;

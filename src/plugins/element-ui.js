@@ -11,7 +11,7 @@ import i18n from './i18n'
 import ElementUI from 'element-ui'
 // Vue.use(ElementUI)
 Vue.use(ElementUI, {
-  size: 'small',
+  size: 'mini',
   i18n: (key, value) => i18n.t(key, value)
 })
 

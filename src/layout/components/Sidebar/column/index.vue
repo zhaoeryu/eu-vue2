@@ -127,6 +127,7 @@ export default {
 
 <style scoped lang="scss">
 .eu-nav__column {
+  flex: 1;
   display: inherit;
   width: inherit;
 }
@@ -135,7 +136,7 @@ export default {
 .eu-nav-sidebar__first {
   width: var(--sidebar-first-width, 124px);
   background-color: var(--theme-nav-first-bg);
-  height: 100%;
+  height: calc(100vh - var(--layout-header-nav-height) - var(--layout-sidebar-header-height) - var(--layout-sidebar-bottom-height));
   display: flex;
   flex-direction: column;
   .eu-nav-sidebar__first-list {
@@ -156,7 +157,7 @@ export default {
   display: flex;
   flex-direction: column;
   position: relative;
-  height: calc(100% - 51px);
+  height: calc(100vh - var(--layout-header-nav-height) - var(--layout-sidebar-header-height) - var(--layout-sidebar-bottom-height) - 1px);
   transition: width .15s linear;
   border-left: 1px solid var(--color-border);
 }

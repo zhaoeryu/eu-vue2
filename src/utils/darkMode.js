@@ -1,3 +1,5 @@
+import VxeUI from 'vxe-pc-ui'
+
 /**
  * 适配深色模式
  * @param {String} theme 主题 light | dark | syncOS
@@ -27,7 +29,9 @@ export function darkMode(theme = 'syncOS') {
 function handleDarkMode(isDark = false) {
   if (isDark) {
     document.body.setAttribute('eu-theme', 'dark');
+    VxeUI.setTheme('dark')
   } else {
     document.body.removeAttribute('eu-theme');
+    VxeUI.setTheme('light')
   }
 }

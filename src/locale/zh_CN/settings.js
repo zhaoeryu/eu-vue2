@@ -48,6 +48,7 @@ export default {
   'crud.TableColumnSettingDialog.column1': '列名称',
   'crud.TableColumnSettingDialog.column2': '是否显示',
   'crud.TableColumnSettingDialog.column3': '调整顺序',
+  'crud.TableColumnSettingDialog.column4': '冻结列',
   // UploadFile.vue
   'crud.UploadFile.trigger': '点击上传',
   'crud.UploadFile.uploadFail': '上传失败',
@@ -149,6 +150,7 @@ export default {
   'general.query.reset': '重置',
   'general.query.search': '查询',
   'general.column.operation': '操作',
+  'general.placeholder.enter.search': '按下回车进行搜索',
   // 401
   '401.title': '抱歉，您没有权限访问该页面',
   '401.desc1': '解决办法：',

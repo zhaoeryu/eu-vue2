@@ -2,7 +2,7 @@
   <header id="eu-layout__navbar">
     <div class="left-side" @click="toHomePage">
       <img :src="require('@/assets/logo.png')" style="height: 30px;margin-right: 16px;">
-      <span>{{ defaultSetting.title }}</span>
+      <span style="font-size: 24px;">{{ defaultSetting.title }}</span>
     </div>
     <ul class="right-side">
       <li v-if="defaultSetting.systemHelpDocUrl" class="eu-phone__hide" @click="toNewPage(defaultSetting.systemHelpDocUrl)">
@@ -149,7 +149,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  height: var(--layout-header-nav-height);
   background: var(--theme-nav-first-bg);
   border-bottom: 1px solid var(--color-border);
   overflow: hidden;
@@ -166,6 +166,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    font-size: 16px;
     li {
       cursor: pointer;
       & + li {

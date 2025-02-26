@@ -126,6 +126,21 @@
                 </el-select>
               </template>
             </el-table-column>
+            <el-table-column prop="areaQuery" label="区域查询" width="80">
+              <template #default="{ row }">
+                <el-checkbox v-model="row.areaQuery"></el-checkbox>
+              </template>
+            </el-table-column>
+            <el-table-column prop="tableHeaderQuery" label="表头查询" width="80">
+              <template #default="{ row }">
+                <el-checkbox v-model="row.tableHeaderQuery"></el-checkbox>
+              </template>
+            </el-table-column>
+            <el-table-column prop="defaultVisible" label="表格可见" width="80">
+              <template #default="{ row }">
+                <el-checkbox v-model="row.defaultVisible"></el-checkbox>
+              </template>
+            </el-table-column>
             <el-table-column prop="dict" label="关联字典">
               <template #default="{ row }">
                 <el-select v-model="row.dictKey" placeholder="选择关联字典" clearable>

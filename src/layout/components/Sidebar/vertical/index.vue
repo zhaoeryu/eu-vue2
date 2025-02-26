@@ -62,10 +62,11 @@ export default {
 
 <style scoped lang="scss">
 .el-scrollbar {
+  flex: 1;
   background-color: var(--theme-nav-first-bg);
   color: var(--theme-nav-first-color);
   width: 100%;
-  height: calc(100vh - 50px);
+  height: calc(100vh - var(--layout-header-nav-height));
   --eu-menu-level: 0;
   --eu-menu-base-level-padding: calc(1.3em + 8px);
 }
@@ -77,6 +78,7 @@ export default {
   height: 100%;
   padding: 12px 0;
   border-right-color: var(--color-border);
+  user-select: none;
 
   // 折叠状态下
   &.el-menu--collapse {

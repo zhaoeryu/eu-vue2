@@ -84,12 +84,12 @@ export default {
 }
 #app-container {
   box-sizing: border-box;
-  padding-top: 50px;
+  padding-top: var(--layout-header-nav-height);
 }
 #app-container__main {
   margin-left: var(--sidebar-width);
   box-sizing: border-box;
-  height: calc(100vh - 50px);
+  height: calc(100vh - var(--layout-header-nav-height));
   width: calc(100vw - var(--sidebar-width));
   overflow: auto;
 
@@ -120,12 +120,12 @@ export default {
   #app-container__tabs {
     width: calc(100vw - var(--sidebar-width));
     position: fixed;
-    top: 50px;
+    top: var(--layout-header-nav-height);
     z-index: 10;
   }
   #app-container__main {
-    height: calc(100vh - 50px - 38px);
-    margin-top: 38px;
+    height: calc(100vh - var(--layout-header-nav-height));
+    padding-top: 38px;
   }
 }
 </style>

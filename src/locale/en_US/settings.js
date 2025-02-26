@@ -48,6 +48,7 @@ export default {
   'crud.TableColumnSettingDialog.column1': 'Column name',
   'crud.TableColumnSettingDialog.column2': 'Display',
   'crud.TableColumnSettingDialog.column3': 'Drag to sort',
+  'crud.TableColumnSettingDialog.column4': 'Fixed',
   // UploadFile.vue
   'crud.UploadFile.trigger': 'Click to upload',
   'crud.UploadFile.uploadFail': 'Upload failed',
@@ -149,6 +150,7 @@ export default {
   'general.query.reset': 'Reset',
   'general.query.search': 'Search',
   'general.column.operation': 'Operation',
+  'general.placeholder.enter.search': 'Press Enter to search',
   // 401 Unauthorized
   '401.title': 'Sorry, you do not have permission to access this page',
   '401.desc1': 'Solution:',

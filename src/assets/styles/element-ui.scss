@@ -11,3 +11,28 @@
   padding-top: 20px;
   text-align: right;
 }
+
+
+.el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li {
+  min-width: 26px;
+  margin: 0 3px;
+}
+.el-pager li {
+  height: 26px;
+  line-height: 26px;
+}
+.el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
+  margin-bottom: 12px;
+}
+.el-divider--horizontal {
+  margin: 12px 0;
+}
+
+.el-table--mini .el-table__cell {
+  padding: var(--vxe-ui-table-column-padding-mini) !important;
+}
+.el-table th.el-table__cell {
+  background: var(--vxe-ui-table-header-background-color) !important;
+  color: var(--vxe-ui-table-header-font-color) !important;
+  border-color: var(--vxe-ui-table-border-color) !important;
+}

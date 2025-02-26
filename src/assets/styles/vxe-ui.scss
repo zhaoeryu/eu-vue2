@@ -1,0 +1,36 @@
+:root {
+  --vxe-ui-table-row-height-mini: 26px;
+  --vxe-ui-button-height-mini: 26px;
+  --vxe-ui-input-height-mini: 26px;
+
+  --vxe-ui-font-primary-color: var(--color-primary);
+  --vxe-ui-font-primary-lighten-color: var(--color-primary);
+  --vxe-ui-font-primary-darken-color: var(--color-primary);
+  --vxe-ui-status-success-color: var(--color-success);
+  --vxe-ui-status-info-color: var(--color-info);
+  --vxe-ui-status-warning-color: var(--color-warning);
+  --vxe-ui-status-danger-color: var(--color-danger);
+  --vxe-ui-status-error-color: var(--color-danger);
+
+  --vxe-ui-table-cell-padding-left: 6px;
+  --vxe-ui-table-cell-padding-right: 6px;
+  --vxe-ui-table-column-padding-mini: 3px 0;
+}
+html[data-vxe-ui-theme="light"] {
+  --vxe-ui-table-header-background-color: #f2f4fa;
+}
+
+.vxe-button+.vxe-button--dropdown, .vxe-button+.vxe-button-wrapper, .vxe-button+.vxe-button.type--button, .vxe-button-wrapper+.vxe-button--dropdown, .vxe-button-wrapper+.vxe-button-wrapper, .vxe-button-wrapper+.vxe-button.type--button, .vxe-input+.vxe-button--dropdown, .vxe-input+.vxe-button-wrapper, .vxe-input+.vxe-button.type--button {
+  margin-left: 4px;
+}
+
+body[eu-theme="dark"] {
+  --vxe-ui-layout-background-color: var(--theme-base-second-bg);
+}
+
+.vxe-header--column {
+  .vxe-cell-title-prefix-icon[class*="vxe-icon-edit"],
+  .vxe-cell-title-suffix-icon[class*="vxe-icon-edit"] {
+    cursor: unset;
+  }
+}

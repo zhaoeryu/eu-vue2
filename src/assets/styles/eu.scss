@@ -1,6 +1,7 @@
 .eu-ui {
   background: var(--theme-base-bg);
   color: var(--theme-text-primary-color);
+  font-size: var(--theme-normal-text-size);
   &::-webkit-scrollbar {
     width: 0;
     height: 0;
