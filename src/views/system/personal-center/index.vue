@@ -76,6 +76,9 @@
                 <el-form-item :label="$t('personal-center.tab2.newPassword')" prop="newPassword">
                   <el-input v-model="updatePasswordForm.newPassword" :placeholder="$t('personal-center.tab2.password.placeholder')" maxlength="30" show-password />
                 </el-form-item>
+                <el-form-item :label="$t('personal-center.tab2.newPasswordStrength')">
+                  <password-strength-progress :password="updatePasswordForm.newPassword" />
+                </el-form-item>
                 <el-form-item :label="$t('personal-center.tab2.confirmPassword')" prop="confirmPassword">
                   <el-input v-model="updatePasswordForm.confirmPassword" :placeholder="$t('personal-center.tab2.password.placeholder')" maxlength="30" show-password />
                 </el-form-item>
@@ -96,10 +99,11 @@ import UserAvatar from '@/views/system/personal-center/UserAvatar.vue'
 import { updateProfile, updatePassword } from '@/api/system/user'
 import { mapGetters } from 'vuex'
 import i18n from '@/plugins/i18n'
+import PasswordStrengthProgress from '@/views/system/personal-center/PasswordStrengthProgress.vue'
 
 export default {
   name: 'PersonalCenter',
-  components: { UserAvatar },
+  components: { PasswordStrengthProgress, UserAvatar },
   data() {
     return {
       tabActive: 'userinfo',

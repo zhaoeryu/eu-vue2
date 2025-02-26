@@ -27,6 +27,7 @@ export default {
   'personal-center.tab2.oldPassword': '旧密码',
   'personal-center.tab2.oldPassword.required': '请输入旧密码',
   'personal-center.tab2.newPassword': '新密码',
+  'personal-center.tab2.newPasswordStrength': '强度',
   'personal-center.tab2.newPassword.required': '请输入新密码',
   'personal-center.tab2.confirmPassword': '确认密码',
   'personal-center.tab2.confirmPassword.required': '请再次输入新密码',

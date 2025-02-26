@@ -133,6 +133,7 @@
       ref="assignRoleDialog"
       @success="onRefresh"
     />
+    <reset-password-dialog ref="resetPasswordDialog" />
 
   </div>
 </template>
@@ -141,7 +142,6 @@
 import {
   page,
   updateStatus,
-  resetPwd,
   batchDel,
   getUserInfo
 } from '@/api/system/user'
@@ -152,9 +152,10 @@ import AssignRoleDialog from '@/views/system/users/AssignRoleDialog.vue'
 import UserEditDialog from '@/views/system/users/UserEditDialog.vue'
 import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
 import EuTableToolbar from '@/components/Crud/EuTableToolbar/index.vue'
+import ResetPasswordDialog from '@/views/system/users/ResetPasswordDialog.vue'
 export default {
   name: 'Users',
-  components: { EuTableToolbar, QueryExpandWrapper, UserEditDialog, AssignRoleDialog, ImportDialog },
+  components: { ResetPasswordDialog, EuTableToolbar, QueryExpandWrapper, UserEditDialog, AssignRoleDialog, ImportDialog },
   data() {
     return {
       list: [],
@@ -234,7 +235,7 @@ export default {
     onHandleCommand(command, row) {
       switch (command) {
         case 'handleResetPwd':
-          this.onResetPassword(row);
+          this.$refs.resetPasswordDialog.open(row.id)
           break;
         case 'handleAuthRole':
           this.onAssignRoles(row);
@@ -242,28 +243,6 @@ export default {
         default:
           break;
       }
-    },
-    onResetPassword(row) {
-      this.$prompt(this.$t('user.confirm.resetPwd.message', { nickname: row.nickname }), this.$t('general.confirm.title'), {
-        confirmButtonText: this.$t('general.confirm.confirm'),
-        cancelButtonText: this.$t('general.confirm.cancel'),
-        closeOnClickModal: false,
-        inputPattern: /^.{6,20}$/,
-        inputErrorMessage: this.$t('user.confirm.resetPwd.errorMessage'),
-        beforeClose: (action, instance, done) => {
-          if (action === 'confirm') {
-            instance.confirmButtonLoading = true;
-            resetPwd(row.id, instance.inputValue).then(() => {
-              this.$message.success(this.$t('user.confirm.resetPwd.successMessage', { newPassword: instance.inputValue }));
-              done()
-            }).finally(() => {
-              instance.confirmButtonLoading = false;
-            })
-          } else {
-            done()
-          }
-        }
-      })
     },
     onAssignRoles(row) {
       this.$refs.assignRoleDialog.open(row.id)
