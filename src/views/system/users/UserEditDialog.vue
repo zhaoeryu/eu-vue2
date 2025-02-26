@@ -75,11 +75,15 @@ export default {
         this.formLoading = true
         const reqPromise = this.form.id ? update(this.form) : add(this.form)
         reqPromise.then(res => {
-          this.$message.success(this.form.id ? this.$t('user.edit.success') : this.$t('user.add.success', {
+          this.$alert(this.form.id ? this.$t('user.edit.success') : this.$t('user.add.success', {
             password: res.data
-          }))
-          this.show = false
-          this.$emit('complete')
+          }), this.$t('general.confirm.title'), {
+            confirmButtonText: this.$t('general.confirm.confirm'),
+            callback: () => {
+              this.show = false
+              this.$emit('complete')
+            }
+          });
         }).finally(() => {
           this.formLoading = false
         })

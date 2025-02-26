@@ -33,7 +33,13 @@ export default {
         if (valid) {
           this.loading = true
           resetPwd(this.form.userId, this.form.password).then(() => {
-            this.$message.success(this.$t('user.confirm.resetPwd.successMessage', { newPassword: this.form.password }));
+            this.$alert(this.$t('user.confirm.resetPwd.successMessage', { newPassword: this.form.password }), this.$t('general.confirm.title'), {
+              confirmButtonText: this.$t('general.confirm.confirm'),
+              callback: () => {
+                this.show = false
+                this.$emit('complete')
+              }
+            });
             this.loading = false
             this.show = false
           })
