@@ -26,7 +26,7 @@
         <eu-table-toolbar
           :multiple-disabled="multipleDisabled"
           :sort.sync="queryParams.sort"
-          :ref-table="$refs.xTable"
+          :ref-table="$refs.table"
           :searchToggle.sync="isQueryShow"
         >
           <template v-if="!multipleDisabled" #left>
@@ -36,11 +36,11 @@
           </template>
         </eu-table-toolbar>
         <vxe-table
-          id="xTable"
+          id="table"
           border
           resizable
           show-overflow
-          ref="xTable"
+          ref="table"
           :loading="loading"
           :data="list"
           :row-config="{isHover: true}"
@@ -207,7 +207,7 @@ import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
 
 export default {
   name: 'Demo',
-  mixins: [TableColumnSettingMixin(['xTable'])],
+  mixins: [TableColumnSettingMixin(['table'])],
   components: { QueryExpandWrapper, EuTableToolbar },
   data() {
     const sexList = [
