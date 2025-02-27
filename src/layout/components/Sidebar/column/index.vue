@@ -159,7 +159,16 @@ export default {
   position: relative;
   height: calc(100vh - var(--layout-header-nav-height) - var(--layout-sidebar-header-height) - var(--layout-sidebar-bottom-height) - 1px);
   transition: width .15s linear;
-  border-left: 1px solid var(--color-border);
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 1px;
+    width: 1px;
+    height: 100%;
+    background-color: var(--color-border);
+  }
 }
 
 // 二级菜单pop层

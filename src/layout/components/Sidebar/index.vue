@@ -39,5 +39,14 @@ export default {
   z-index: 100;
   transition: width .15s linear;
   flex-direction: column;
+
+  &:before {
+    content: '';
+    position: absolute;
+    right: -1px;
+    width: 1px;
+    height: 100%;
+    background-color: var(--color-border);
+  }
 }
 </style>
