@@ -1,32 +1,23 @@
-import store from '@/store'
-import { ALL_ROLE } from '@/utils/constants'
+import { PermissionModeEnums } from '@/utils/enums'
+import { hasRole } from '@/utils/permission'
 export default {
   inserted(el, binding) {
     const { value, arg } = binding
-    const roles = store.getters && store.getters['user/roles'] || []
-    const mode = arg || 'or'
+    const mode = arg || PermissionModeEnums.OR
+
+    if (!Object.values(PermissionModeEnums).includes(mode)) {
+      throw new Error('请设置正确的权限检查模式')
+    }
 
     // 检查标签值是否以数组的形式传入
     if (!Array.isArray(value)) {
       throw new Error('请设置操作角色标签值')
     }
 
-    if (roles.includes(ALL_ROLE)) {
-      // 拥有所有角色，直接返回
-      return
-    }
+    // 检查当前用户是否拥有指定的角色
+    const isHave = hasRole(value, mode)
 
-    let hasRole = false
-    if (mode === 'and') {
-      // 检查当前用户是否拥有指定的所有角色
-      hasRole = value.every(role => roles.includes(role))
-    } else if (mode === 'or') {
-      // 检查当前用户是否有该角色
-      hasRole = roles.some(role => value.includes(role))
-    } else {
-      throw new Error('未受支持的检查模式 ：' + mode)
-    }
-    if (!hasRole) {
+    if (!isHave) {
       // 如果没有权限，则删除当前dom
       el.parentNode && el.parentNode.removeChild(el)
     }
