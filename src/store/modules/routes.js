@@ -146,7 +146,7 @@ function loadComponent(menu) {
  * @param {Object} parentNode 父节点
  */
 function recursionTree(node, parentNode) {
-  const hasChildrenNode = Array.isArray(node.children) && node.children.length
+  let hasChildrenNode = Array.isArray(node.children) && node.children.length
   if (!hasChildrenNode) {
     node.children = []
   }
@@ -157,16 +157,41 @@ function recursionTree(node, parentNode) {
     // 第一层节点
     if (hasChildrenNode) {
       // 有子节点
-      node.component = Layout
-      // 重定向到第一个可访问的子菜单
-      node.redirect = pathTrim(addLeadingSlash(getFirstChildrenFields(node, { fieldKey: 'path' }).join('/')))
-      if (!isMultiChildren) {
-        // 只有一个子节点
-        const child = node.children[0]
-        if (!node.meta.alwaysShow) {
-          node.meta = { ...child.meta }
-          node.meta.isChildMeta = true
+      // 判断当前节点是目录还是菜单
+      if (node.menuType === MenuTypeEnums.DIR.value) {
+        // 目录
+        node.component = Layout
+        // 重定向到第一个可访问的子菜单
+        node.redirect = pathTrim(addLeadingSlash(getFirstChildrenFields(node, { fieldKey: 'path' }).join('/')))
+        if (!isMultiChildren) {
+          // 只有一个子节点
+          const child = node.children[0]
+          if (!node.meta.alwaysShow) {
+            node.meta = { ...child.meta }
+            node.meta.isChildMeta = true
+          }
         }
+      } else {
+        // 菜单
+
+        // 给该菜单包装一个Layout组件,并且重定向到该菜单
+        const childNode = JSON.parse(JSON.stringify(node))
+        delete node.name
+
+        node.path = addLeadingSlash(node.path)
+        node.redirect = node.path
+        node.component = Layout
+
+        childNode.path = ''
+
+        node.children = [ childNode, ...childNode.children ]
+        childNode.children = []
+
+        node.children.forEach(item => {
+          item.component = loadComponent(item)
+        })
+
+        hasChildrenNode = false
       }
     } else {
       // 没有子节点

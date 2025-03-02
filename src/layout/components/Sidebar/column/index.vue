@@ -41,17 +41,11 @@ export default {
     },
     secondNavList() {
       return (this.routes.find(item => item.path === this.activeFirstMenuPath)?.children || []).filter(item => !item.hidden)
-    },
-    isSecondNavHidden() {
-      const isNotMultiChildren = this.secondNavList.length < 2
-      const route = this.$route.matched.find(item => item.parent === undefined)
-      const isAlwaysShow = route?.meta?.alwaysShow
-      return isNotMultiChildren && !isAlwaysShow
     }
   },
   methods: {
     disabledFirstNav(item) {
-      if (!Array.isArray(item.children) || item.children.length < 2) {
+      if (!Array.isArray(item.children) || (item.children.filter(c => !c.hidden)).length < 2) {
         // 如果没有二级菜单，或者二级菜单只有一个，则禁用
         return true
       }

@@ -45,6 +45,8 @@ export const defaultSetting = {
   githubUrl: 'https://github.com/zhaoeryu',
   // gitee源码地址
   giteeUrl: 'https://gitee.com/zhaoeryu',
+  // 开启国际化
+  enableI18n: true,
   // 默认语言
   locale: 'zh_CN',
 }

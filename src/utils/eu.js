@@ -10,3 +10,8 @@ export function openTableColumnSettingDialog(refTable, tableColumnRefName = 'tab
   }
   ref.open(refTable)
 }
+
+export const openNewWindow = (router, params) => {
+  let routeData = router.resolve(params);
+  window.open(routeData.href, '_blank');
+}

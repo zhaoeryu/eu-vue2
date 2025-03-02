@@ -55,6 +55,57 @@ export const layoutRouteList = [
       }
     ],
     hidden: false,
+  },
+  {
+    path: '/crud',
+    name: 'CRUD',
+    component: Layout,
+    meta: {
+      title: 'crud',
+      icon: 'workbench',
+    },
+    redirect: '/crud',
+    children: [
+      {
+        path: '',
+        name: 'Table',
+        component: (resolve) => require(['@/views/demo'], resolve),
+        meta: {
+          title: '表格',
+          icon: 'workbench',
+          affix: false,
+          showHeader: true,
+          showFooter: true
+        }
+      },
+      {
+        path: 'add',
+        name: 'Add',
+        component: (resolve) => require(['@/views/demo/edit'], resolve),
+        meta: {
+          title: '新增',
+          icon: 'workbench',
+          affix: false,
+          showHeader: true,
+          showFooter: true
+        },
+        hidden: true,
+      },
+      {
+        path: 'edit/:id',
+        name: 'Edit',
+        component: (resolve) => require(['@/views/demo/edit'], resolve),
+        meta: {
+          title: '编辑',
+          icon: 'workbench',
+          affix: false,
+          showHeader: true,
+          showFooter: true
+        },
+        hidden: true,
+      }
+    ],
+    hidden: true,
   }
 ]
 

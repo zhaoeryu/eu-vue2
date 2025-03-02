@@ -64,10 +64,12 @@ Vue.prototype.$permission = hasPermission
 Vue.prototype.$role = hasRole
 
 // 打开表格列设置Dialog
-import { openTableColumnSettingDialog } from '@/utils/eu'
+import { openNewWindow, openTableColumnSettingDialog } from '@/utils/eu'
 import { EU_TABLE_COLUMN_FIELD_OPERATION } from '@/utils/constants'
 Vue.prototype.$openTableColumnSettingDialog = openTableColumnSettingDialog
 
 Vue.prototype.$tableColumnField = {
   operation: EU_TABLE_COLUMN_FIELD_OPERATION
 }
+
+Vue.prototype.$openNewWindow = openNewWindow

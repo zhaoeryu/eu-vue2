@@ -33,7 +33,7 @@
           </template>
         </message>
       </li>
-      <li>
+      <li v-if="defaultSetting.enableI18n">
         <el-dropdown @command="onLocaleChange">
           <div>
             <svg-icon icon-class="language" />

@@ -86,3 +86,21 @@ export function enumsParseLabel(enums, value, defaultValue = null) {
 export function enumsConvertToList(enums) {
   return Object.keys(enums).map(key => enums[key])
 }
+
+/**
+ * 页面模式
+ */
+export const PageMode = {
+  Add: {
+    label: '新增',
+    value: 'add'
+  },
+  Edit: {
+    label: '编辑',
+    value: 'edit'
+  },
+  Detail: {
+    label: '详情',
+    value: 'detail'
+  }
+}

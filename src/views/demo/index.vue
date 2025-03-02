@@ -28,6 +28,7 @@
           :sort.sync="queryParams.sort"
           :ref-table="$refs.table"
           :searchToggle.sync="isQueryShow"
+          @add="$router.push('/crud/add')"
         >
           <template v-if="!multipleDisabled" #left>
             <span style="display: inline-block;padding-right: 1em;">
@@ -68,6 +69,9 @@
                   @change="onQuery"
                   style="width: 100%;"
                 />
+              </template>
+              <template #default="{ row }">
+                <el-link href="/crud/edit/123" target="_blank" type="primary">{{ row.name }}</el-link>
               </template>
             </vxe-column>
           </vxe-colgroup>
@@ -185,7 +189,6 @@
             <template #default>
               <el-button type="text">{{ $t('general.edit') }}</el-button>
               <el-button type="text">{{ $t('general.del') }}</el-button>
-              <el-button type="text">{{ $t('sysNotice.button.detail') }}</el-button>
             </template>
           </vxe-column>
         </vxe-table>
@@ -262,7 +265,6 @@ export default {
   methods: {
     // 前端分页
     onQuery() {
-      console.log('queryParams', this.queryParams)
       this.loading = true
 
       setTimeout(() => {
