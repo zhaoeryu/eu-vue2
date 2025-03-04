@@ -107,7 +107,8 @@ export default {
       queryParams: {
         dictKey: null,
         page: 1,
-        size: 10
+        size: 10,
+        sort: 'sort_num,asc'
       },
 
       isQueryShow: true,
