@@ -166,13 +166,15 @@ export function getChildrenFields(node, { fieldKey, childrenKey = 'children' } =
  * @param {Object} node 当前节点
  * @param {String} fieldKey 需要获取的属性
  * @param {String} childrenKey 子节点的属性名
+ * @param {Function} condition 自定义条件
  * @returns {*[]}
  */
-export function getFirstChildrenFields(node, { fieldKey, childrenKey = 'children' } = {}) {
+export function getFirstChildrenFields(node, { fieldKey, childrenKey = 'children', condition = () => true } = {}) {
   const childrenProps = []
   childrenProps.push(node[fieldKey])
-  if (node[childrenKey] && node[childrenKey].length) {
-    childrenProps.push(...getFirstChildrenFields(node[childrenKey][0], { fieldKey, childrenKey }))
+  const extraCondition = condition(node)
+  if (node[childrenKey] && node[childrenKey].length && extraCondition) {
+    childrenProps.push(...getFirstChildrenFields(node[childrenKey][0], { fieldKey, childrenKey, condition }))
   }
   return childrenProps
 }

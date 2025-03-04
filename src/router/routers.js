@@ -37,7 +37,8 @@ export const layoutRouteList = [
     component: Layout,
     meta: {
       title: '工作台',
-      icon: 'workbench'
+      icon: 'workbench',
+      alwaysShow: false,
     },
     redirect: '/workbench',
     children: [

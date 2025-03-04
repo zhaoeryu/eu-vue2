@@ -29,10 +29,12 @@ export default {
       return (this.item.children || []).filter(item => !item.hidden)
     },
     isHiddenChildren() {
-      const isNotMultiChildren = (this.isRoot && this.childrenList.length < 2) || this.childrenList.length < 1
-      const route = this.$route.matched.find(item => item.parent === undefined)
-      const isAlwaysShow = route?.meta?.alwaysShow
-      return isNotMultiChildren && !isAlwaysShow
+      const isNotMultiChildren = this.childrenList.length < 2
+      const isAlwaysShow = this.item.meta?.alwaysShow
+      // 如果没有子菜单
+      // 如果有子菜单，并且子菜单只有一个，同时alwaysShow = false，并且是一级菜单
+      return !this.childrenList.length
+        || (isNotMultiChildren && !isAlwaysShow && this.isRoot)
     },
     fullRootPath() {
       // 如果没有传上级菜单的路径，则返回当前激活的一级菜单
@@ -80,7 +82,7 @@ export default {
       '--eu-menu-level': level
     }"
   >
-    <template v-if="!item.children || !item.children.length || isHiddenChildren">
+    <template v-if="isHiddenChildren">
       <app-link :to="resolvedPath">
         <el-menu-item :index="resolvedPath">
           <svg-icon v-if="isRoot && item.meta.icon" :icon-class="item.meta.icon" />

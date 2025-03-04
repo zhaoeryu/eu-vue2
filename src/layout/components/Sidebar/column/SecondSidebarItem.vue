@@ -67,7 +67,7 @@ export default {
       return isExternal(this.curItemPath) ? this.curItemPath : this.fullRootPath + this.curItemPath
     },
     hasChildren() {
-      return this.item.children && this.item.children.length
+      return this.item.children && (this.item.children.filter(m => !m.hidden)).length
     }
   }
 }
@@ -91,7 +91,7 @@ export default {
       </div>
       <ul class="eu-submenu__body">
         <second-sidebar-item
-          v-for="child in item.children"
+          v-for="child in (item.children.filter(m => !m.hidden))"
           :key="child.path"
           :item="child"
           :root-path="resolvedPath"

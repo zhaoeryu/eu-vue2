@@ -162,7 +162,8 @@ function recursionTree(node, parentNode) {
         // 目录
         node.component = Layout
         // 重定向到第一个可访问的子菜单
-        node.redirect = pathTrim(addLeadingSlash(getFirstChildrenFields(node, { fieldKey: 'path' }).join('/')))
+        const condition = (n) => n.menuType !== MenuTypeEnums.MENU.value
+        node.redirect = pathTrim(addLeadingSlash(getFirstChildrenFields(node, { fieldKey: 'path', condition }).join('/')))
         if (!isMultiChildren) {
           // 只有一个子节点
           const child = node.children[0]
@@ -220,9 +221,16 @@ function recursionTree(node, parentNode) {
       }
     }
   } else if (hasChildrenNode) {
-    // 中间节点
-    node.path = removeLeadingSlash(node.path)
-    node.component = MiddleDirectory
+    if (node.menuType === MenuTypeEnums.DIR.value) {
+      // 中间节点
+      node.path = removeLeadingSlash(node.path)
+      node.component = MiddleDirectory
+    } else if (node.menuType === MenuTypeEnums.MENU.value) {
+      node.path = removeLeadingSlash(node.path)
+      node.component = loadComponent(node)
+    } else {
+      console.warn('[%s]不受支持的中间节点类型', node.meta && node.meta.title || node.id)
+    }
   } else {
     // 最后一层节点
     if (node.menuType === MenuTypeEnums.MENU.value) {
