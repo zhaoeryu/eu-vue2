@@ -1,8 +1,7 @@
 import { PageMode } from '@/utils/enums'
 import i18n from '@/plugins/i18n'
 export default function PageModeMixin(options = {
-  permissions: [],
-  listPath: null
+  permissions: []
 }) {
   return {
     data() {
