@@ -114,11 +114,11 @@
             style="width: 100%"
           >
             <el-table-column prop="columnSort" label="序号" width="50"></el-table-column>
-            <el-table-column prop="columnName" label="字段名"></el-table-column>
-            <el-table-column prop="columnType" label="db字段类型"></el-table-column>
-            <el-table-column prop="javaType" label="java字段类型"></el-table-column>
-            <el-table-column prop="javaField" label="java字段名"></el-table-column>
-            <el-table-column prop="columnComment" label="描述">
+            <el-table-column prop="columnName" label="字段名" min-width="120"></el-table-column>
+            <el-table-column prop="columnType" label="db字段类型" min-width="120"></el-table-column>
+            <el-table-column prop="javaType" label="java字段类型" min-width="120"></el-table-column>
+            <el-table-column prop="javaField" label="java字段名" min-width="120"></el-table-column>
+            <el-table-column prop="columnComment" label="描述" min-width="120">
               <template #default="{ row }">
                 <el-input v-model="row.columnComment" placeholder="输入描述" maxlength="32"></el-input>
               </template>
@@ -150,7 +150,7 @@
                 </el-select>
               </template>
             </el-table-column>
-            <el-table-column prop="formType" label="表单类型" width="110">
+            <el-table-column prop="formType" label="表单类型" width="100">
               <template #default="{ row }">
                 <el-select v-model="row.formType" placeholder="选择表单类型" clearable>
                   <el-option v-for="item in formTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -172,7 +172,7 @@
                 <el-checkbox v-model="row.defaultVisible"></el-checkbox>
               </template>
             </el-table-column>
-            <el-table-column prop="dict" label="关联字典">
+            <el-table-column prop="dict" label="关联字典" min-width="120">
               <template #default="{ row }">
                 <el-select v-model="row.dictKey" placeholder="选择关联字典" clearable>
                   <el-option
@@ -183,6 +183,20 @@
                   >
                     <span style="float: left">{{ item.remark || item.dictKey }}</span>
                     <span v-if="item.remark" style="float: right; color: #8492a6; font-size: 13px">&nbsp;&nbsp;{{ item.dictKey }}</span>
+                  </el-option>
+                </el-select>
+              </template>
+            </el-table-column>
+            <el-table-column prop="enumKey" label="关联枚举" min-width="120">
+              <template #default="{ row }">
+                <el-select v-model="row.enumKey" placeholder="选择关联枚举" clearable>
+                  <el-option
+                    v-for="item in Object.keys($enums)"
+                    :key="item"
+                    :label="item"
+                    :value="item"
+                  >
+                    <span>{{ item }}</span>
                   </el-option>
                 </el-select>
               </template>

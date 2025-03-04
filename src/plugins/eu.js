@@ -50,9 +50,11 @@ import {
   enumsParseLabel,
   enumsConvertToList
 } from '@/utils/enums'
+import businessEnums from '@/utils/business-enums'
 Vue.prototype.$enumsParse = enumsParse
 Vue.prototype.$enumsParseLabel = enumsParseLabel
 Vue.prototype.$enumsConvertToList = enumsConvertToList
+Vue.prototype.$enums = businessEnums
 
 // 默认系统配置
 import { defaultSetting } from '@/settings'
