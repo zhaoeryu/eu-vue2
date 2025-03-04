@@ -5,6 +5,11 @@ export default function PageModeMixin(options = {
   listPath: null
 }) {
   return {
+    data() {
+      return {
+        _x_page_path: null
+      }
+    },
     computed: {
       pageMode() {
         const { path } = this.$route
@@ -68,15 +73,18 @@ export default function PageModeMixin(options = {
         return this.isAddMode || (this.businessAllowEdit && this.hasEditPermission)
       }
     },
+    mounted() {
+      this._x_page_path = this.$route.path
+    },
+    beforeDestroy() {
+      // 从Tab栏中移除当前缓存
+      this.$store.dispatch('tabsView/delVisitedView', {
+        path: this._x_page_path
+      })
+    },
     methods: {
       onCancel() {
-        if (this.isAddMode) {
-          this.$router.back()
-        } else {
-          // 从Tab栏中移除当前缓存
-          this.$store.dispatch('tabsView/delVisitedView', this.$route)
-          this.$router.push(options.listPath)
-        }
+        this.$router.back()
       },
       /**
        * 提交成功后的处理
@@ -87,7 +95,7 @@ export default function PageModeMixin(options = {
           this.onCancel()
         } else {
           this.$confirm(i18n.t('general.submit.update.success.tips'), i18n.t('general.submit.update.success'), {
-            confirmButtonText: i18n.t('general.submit.update.success.tips.goList'),
+            confirmButtonText: i18n.t('general.submit.update.success.tips.goPrev'),
             cancelButtonText: i18n.t('general.submit.update.success.tips.stay'),
             type: 'success',
             center: true

@@ -158,8 +158,8 @@ export default {
   'general.error.dataLoad': '数据加载异常',
   'general.submit.add.success': '新增成功',
   'general.submit.update.success': '更新成功',
-  'general.submit.update.success.tips': '您可以停在当前页继续编辑，或前往列表页查看?',
-  'general.submit.update.success.tips.goList': '前往列表页',
+  'general.submit.update.success.tips': '您可以停在当前页继续编辑，或者返回上一页?',
+  'general.submit.update.success.tips.goPrev': '返回上一页',
   'general.submit.update.success.tips.stay': '停留在当前页',
   // 401
   '401.title': '抱歉，您没有权限访问该页面',

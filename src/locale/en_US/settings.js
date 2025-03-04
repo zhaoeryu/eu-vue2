@@ -158,8 +158,8 @@ export default {
   'general.error.dataLoad': 'Data load exception',
   'general.submit.add.success': 'Added successfully',
   'general.submit.update.success': 'Updated successfully',
-  'general.submit.update.success.tips': 'You can choose to go to the list page or stay on the current page',
-  'general.submit.update.success.tips.goList': 'Go to the list page',
+  'general.submit.update.success.tips': 'You can choose to back previous page or stay on the current page',
+  'general.submit.update.success.tips.goPrev': 'Back previous page',
   'general.submit.update.success.tips.stay': 'Stay on the current page',
   // 401 Unauthorized
   '401.title': 'Sorry, you do not have permission to access this page',
