@@ -75,3 +75,9 @@ Vue.prototype.$tableColumnField = {
 }
 
 Vue.prototype.$openNewWindow = openNewWindow
+
+// 导入自定义的表单组件
+import mFormItemComponents from '@/utils/m-form-item-components'
+Object.keys(mFormItemComponents).forEach(key => {
+  Vue.component(key, mFormItemComponents[key])
+})

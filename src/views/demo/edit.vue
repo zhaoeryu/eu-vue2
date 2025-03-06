@@ -49,7 +49,7 @@ export default {
       }
       // 获取数据
       this.loading = true
-      Promise.resolve().then(res => {
+      Promise.resolve({}).then(res => {
         this.form = res.data || {}
       }).finally(() => {
         // this.loading = false

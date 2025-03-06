@@ -225,6 +225,7 @@
 <script>
 import { tableInfo, syncTable, saveTable, saveColumns, queryTypeList, formTypeList } from '@/api/system/generate'
 import { page as dictPage } from '@/api/system/dict'
+import mFormItemComponents from '@/utils/m-form-item-components'
 
 export default {
   name: 'GenerateSettingDrawer',
@@ -292,9 +293,14 @@ export default {
       }).then(res => {
         this.dictList = res.data.records || []
       })
+      // 自定义表单类型
+      this.formTypeList = Object.keys(mFormItemComponents).map(item => ({
+        label: item,
+        value: item
+      }))
       // 表单类型
       formTypeList().then(res => {
-        this.formTypeList = res.data || []
+        this.formTypeList = [...(res.data || []), ...this.formTypeList]
       })
     },
     onSave() {
