@@ -1,4 +1,5 @@
 <script>
+import { PopupManager } from 'element-ui/lib/utils/popup'
 export default {
   name: 'MSelectPulldown',
   props: {
@@ -117,6 +118,10 @@ export default {
         return
       }
       this.$refs.xDown.showPanel(this.$refs.pullDownReference)
+      // 使用ElementUI的ZIndex，避免该组件在ElementUI的dialog/drawer中遮罩层层级问题
+      this.$nextTick(() => {
+        this.$refs.xDown.reactData.panelIndex = PopupManager.nextZIndex()
+      })
     },
     onQuery(isForcedRefresh = false) {
       if (!isForcedRefresh && this.list.length) {
