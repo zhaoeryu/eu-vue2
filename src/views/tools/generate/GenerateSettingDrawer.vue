@@ -118,6 +118,16 @@
             <el-table-column prop="columnType" label="db字段类型" min-width="120"></el-table-column>
             <el-table-column prop="javaType" label="java字段类型" min-width="120"></el-table-column>
             <el-table-column prop="javaField" label="java字段名" min-width="120"></el-table-column>
+            <el-table-column prop="tableShowField" label="表格显示字段" min-width="120">
+              <template #header>
+                <el-tooltip class="item" effect="dark" content="渲染前端列表页column时会使用该列名。一般用于表字段只有ID，然后通过表连接查询出labe，前端显示label时用" placement="top">
+                  <span>表格显示字段<i class="el-icon-question"></i></span>
+                </el-tooltip>
+              </template>
+              <template #default="{ row }">
+                <el-input v-model="row.tableShowField" maxlength="32"></el-input>
+              </template>
+            </el-table-column>
             <el-table-column prop="columnComment" label="描述" min-width="120">
               <template #default="{ row }">
                 <el-input v-model="row.columnComment" placeholder="输入描述" maxlength="32"></el-input>

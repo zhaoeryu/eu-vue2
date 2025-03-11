@@ -4,7 +4,6 @@ function getCachedConfig() {
   return JSON.parse(localStorage.getItem(STORAGE_KEY_TABLE_CONFIG)) || {}
 }
 function saveCachedConfig(fingerprint, config) {
-  console.log('saveCachedConfig', fingerprint, config)
   localStorage.setItem(STORAGE_KEY_TABLE_CONFIG, JSON.stringify(Object.assign({}, getCachedConfig(), {
     [fingerprint]: config
   })))
