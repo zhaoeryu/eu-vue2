@@ -81,10 +81,8 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item prop="detailHeaderFieldKey" label="详情页头部字段">
-                    <el-select v-model="tableForm.detailHeaderFieldKey" placeholder="请选择删除时显示的字段" filterable clearable>
-                      <el-option v-for="item in fieldOptions" :key="item" :label="item" :value="item"></el-option>
-                    </el-select>
+                  <el-form-item prop="i18nEnable" label="开启i18n">
+                    <el-switch v-model="tableForm.i18nEnable"></el-switch>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
@@ -93,6 +91,13 @@
                       <el-radio label="dialog">弹窗</el-radio>
                       <el-radio label="page">页面</el-radio>
                     </el-radio-group>
+                  </el-form-item>
+                </el-col>
+                <el-col v-if="tableForm.crudEditMode === 'page'" :span="12">
+                  <el-form-item prop="detailHeaderFieldKey" label="详情页头部字段">
+                    <el-select v-model="tableForm.detailHeaderFieldKey" placeholder="请选择删除时显示的字段" filterable clearable>
+                      <el-option v-for="item in fieldOptions" :key="item" :label="item" :value="item"></el-option>
+                    </el-select>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
