@@ -60,6 +60,7 @@ li {
     >.svg-icon {
       display: inline-block;
       width: 1.3em;
+      min-width: 1.3em;
       height: 1.3em;
       text-align: center;
       margin-right: 8px;
