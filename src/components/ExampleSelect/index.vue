@@ -56,7 +56,7 @@ export default {
             list.push({
               id: i,
               username: `测试${i}`,
-              groupName: '分组' + i % 4
+              age: 18 + i
             })
           }
           resolve({
@@ -68,6 +68,17 @@ export default {
     },
     onSearch(keyword) {
       console.log('onSearch', keyword)
+    },
+    async fetchObject(value) {
+      return await new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            id: value,
+            username: `测试${value}`,
+            age: 18 + value
+          })
+        }, 300)
+      })
     }
   }
 }
@@ -75,20 +86,74 @@ export default {
 
 <template>
   <m-select-pulldown
+    ref="pulldown"
     v-model="localValue"
     :disabled="disabled"
     :clearable="clearable"
-    :loadData="loadData"
+    :fetch-options="loadData"
+    :fetch-object="fetchObject"
     :page="page"
     :field="{ value: 'id', label: 'username' }"
-    :group="{ enabled: false, groupField: 'groupName' }"
     :placeholder="placeholder"
     @checked="onItemChecked"
     @search="onSearch"
   >
+    <template #content="{ list }">
+      <div
+        v-for="(item, index) in list"
+        :key="index"
+        class="item padding-sm cursor"
+        :class="{ 'active': item.id === localValue }"
+        @click="$refs.pulldown.onItemChecked(item)"
+      >
+        <div class="flex justify-between">
+          <div>
+            {{ item.username }}
+          </div>
+          <div>
+            <span class="label">age：</span>
+            <span>{{ item.age }}</span>
+          </div>
+        </div>
+      </div>
+    </template>
   </m-select-pulldown>
 </template>
 
 <style scoped lang="scss">
+.item {
+  background: var(--color-fill-2);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
 
+  &.active::after {
+    content: '';
+    position: absolute;
+    top: -1.7em;
+    left: -1.7em;
+    width: 3.5em;
+    height: 3.5em;
+    transform: rotate(45deg);
+    background: var(--color-success);
+  }
+
+  &.active::before {
+    content: '◉';
+    position: absolute;
+    top: 0.2em;
+    left: 0.2em;
+    color: var(--color-white);
+    z-index: 1;
+  }
+
+  &~& {
+    margin-top: 12px;
+  }
+}
+
+.label {
+  font-size: 12px;
+  color: var(--color-text-3);
+}
 </style>

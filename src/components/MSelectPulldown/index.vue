@@ -31,18 +31,28 @@ export default {
       type: Object,
       default: () => ({
         value: null,
-        label: null
+        label: null,
+        labelFn: null
       })
     },
     group: {
       type: Object,
       default: () => ({
         enabled: false,
-        groupField: null,
+        field: null,
         sortField: null
       })
     },
-    loadData: Function,
+    fetchOptions: Function,
+    fetchObject: Function,
+    minHeight: {
+      type: String,
+      default: '300px'
+    },
+    maxHeight: {
+      type: String,
+      default: '300px'
+    },
     width: {
       type: String,
       default: '500px'
@@ -53,15 +63,20 @@ export default {
       loading: false,
       keyword: '',
       list: [],
-      localPage: { ...this.page }
+      localPage: {},
+
+      isFocused: false,
+      isHovered: false,
+
+      displayValue: null
     }
   },
   watch: {
     page: {
       handler(newPage) {
-        this.localPage = { ...newPage };
+        this.localPage = newPage;
       },
-      deep: true
+      immediate: true
     },
     localPage: {
       handler(newLocalPage) {
@@ -74,7 +89,17 @@ export default {
     filterList() {
       let list = this.list
       if (this.keyword && !this.page.enabled) {
-        list = this.list.filter(item => item[this.field.label].includes(this.keyword))
+        if (this.field.labelFn) {
+          list = list.filter(item => {
+            const label = this.field.labelFn(item)
+            if (label) {
+              return label.includes(this.keyword)
+            }
+            return false
+          })
+        } else {
+          list = this.list.filter(item => item[this.field.label].includes(this.keyword))
+        }
       }
       return list
     },
@@ -87,7 +112,7 @@ export default {
 
       const _tmpGroupList = []
       list.forEach(item => {
-        const groupField = item[this.group.groupField] || '未知'
+        const groupField = item[this.group.field] || '未知'
         const _group = _tmpGroupList.find(group => group.label === groupField)
         if (_group) {
           _group.children.push(item)
@@ -101,198 +126,248 @@ export default {
       })
       const sortField = this.group.sortField ? 'sort' : 'label'
       return _tmpGroupList.sort((a, b) => a[sortField] - b[sortField])
-    },
-    checkedItem() {
-      return this.list.find(item => item[this.field.value] === this.value) || {}
-    },
-    showLabel() {
-      return this.checkedItem?.[this.field.label]
     }
   },
   mounted() {
     this.onQuery()
+    // this.$nextTick(() => {
+    //   this.$refs.xDown.hidePanel = () => {}
+    // })
   },
   methods: {
     onShow() {
       if (this.disabled) {
         return
       }
+      this.onQuery()
       this.$refs.xDown.showPanel(this.$refs.pullDownReference)
       // 使用ElementUI的ZIndex，避免该组件在ElementUI的dialog/drawer中遮罩层层级问题
       this.$nextTick(() => {
         this.$refs.xDown.reactData.panelIndex = PopupManager.nextZIndex()
       })
     },
-    onQuery(isForcedRefresh = false) {
+    async onQuery(isForcedRefresh = false) {
       if (!isForcedRefresh && this.list.length) {
         return
       }
       this.loading = true
-      this.loadData(this.keyword).then(res => {
-        this.list = res.data
-      }).finally(() => {
+      try {
+        const ms = isForcedRefresh ? 100 : 0
+        const res = await this.withMinDuration(this.fetchOptions, ms)
+        let records = res.data || []
+        this.list = records
+        
+        // 显示值处理
+        this.displayValueHandle(records)
+      } finally {
         this.loading = false
-      })
+      }
+    },
+    async displayValueHandle(records) {
+      // 判断是否需要加载显示值
+      if (this._.isNil(this.displayValue) && !this._.isNil(this.value)) {
+        // 当有id，没有显示值时，加载显示值
+        // 看看本次请求的结果，是否包含当前选中的id
+        const foundItem = records.find(item => item[this.field.value] === this.value)
+        if (foundItem) {
+          this.displayValue = foundItem[this.field.label]
+        } else {
+          const objRes = await this.fetchObject(this.value)
+          if (objRes.data) {
+            this.displayValue = objRes.data[this.field.label]
+          }
+        }
+      }
+    },
+    /**
+     * 确保异步操作至少执行指定的最小时间
+     * @param {Function} fn - 要执行的异步函数
+     * @param {number} minDuration - 最小执行时间（毫秒），默认300ms
+     * @returns {Promise<any>} 返回fn的执行结果
+     * @throws {Error} 如果fn执行出错，将抛出原始错误
+     */
+    async withMinDuration(fn, minDuration = 100) {
+      const startTime = performance.now();
+      let result;
+      let error = null;
+
+      try {
+        result = await fn(this.keyword);
+      } catch (err) {
+        error = err
+      }
+
+      const elapsedTime = performance.now() - startTime;
+      const remainingTime = Math.max(0, minDuration - elapsedTime);
+
+      if (remainingTime > 0) {
+        await new Promise(resolve => setTimeout(resolve, remainingTime));
+      }
+
+      if (error) {
+        throw error;
+      }
+
+      return result;
     },
     onItemChecked(row) {
+      this.displayValue = row[this.field.label]
       this.$emit('input', row[this.field.value])
       this.$emit('checked', row)
       this.$refs.xDown.hidePanel()
     },
     onClear() {
-      this.$emit('input', null)
-      this.$emit('checked', {})
+      this.onItemChecked({})
+      this.isFocused = false
+    },
+    onFocus() {
+      this.onShow()
+      this.isFocused = true
+    },
+    onBlur() {
+      this.isFocused = false
+    },
+    onSearchChange() {
+      this.$emit('search', this.keyword)
+      if (!this.page.enabled) {
+        return
+      }
+      this.onQuery(true)
+    },
+    onShowPanel({ visible }) {
+      if (visible) {
+        this.$nextTick(() => {
+          this.$refs.xDown.$refs.refPulldownPanel.style.width = this.width
+          this.$refs.xDown.$refs.refPulldownPanel.style.minWidth = this.width
+          this.$refs.xDown.$refs.refPulldownPanel.style.maxWidth = this.width
+        })
+      }
     }
   }
 }
 </script>
 
 <template>
-  <div>
-    <div
-      ref="pullDownReference"
-      class="pulldown-reference-wrapper"
-    >
-      <div class="cursor" style="flex: 1;" @click="onShow">
-        <template v-if="$scopedSlots.reference">
-          <slot name="reference" :checkedItem="checkedItem"></slot>
-        </template>
-        <template v-else>
-          <el-input 
-            v-model="showLabel" 
-            size="mini" 
-            :placeholder="placeholder" 
-            readonly 
+  <vxe-pulldown
+    ref="xDown"
+    :transfer="true"
+    :show-popup-shadow="true"
+    class-name="m-pulldown"
+    popup-class-name="m-pulldown-popup"
+    @visible-change="onShowPanel"
+  >
+    <template #default>
+      <slot name="default"></slot>
+      <el-input
+        v-if="!$scopedSlots.default"
+        ref="pullDownReference"
+        v-model="displayValue"
+        :disabled="disabled"
+        :placeholder="placeholder"
+        readonly
+        style="width: 100%;"
+        @focus="onFocus"
+        @blur="onBlur"
+        @mouseenter.native="isHovered = true"
+        @mouseleave.native="isHovered = false"
+      >
+        <span v-if="(isFocused || isHovered) && clearable && !disabled && !_.isNil(value)" slot="suffix" @click="onClear" style="font-size: 16px;line-height: 28px;">
+          <i class="el-icon-circle-close" style="margin-left: 5px;cursor: pointer;"></i>
+        </span>
+      </el-input>
+    </template>
+    <template #header>
+      <slot name="header"></slot>
+      <div v-if="!$scopedSlots.header" class="header flex justify-between padding-sm">
+        <div>
+          <slot name="search-prepend"></slot>
+          <el-input
+            v-model="keyword"
+            style="width: 250px;"
+            size="mini"
+            placeholder="请输入"
+            clearable
+            @change="onSearchChange"
           />
-        </template>
+          <slot name="search-append"></slot>
+        </div>
+        <el-button
+          class="margin-left-sm"
+          type="primary"
+          size="mini"
+          @click="onQuery(true)"
+        >{{ page.enabled ? '查询' : '刷新' }}</el-button>
       </div>
-      <div v-if="clearable && value && !disabled" @click="onClear" class="pulldown__clearable">
-        <i class="el-icon-circle-close cursor" />
-      </div>
-    </div>
-    <div style="position:fixed;">
-      <vxe-pulldown ref="xDown" :transfer="true">
-        <template #dropdown>
-          <div class="m-dropdown flex flex-direction padding-df" :style="{
-            width: width,
-          }">
-            <div class="header flex justify-between padding-bottom-df">
-              <template v-if="page.enabled">
-                <el-input v-model="keyword" style="width: 250px;" size="mini" placeholder="请输入" @change="$emit('search', keyword)" />
-                <el-button type="primary" size="mini" @click="onQuery(true)">查询</el-button>
-              </template>
-              <template v-else>
-                <el-button type="primary" size="mini" plain @click="onQuery(true)">刷新</el-button>
-                <el-input v-model="keyword" style="width: 250px;" size="mini" placeholder="请输入" @change="$emit('search', keyword)" />
-              </template>
-            </div>
-            <div
-              class="flex-sub margin-top-xs"
-              :style="{minHeight: '300px', maxHeight: '300px', overflowY: 'auto'}"
-            >
-              <eu-loading v-if="loading" style="height: 300px;" />
-              <template v-else-if="filterList.length">
-                <template v-if="$scopedSlots.content">
-                  <slot name="content" :groupList="groupList"></slot>
-                </template>
-                <template v-else-if="group.enabled">
-                  <div v-for="(group, groupIndex) in groupList" :key="groupIndex">
-                    <div class="text-sm padding-xs text-bold">{{ group.label }}</div>
-                    <div class="flex" style="flex-wrap: wrap;">
-                      <div
-                        v-for="item in group.children"
-                        :key="item[field.value]"
-                        class="m-dropdown__item padding-xs margin-right-sm margin-vertical-xs"
-                        style="font-size: 13px;"
-                        :class="value === item[field.value] ? 'active' : ''"
-                        @click="onItemChecked(item)"
-                      >
-                        {{ item[field.label] || '-' }}
-                      </div>
-                    </div>
-                  </div>
-                </template>
-                <template v-else>
-                  <div class="flex" style="flex-wrap: wrap;">
-                    <div
-                      v-for="(item, index) in filterList"
-                      :key="index"
-                      class="m-dropdown__item padding-xs margin-right-sm margin-vertical-xs"
-                      :class="value === item[field.value] ? 'active' : ''"
-                      @click="onItemChecked(item)"
-                    >
-                      {{ item[field.label] || '-' }}
-                    </div>
-                  </div>
-                </template>
-              </template>
-              <template v-else>
-                <el-empty style="width: 100%;" :image-size="120" description="暂无数据" />
-              </template>
-            </div>
-            <pagination
-              v-if="page.enabled && filterList.length"
-              :total="page.total"
-              :page.sync="localPage.page"
-              :limit.sync="localPage.size"
-              :layout="'total, prev, pager, next'"
-              @pagination="onQuery(true)"
+    </template>
+    <template #footer>
+      <slot name="footer"></slot>
+      <pagination
+        v-if="!$scopedSlots.footer && page.enabled && filterList.length"
+        :total="page.total"
+        :page.sync="localPage.page"
+        :limit.sync="localPage.size"
+        :layout="'total, prev, pager, next'"
+        class="padding-sm"
+        @pagination="onQuery(true)"
+      />
+    </template>
+    <template #dropdown>
+      <slot name="dropdown"></slot>
+      <div
+        v-if="!$scopedSlots.dropdown"
+        class="m-dropdown flex flex-direction padding-sm"
+      >
+        <div
+          class="flex-sub m-dropdown-content"
+          :style="{ minHeight: minHeight, maxHeight: maxHeight, overflowY: 'auto' }"
+        >
+          <eu-loading
+            v-if="loading"
+            style="height: 300px;"
+          />
+          <template v-else-if="filterList.length">
+            <slot
+              name="content"
+              :groupList="groupList"
+              :list="filterList"
+            ></slot>
+          </template>
+          <template v-else>
+            <slot name="empty"></slot>
+            <el-empty
+              v-if="!$scopedSlots.empty"
+              style="width: 100%;"
+              :image-size="120"
+              description="暂无数据"
             />
-          </div>
-        </template>
-      </vxe-pulldown>
-    </div>
-  </div>
+          </template>
+        </div>
+      </div>
+    </template>
+  </vxe-pulldown>
 </template>
 
 <style scoped lang="scss">
-.m-dropdown {
-  width: 500px;
-  background-color: var(--color-bg-2);
-  box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.1);
-  padding-bottom: 6px;
-  .header {
-    position: relative;
-    &:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 1px;
-      background-color: var(--color-border);
-    }
-  }
-  .m-dropdown__item {
-    cursor: pointer;
-    border-radius: 2px;
-    background-color: var(--color-fill-2);
-    &.active {
-      color: var(--color-primary);
-      background-color: rgba(var(--primary), .2) !important;
-    }
-    &:not(.active):hover {
-      color: var(--color-primary);
-      background-color: rgba(var(--primary), .1) !important;
-    }
-  }
+@import "~@/assets/styles/mixin.scss";
+.m-pulldown {
+  display: block;
 }
-.pulldown-reference-wrapper {
+.header {
   position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 2px;
-  line-height: 32px;
-  box-sizing: border-box;
-  height: 32px;
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: var(--color-border);
+  }
 }
-.el-icon-circle-close:hover {
-  color: var(--color-primary);
+.m-dropdown {
+  background-color: var(--color-bg-2);
 }
-.pulldown__clearable {
-  position: absolute;
-  right: 0.5em;
+.m-dropdown-content {
+  @include scrollBar;
 }
 </style>
