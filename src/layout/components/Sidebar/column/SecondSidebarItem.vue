@@ -29,8 +29,18 @@ export default {
     },
     isActive() {
       // 1、最后一层菜单，直接比较路径
-      // 2、非最后一层菜单，判断当前路径是否以该菜单的路径开头
-      return this.resolvedPath === this.activeMenu || this.activeMenu.startsWith(this.resolvedPath)
+      // 2、非最后一层菜单，判断路径的每个部分是否和当前激活的菜单路径的每个部分是否一致
+      let isActive = this.resolvedPath === this.activeMenu
+      if (!isActive) {
+        isActive = this.activeMenu.startsWith(this.resolvedPath)
+        if (isActive) {
+          const routeParts = this.activeMenu.split('/')
+          const menuParts = this.resolvedPath.split('/')
+
+          isActive = menuParts.every((part, index) => part === routeParts[index])
+        }
+      }
+      return isActive
     },
     /**
      * 当前Item处理后的路径（如果item.path以/开头，则去掉/）
