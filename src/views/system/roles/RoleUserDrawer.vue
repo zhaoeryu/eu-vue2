@@ -100,7 +100,7 @@ export default {
       });
     },
     onSelectable(row) {
-      return row.username !== 'admin'
+      return row.admin !== 1
     },
     onDeptQuery() {
       deptList().then(res => {

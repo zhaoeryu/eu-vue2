@@ -87,13 +87,13 @@
               <el-table-column prop="mobile" :label="$t('user.column.mobile')"></el-table-column>
               <el-table-column prop="status" :label="$t('user.column.status')" width="80">
                 <template v-slot:default="{ row }">
-                  <el-switch v-model="row.status" :disabled="row.username === 'admin'" :active-value="0" :inactive-value="1" @change="onStatusChange(row)" />
+                  <el-switch v-model="row.status" :disabled="row.admin === 1" :active-value="0" :inactive-value="1" @change="onStatusChange(row)" />
                 </template>
               </el-table-column>
               <el-table-column prop="lastActiveTime" :label="$t('user.column.lastActiveTime')"></el-table-column>
               <el-table-column :label="$t('general.column.operation')" fixed="right" width="150">
                 <template v-slot:default="{ row }">
-                  <template v-if="row.username !== 'admin'">
+                  <template v-if="row.admin !== 1">
                     <el-button v-permissions="['system:user:edit']" type="text" @click="onRowUpdate(row)">{{ $t('general.edit') }}</el-button>
                     <el-button v-permissions="['system:user:del']" type="text" @click="onRowDelete(row)">{{ $t('general.del') }}</el-button>
                     <el-dropdown v-permissions="['system:user:resetPwd', 'system:user:assignRole']" @command="(command) => onHandleCommand(command, row)" trigger="click" style="margin-left: 10px;">
@@ -196,7 +196,7 @@ export default {
   },
   methods: {
     onSelectable(row) {
-      return row.username !== 'admin'
+      return row.admin !== 1
     },
     onFilterNode(value, node) {
       if (!value) {
