@@ -58,56 +58,32 @@ export const layoutRouteList = [
     hidden: false,
   },
   {
-    path: '/crud',
-    name: 'CRUD',
+    path: '/personal-center',
+    name: 'PersonalCenterA',
     component: Layout,
     meta: {
-      title: 'crud',
+      title: '个人中心',
       icon: 'workbench',
+      alwaysShow: false,
     },
-    redirect: '/crud',
+    redirect: '/personal-center',
     children: [
       {
-        path: '',
-        name: 'Table',
-        component: (resolve) => require(['@/views/demo'], resolve),
+        path: '/personal-center',
+        name: 'PersonalCenter',
+        component: (resolve) => require(['@/views/system/personal-center'], resolve),
         meta: {
-          title: '表格',
+          title: '个人中心',
           icon: 'workbench',
           affix: false,
-          showHeader: true,
-          showFooter: true
-        }
-      },
-      {
-        path: 'add',
-        name: 'Add',
-        component: (resolve) => require(['@/views/demo/edit'], resolve),
-        meta: {
-          title: '新增',
-          icon: 'workbench',
-          affix: false,
-          showHeader: true,
-          showFooter: true
-        },
-        hidden: true,
-      },
-      {
-        path: 'edit/:id',
-        name: 'Edit',
-        component: (resolve) => require(['@/views/demo/edit'], resolve),
-        meta: {
-          title: '编辑',
-          icon: 'workbench',
-          affix: false,
-          showHeader: true,
+          showHeader: false,
           showFooter: true
         },
         hidden: true,
       }
     ],
     hidden: true,
-  }
+  },
 ]
 
 export default new Router({

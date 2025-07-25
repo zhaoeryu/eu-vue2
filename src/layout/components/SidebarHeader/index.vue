@@ -31,7 +31,7 @@
       <el-divider direction="horizontal"></el-divider>
       <el-row style="display: flex;">
         <el-col :span="11">
-          <el-button type="text" style="width: 100%;" @click="hiddenPopover();$router.push('/system/personal-center')">
+          <el-button type="text" style="width: 100%;" @click="hiddenPopover();$router.push('/personal-center')">
             {{ $t('layout.SidebarHeader.personCenter') }}</el-button>
         </el-col>
         <el-col :span="2">
