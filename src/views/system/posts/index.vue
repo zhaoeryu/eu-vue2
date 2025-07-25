@@ -81,12 +81,10 @@
 <script>
 import { page, batchDel } from '@/api/system/post'
 import PostEditDialog from '@/views/system/posts/PostEditDialog.vue'
-import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
-import EuTableToolbar from '@/components/Crud/EuTableToolbar/index.vue'
 import ImportDialog from '@/components/ImportDialog/index.vue'
 export default {
   name: 'Posts',
-  components: { ImportDialog, EuTableToolbar, QueryExpandWrapper, PostEditDialog },
+  components: { ImportDialog, PostEditDialog },
   data() {
     return {
       loading: false,

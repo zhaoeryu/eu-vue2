@@ -150,12 +150,10 @@ import { getParentFieldsByLeafId, handleTreeData } from '@/utils'
 import ImportDialog from '@/components/ImportDialog/index.vue'
 import AssignRoleDialog from '@/views/system/users/AssignRoleDialog.vue'
 import UserEditDialog from '@/views/system/users/UserEditDialog.vue'
-import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
-import EuTableToolbar from '@/components/Crud/EuTableToolbar/index.vue'
 import ResetPasswordDialog from '@/views/system/users/ResetPasswordDialog.vue'
 export default {
   name: 'Users',
-  components: { ResetPasswordDialog, EuTableToolbar, QueryExpandWrapper, UserEditDialog, AssignRoleDialog, ImportDialog },
+  components: { ResetPasswordDialog, UserEditDialog, AssignRoleDialog, ImportDialog },
   data() {
     return {
       list: [],

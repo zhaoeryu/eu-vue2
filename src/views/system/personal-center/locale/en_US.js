@@ -36,7 +36,7 @@ export default {
   'personal-center.tab2.password.same': 'The new password cannot be the same as the old password',
   'personal-center.tab2.password.different': 'The new password and confirmation password do not match',
   'personal-center.tab2.confirm': 'Are you sure you want to change your password?',
-  'personal-center.tab2.success': 'Password successfully changed',
+  'personal-center.tab2.success': 'Password successfully changed, please log in again',
   // Update avatar
   'personal-center.UpdateAvatar.title': 'Change Avatar',
   'personal-center.UpdateAvatar.trigger': 'Select',

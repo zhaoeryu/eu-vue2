@@ -17,7 +17,8 @@ export function captcha() {
 export function getInfo() {
   return request({
     url: '/api/auth/info',
-    method: 'get'
+    method: 'get',
+    silent: true
   })
 }
 

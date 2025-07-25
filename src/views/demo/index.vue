@@ -204,14 +204,12 @@
 </template>
 
 <script>
-import EuTableToolbar from '@/components/Crud/EuTableToolbar/index.vue'
 import TableColumnSettingMixin from '@/mixins/TableColumnSettingMixin'
-import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
 
 export default {
   name: 'Demo',
   mixins: [TableColumnSettingMixin(['table'])],
-  components: { QueryExpandWrapper, EuTableToolbar },
+  components: { },
   data() {
     const sexList = [
       { label: '男', value: '1' },

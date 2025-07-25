@@ -83,6 +83,13 @@ export default {
         this.$emit('update:page', newLocalPage);
       },
       deep: true
+    },
+    value: {
+      handler() {
+        this.displayValue = null
+        this.onQuery()
+      },
+      immediate: true
     }
   },
   computed: {
@@ -129,7 +136,7 @@ export default {
     }
   },
   mounted() {
-    this.onQuery()
+    // this.onQuery()
     // this.$nextTick(() => {
     //   this.$refs.xDown.hidePanel = () => {}
     // })
@@ -146,19 +153,16 @@ export default {
         this.$refs.xDown.reactData.panelIndex = PopupManager.nextZIndex()
       })
     },
-    async onQuery(isForcedRefresh = false) {
-      if (!isForcedRefresh && this.list.length) {
-        return
-      }
+    async onQuery() {
       this.loading = true
       try {
-        const ms = isForcedRefresh ? 100 : 0
+        const ms = 100
         const res = await this.withMinDuration(this.fetchOptions, ms)
         let records = res.data || []
         this.list = records
-        
+
         // 显示值处理
-        this.displayValueHandle(records)
+        await this.displayValueHandle(records)
       } finally {
         this.loading = false
       }
@@ -232,7 +236,7 @@ export default {
       if (!this.page.enabled) {
         return
       }
-      this.onQuery(true)
+      this.onQuery()
     },
     onShowPanel({ visible }) {
       if (visible) {
@@ -287,6 +291,7 @@ export default {
             size="mini"
             placeholder="请输入"
             clearable
+            :validate-event="false"
             @change="onSearchChange"
           />
           <slot name="search-append"></slot>
@@ -295,8 +300,9 @@ export default {
           class="margin-left-sm"
           type="primary"
           size="mini"
-          @click="onQuery(true)"
-        >{{ page.enabled ? '查询' : '刷新' }}</el-button>
+          @click="onQuery"
+        >{{ page.enabled ? '查询' : '刷新' }}
+        </el-button>
       </div>
     </template>
     <template #footer>
@@ -308,7 +314,7 @@ export default {
         :limit.sync="localPage.size"
         :layout="'total, prev, pager, next'"
         class="padding-sm"
-        @pagination="onQuery(true)"
+        @pagination="onQuery"
       />
     </template>
     <template #dropdown>

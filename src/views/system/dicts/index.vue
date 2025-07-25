@@ -84,13 +84,11 @@
 import DictDetailDrawer from '@/views/system/dicts/DictDetailDrawer.vue'
 import { page, batchDel } from '@/api/system/dict'
 import DictEditDialog from '@/views/system/dicts/DictEditDialog.vue'
-import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
-import EuTableToolbar from '@/components/Crud/EuTableToolbar/index.vue'
 import ImportDialog from '@/components/ImportDialog/index.vue'
 
 export default {
   name: 'Dicts',
-  components: { ImportDialog, EuTableToolbar, QueryExpandWrapper, DictEditDialog, DictDetailDrawer },
+  components: { ImportDialog, DictEditDialog, DictDetailDrawer },
   data() {
     return {
       loading: false,

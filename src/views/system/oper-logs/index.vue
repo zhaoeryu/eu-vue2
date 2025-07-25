@@ -124,12 +124,10 @@
 <script>
 import { page } from '@/api/system/sysOperLog'
 import { BusinessTypeEnums } from '@/utils/enums'
-import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
-import EuTableToolbar from '@/components/Crud/EuTableToolbar/index.vue'
 
 export default {
   name: 'SysOperLog',
-  components: { EuTableToolbar, QueryExpandWrapper },
+  components: { },
   data() {
     return {
       loading: false,

@@ -131,6 +131,7 @@ export default {
   'request.error.network': '后端接口连接异常',
   'request.error.timeout': '系统接口请求超时',
   'request.error.failed': '系统接口{msg}异常',
+  'request.error.unauthorized': '{msg},请重新登录',
   'request.download.loading': '正在下载数据，请稍候',
   'request.download.success': '操作成功',
   'request.download.error': '下载文件出现错误，请联系管理员',

@@ -90,13 +90,11 @@ import { page, batchDel } from '@/api/system/role'
 import RoleUserDrawer from '@/views/system/roles/RoleUserDrawer.vue'
 import RoleEditDialog from '@/views/system/roles/RoleEditDialog.vue'
 import DataScopeDialog from '@/views/system/roles/DataScopeDialog.vue'
-import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
-import EuTableToolbar from '@/components/Crud/EuTableToolbar/index.vue'
 import ImportDialog from '@/components/ImportDialog/index.vue'
 
 export default {
   name: 'Roles',
-  components: { ImportDialog, EuTableToolbar, QueryExpandWrapper, DataScopeDialog, RoleEditDialog, RoleUserDrawer },
+  components: { ImportDialog, DataScopeDialog, RoleEditDialog, RoleUserDrawer },
   data() {
     return {
       loading: false,

@@ -95,12 +95,10 @@
 import { list, batchDel } from '@/api/system/menu'
 import { handleTreeData, getChildrenFields, getParentFieldsByLeafId } from '@/utils'
 import MenuEditDialog from '@/views/system/menus/MenuEditDialog.vue'
-import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
-import EuTableToolbar from '@/components/Crud/EuTableToolbar/index.vue'
 
 export default {
   name: 'Menus',
-  components: { EuTableToolbar, QueryExpandWrapper, MenuEditDialog },
+  components: { MenuEditDialog },
   data() {
     return {
       refreshTable: true,

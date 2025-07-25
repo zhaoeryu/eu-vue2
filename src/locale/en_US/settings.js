@@ -131,6 +131,7 @@ export default {
   'request.error.network': 'Backend interface connection exception',
   'request.error.timeout': 'System interface request timeout',
   'request.error.failed': 'System interface {msg} exception',
+  'request.error.unauthorized': '{msg},pplease log in again',
   'request.download.loading': 'Downloading data, please wait',
   'request.download.success': 'Operation succeeded',
   'request.download.error': 'An error occurred while downloading the file, please contact the administrator',

@@ -91,13 +91,11 @@
 <script>
 import { page, batchDel } from '@/api/system/sysNotice'
 import SysNoticeEditDialog from './SysNoticeEditDialog.vue'
-import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
-import EuTableToolbar from '@/components/Crud/EuTableToolbar/index.vue'
 import SysNoticeViewDialog from '@/views/system/sysNotice/SysNoticeViewDialog.vue'
 import { NoticeTypeEnums } from '@/utils/enums'
 export default {
   name: 'SysNotice',
-  components: { SysNoticeViewDialog, EuTableToolbar, QueryExpandWrapper, SysNoticeEditDialog },
+  components: { SysNoticeViewDialog, SysNoticeEditDialog },
   data() {
     return {
       loading: false,

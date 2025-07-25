@@ -36,7 +36,7 @@ export default {
   'personal-center.tab2.password.same': '新密码不能和旧密码相同',
   'personal-center.tab2.password.different': '新密码和确认密码不一致',
   'personal-center.tab2.confirm': '确认修改密码吗?',
-  'personal-center.tab2.success': '密码修改成功',
+  'personal-center.tab2.success': '密码修改成功，请重新登录',
   // update avatar
   'personal-center.UpdateAvatar.title': '修改头像',
   'personal-center.UpdateAvatar.trigger': '选 择',

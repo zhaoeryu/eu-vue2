@@ -32,6 +32,20 @@ Vue.component('Pagination', Pagination)
 import TableColumnSettingDialog from '@/components/TableColumnSettingDialog/index.vue'
 Vue.component('TableColumnSettingDialog', TableColumnSettingDialog)
 
+import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
+import EuTableToolbar from '@/components/Crud/EuTableToolbar/index.vue'
+Vue.component('QueryExpandWrapper', QueryExpandWrapper)
+Vue.component('EuTableToolbar', EuTableToolbar)
+
+import ContentBlock from '@/components/ContentLayout/ContentBlock.vue'
+import ContentFooter from '@/components/ContentLayout/ContentFooter.vue'
+import ContentLayout from '@/components/ContentLayout/ContentLayout.vue'
+import ContentBlockHeader from '@/components/ContentLayout/ContentBlockHeader.vue'
+Vue.component(ContentBlock.name, ContentBlock)
+Vue.component(ContentFooter.name, ContentFooter)
+Vue.component(ContentLayout.name, ContentLayout)
+Vue.component(ContentBlockHeader.name, ContentBlockHeader)
+
 // 指令
 import directive from '@/directive'
 Vue.use(directive)

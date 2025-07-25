@@ -3,12 +3,10 @@ import AddAuthUserDialog from '@/views/system/roles/AddAuthUserDialog.vue'
 import { cancelAuth, roleUserList } from '@/api/system/user'
 import { list as deptList } from '@/api/system/dept'
 import { getParentFieldsByLeafId, handleTreeData } from '@/utils'
-import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
-import EuTableToolbar from '@/components/Crud/EuTableToolbar/index.vue'
 
 export default {
   name: 'RoleUserDrawer',
-  components: { EuTableToolbar, QueryExpandWrapper, AddAuthUserDialog },
+  components: { AddAuthUserDialog },
   data() {
     return {
       show: false,

@@ -114,11 +114,9 @@
 import { page, batchDel, execJob, pauseOrResume } from '@/api/system/job'
 import JobLog from '@/views/system/jobs/JobLog.vue'
 import JobEditDialog from '@/views/system/jobs/JobEditDialog.vue'
-import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
-import EuTableToolbar from '@/components/Crud/EuTableToolbar/index.vue'
 export default {
   name: 'Jobs',
-  components: { EuTableToolbar, QueryExpandWrapper, JobEditDialog, JobLog },
+  components: { JobEditDialog, JobLog },
   data() {
     return {
       loading: false,

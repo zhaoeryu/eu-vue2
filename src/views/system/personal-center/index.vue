@@ -207,7 +207,12 @@ export default {
         }).then(() => {
           this.updatePasswordFormLoading = true
           updatePassword(this.updatePasswordForm.oldPassword, this.updatePasswordForm.newPassword).then(() => {
-            this.$message.success(this.$t('personal-center.tab2.success'))
+            this.$alert(this.$t('personal-center.tab2.success'), this.$t('general.confirm.title'), {
+              confirmButtonText: this.$t('general.confirm.confirm'),
+              callback: () => {
+                location.reload()
+              }
+            });
           }).finally(() => {
             this.updatePasswordFormLoading = false
           })

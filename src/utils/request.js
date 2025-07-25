@@ -2,12 +2,13 @@ import axios from 'axios'
 import { getToken } from '@/utils/auth'
 import { EU_FRONT_KEY, REQUEST_HEADER_TOKEN } from '@/utils/constants'
 import errorCode from '@/utils/errorCode'
-import { Message, Loading } from 'element-ui'
+import { Message, Loading, MessageBox } from 'element-ui'
 import { blobValidate } from '@/utils/index'
 import { saveAs } from 'file-saver'
 import { defaultSetting } from '@/settings'
 import qs from 'qs'
 import i18n, { i18nConvertConnector } from '@/plugins/i18n'
+import store from '@/store'
 
 export const commonReqHeaders = {
   'X-Eu-Front': EU_FRONT_KEY,
@@ -36,7 +37,6 @@ service.interceptors.request.use(config => {
   if (getToken()) {
     config.headers[REQUEST_HEADER_TOKEN] = getToken()
   }
-
   return config
 }, error => {
   console.error(error)
@@ -57,10 +57,7 @@ service.interceptors.response.use(res => {
     return res.data
   }
   if (code === 401) {
-    if (!res.config.silent) {
-      showMessage(res, { message, type: 'warning' })
-    }
-    return Promise.reject(message)
+    doUnauthrorized(res, { message, type: 'error' })
   } else if (code === 600) {
     // 警告消息
     showMessage(res, { message, type: 'warning' })
@@ -132,6 +129,29 @@ function showMessage(res, messageOptions) {
     return
   }
   Message(messageOptions)
+}
+
+function doUnauthrorized(res, messageOptions) {
+  if (res.config.silent) {
+    // 静默不处理
+    return
+  }
+  // 如果当前页面是登录页，不提示
+  if (window.location.pathname === '/login') {
+    return
+  }
+  MessageBox.alert(
+    i18n.t('request.error.unauthorized', { msg: messageOptions.message }),
+    i18n.t('general.confirm.title'),
+    {
+      confirmButtonText: i18n.t('general.confirm.confirm'),
+      callback: () => {
+        store.dispatch('user/Logout').finally(() => {
+          location.reload()
+        })
+      }
+    }
+  )
 }
 
 export default service

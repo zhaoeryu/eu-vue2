@@ -53,10 +53,9 @@
 import { page, syncTable } from '@/api/system/generate'
 import GeneratePreview from '@/views/tools/generate/GeneratePreview.vue'
 import GenerateSettingDrawer from '@/views/tools/generate/GenerateSettingDrawer.vue'
-import QueryExpandWrapper from '@/components/Crud/QueryExpandWrapper/index.vue'
 export default {
   name: 'Generate',
-  components: { QueryExpandWrapper, GenerateSettingDrawer, GeneratePreview },
+  components: { GenerateSettingDrawer, GeneratePreview },
   data() {
     return {
       loading: false,
