@@ -5,6 +5,7 @@ export default {
   'menu.query.expandAll': 'Expand All',
   'menu.query.collapseAll': 'Collapse All',
   'menu.column.menuName': 'Menu Name',
+  'menu.column.menuType': 'Menu Type',
   'menu.column.menuIcon': 'Icon',
   'menu.column.sortNum': 'Sort Order',
   'menu.column.path': 'Route Path',

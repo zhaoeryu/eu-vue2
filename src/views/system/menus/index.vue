@@ -40,6 +40,13 @@
           :tree-props="{children: 'children'}"
         >
           <el-table-column prop="menuName" :label="$t('menu.column.menuName')" width="180"></el-table-column>
+          <el-table-column prop="menuType" :label="$t('menu.column.menuType')" width="100">
+            <template #default="{ row }">
+              <el-tag v-if="row.menuType === 1" type="info">{{ $t('const.MenuTypeEnums.DIR') }}</el-tag>
+              <el-tag v-else-if="row.menuType === 2">{{ $t('const.MenuTypeEnums.MENU') }}</el-tag>
+              <el-tag v-else-if="row.menuType === 3" type="success">{{ $t('const.MenuTypeEnums.BUTTON') }}</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column prop="menuIcon" :label="$t('menu.column.menuIcon')" width="60">
             <template slot-scope="{ row }" v-if="row.menuIcon">
               <svg-icon :icon-class="row.menuIcon"/>

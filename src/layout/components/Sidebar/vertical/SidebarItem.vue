@@ -1,6 +1,5 @@
 <script>
 import AppLink from '@/layout/components/Sidebar/Link.vue'
-import { isExternal } from '@/utils'
 import ElMenuItem from '@/components/ElMenuItem.vue'
 export default {
   name: 'SidebarItem',
@@ -9,11 +8,6 @@ export default {
     item: {
       type: Object,
       required: true
-    },
-    rootPath: {
-      type: String,
-      required: false,
-      default: ''
     },
     level: {
       type: Number,
@@ -31,23 +25,9 @@ export default {
     isHiddenChildren() {
       const isNotMultiChildren = this.childrenList.length < 2
       const isAlwaysShow = this.item.meta?.alwaysShow
-      // 如果没有子菜单
-      // 如果有子菜单，并且子菜单只有一个，同时alwaysShow = false，并且是一级菜单
+      // 如果子菜单只有一个，同时alwaysShow = false，并且是一级菜单
       return !this.childrenList.length
         || (isNotMultiChildren && !isAlwaysShow && this.isRoot)
-    },
-    fullRootPath() {
-      // 如果没有传上级菜单的路径，则返回当前激活的一级菜单
-      const prefix = this.rootPath
-      // 检查rootPath是否以/结尾，如果不是则加上/
-      return prefix.replace(/\/$/, '') + '/'
-    },
-    /**
-     * 当前Item处理后的路径（如果item.path以/开头，则去掉/）
-     * @returns {string}
-     */
-    curItemPath() {
-      return this.item.path.replace(/^\//, '')
     },
     /**
      * 解析后的路径
@@ -55,19 +35,9 @@ export default {
      */
     resolvedPath() {
       if (this.item.fullPath) {
-        // 如果设置了自定义的路径，则直接返回
         return this.item.fullPath
       }
-      // 如果是外链，直接返回
-      if (isExternal(this.curItemPath)) {
-        return this.curItemPath
-      }
-      // 如果是隐藏子菜单且有重定向，则返回重定向地址
-      if (this.isHiddenChildren && this.item.redirect) {
-        return this.item.redirect
-      }
-      // 正常返回
-      return this.fullRootPath + this.curItemPath
+      return this.item.path
     },
     isRoot() {
       return this.level === 0
@@ -87,7 +57,7 @@ export default {
         <el-menu-item :index="resolvedPath">
           <svg-icon v-if="isRoot && item.meta.icon" :icon-class="item.meta.icon" />
           <template #title>
-            <span>{{ item.meta.title }}</span>
+            <span class="text-overflow">{{ item.meta.title }}</span>
             <el-tag v-if="item.meta.badge" type="danger" effect="dark">{{ item.meta.badge }}</el-tag>
             <span v-else-if="item.meta.dot" class="eu-dot eu-dot-error">
               <span></span>
@@ -105,7 +75,7 @@ export default {
     >
       <template #title>
         <svg-icon v-if="isRoot && item.meta.icon" :icon-class="item.meta.icon" />
-        <span>{{ item.meta.title }}</span>
+        <span class="text-overflow">{{ item.meta.title }}</span>
       </template>
       <sidebar-item
         v-for="child in childrenList"
@@ -123,6 +93,8 @@ export default {
   display: inline-block;
   width: 1.3em;
   height: 1.3em;
+  min-width: 1.3em;
+  min-height: 1.3em;
   text-align: center;
   margin-right: 8px;
 }

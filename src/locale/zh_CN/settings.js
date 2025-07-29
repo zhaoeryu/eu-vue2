@@ -83,7 +83,6 @@ export default {
   'layout.ThemeConfig.form.showTabsBar': '标签页',
   'layout.ThemeConfig.form.fixedTabsBar': '固定标签',
   'layout.ThemeConfig.form.showProgressBar': '进度条',
-  'layout.ThemeConfig.form.useUsualMenu': '开启快捷菜单',
   'layout.ThemeConfig.form.enabledWatermark': '开启水印',
   'layout.ThemeConfig.form.darkMode': '暗黑模式',
   'layout.ThemeConfig.submit': '保存',
@@ -172,6 +171,7 @@ export default {
   '401.back': '回到上一个页面',
   // 404
   '404.title': '抱歉，页面暂时无法访问',
+  '404.from': '来源：',
   '404.desc1': '可能有以下原因：',
   '404.desc2': '网址错误：请检查地址是否完整或存在多余字符',
   '404.desc3': '网络问题：请检查网络是否已连接',

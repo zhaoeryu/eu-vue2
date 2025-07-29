@@ -4,6 +4,7 @@
       <img :src="require('@/assets/images/notfound.png')" alt="" width="200">
       <div class="not-found">
         <div class="not-found__404">{{ $t('404.title') }}</div>
+        <div v-if="$route.redirectedFrom" class="not-found__url">{{ $t('404.from') }}{{ $route.redirectedFrom || '' }}</div>
         <div class="not-found__desc">
           <p>{{ $t('404.desc1') }}</p>
           <p>{{ $t('404.desc2') }}</p>
@@ -43,9 +44,15 @@ body[eu-theme='dark'] {
 .not-found__404 {
   font-size: 20px;
 }
+.not-found__url {
+  margin-top: 16px;
+  font-size: 14px;
+  p {
+    line-height: 2.5em;
+  }
+}
 .not-found__desc {
   margin: 30px 0;
-  color: #606266;
   font-size: 14px;
   p {
     line-height: 2.5em;

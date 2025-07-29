@@ -14,23 +14,11 @@ export default {
   computed: {
     ...mapGetters({
       routes: 'routes/routes',
-      usualMenus: 'routes/usualMenus',
       theme: 'settings/theme',
       sidebarCollapsed: 'settings/sidebarCollapsed'
     }),
     menuList() {
-      const menus = this.routes.filter(route => !route.hidden)
-      if (this.theme.useUsualMenu && this.shortcutMenu.children.length) {
-        return [this.shortcutMenu, ...menus]
-      }
-      return menus
-    },
-    shortcutMenu() {
-      return {
-        path: '/usual',
-        meta: { title: '快捷', icon: 'pushpin', shortcut: true },
-        children: this.usualMenus || []
-      }
+      return this.routes.filter(route => !route.hidden)
     },
     activeFirstMenu() {
       return this.$route.matched.find(item => item.parent === undefined)
@@ -98,6 +86,7 @@ export default {
           <template #reference>
             <first-sidebar-item
               :item="item"
+              :menu-list="menuList"
               :class="{ hover: firstMenuHover[index] }"
             />
           </template>
@@ -106,7 +95,6 @@ export default {
             <second-sidebar
               ref="popSecondSidebar"
               :second-nav-list="item.children.filter(m => !m.hidden)"
-              :root-path="item.path"
               class="eu-nav-pop-scroll-wrapper"
               @item-click="onItemClick(index, $event)"
             />
@@ -130,7 +118,7 @@ export default {
 .eu-nav-sidebar__first {
   width: var(--sidebar-first-width, 124px);
   background-color: var(--theme-nav-first-bg);
-  height: calc(100vh - var(--layout-header-nav-height) - var(--layout-sidebar-header-height) - var(--layout-sidebar-bottom-height));
+  height: calc(100vh - var(--layout-header-nav-height));
   display: flex;
   flex-direction: column;
   .eu-nav-sidebar__first-list {
@@ -151,7 +139,7 @@ export default {
   display: flex;
   flex-direction: column;
   position: relative;
-  height: calc(100vh - var(--layout-header-nav-height) - var(--layout-sidebar-header-height) - var(--layout-sidebar-bottom-height) - 1px);
+  height: calc(100vh - var(--layout-header-nav-height) - 1px);
   transition: width .15s linear;
 
   &:before {

@@ -28,6 +28,7 @@
     "screenfull": "^6.0.2",
     "sortablejs": "^1.15.0",
     "tinymce": "^5.10.9",
+    "tree-lodash": "^0.4.0",
     "vue": "^2.7.16",
     "vue-clipboard2": "^0.3.3",
     "vue-cropper": "0.5.5",

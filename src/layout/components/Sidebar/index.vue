@@ -31,7 +31,7 @@ export default {
 <style lang='scss' scoped>
 #eu-nav-sidebar {
   width: var(--sidebar-width, 264px);
-  height: 100%;
+  height: calc(100vh - var(--layout-header-nav-height));
   position: fixed;
   top: var(--layout-header-nav-height);
   left: 0;

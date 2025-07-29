@@ -83,7 +83,6 @@ export default {
   'layout.ThemeConfig.form.showTabsBar': 'Tabs',
   'layout.ThemeConfig.form.fixedTabsBar': 'Fixed tabs',
   'layout.ThemeConfig.form.showProgressBar': 'Progress bar',
-  'layout.ThemeConfig.form.useUsualMenu': 'Enable quick menu',
   'layout.ThemeConfig.form.enabledWatermark': 'Enable watermark',
   'layout.ThemeConfig.form.darkMode': 'Dark mode',
   'layout.ThemeConfig.submit': 'Save',
@@ -172,6 +171,7 @@ export default {
   '401.back': 'Go back to the previous page',
   // 404 Not Found
   '404.title': 'Sorry, the page cannot be accessed at the moment',
+  '404.from': 'From：',
   '404.desc1': 'Possible reasons:',
   '404.desc2': 'URL error: Please check if the address is complete or contains extra characters',
   '404.desc3': 'Network issue: Please check if your network is connected',

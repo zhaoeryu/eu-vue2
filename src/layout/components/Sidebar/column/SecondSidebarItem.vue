@@ -1,15 +1,11 @@
 <script>
 import AppLink from '@/layout/components/Sidebar/Link.vue'
-import { isExternal } from '@/utils'
+import { isMenuSegmentMatch } from '@/utils/route-helpers'
 
 export default {
   name: 'SecondSidebarItem',
   components: { AppLink },
   props: {
-    rootPath: {
-      type: String,
-      required: false
-    },
     item: {
       type: Object,
       required: true
@@ -21,49 +17,15 @@ export default {
     }
   },
   computed: {
-    fullRootPath() {
-      // 如果没有传上级菜单的路径，则返回当前激活的一级菜单
-      const prefix = this.rootPath ? this.rootPath : this.activeFirstMenu
-      // 检查rootPath是否以/结尾，如果不是则加上/
-      return prefix.replace(/\/$/, '') + '/'
-    },
     isActive() {
-      // 1、最后一层菜单，直接比较路径
-      // 2、非最后一层菜单，判断路径的每个部分是否和当前激活的菜单路径的每个部分是否一致
-      let isActive = this.resolvedPath === this.activeMenu
-      if (!isActive) {
-        isActive = this.activeMenu.startsWith(this.resolvedPath)
-        if (isActive) {
-          const routeParts = this.activeMenu.split('/')
-          const menuParts = this.resolvedPath.split('/')
-
-          isActive = menuParts.every((part, index) => part === routeParts[index])
-        }
+      const route = this.$route
+      const activeMenu = route.path
+      let isActive = this.resolvedPath === activeMenu
+      if (!isActive && route.meta.hidden === true) {
+        // 支持模糊匹配
+        isActive = isMenuSegmentMatch(activeMenu, this.resolvedPath)
       }
       return isActive
-    },
-    /**
-     * 当前Item处理后的路径（如果item.path以/开头，则去掉/）
-     * @returns {string}
-     */
-    curItemPath() {
-      return this.item.path.replace(/^\//, '')
-    },
-    /**
-     * 当前激活的菜单
-     * @returns {string}
-     */
-    activeMenu() {
-      const route = this.$route
-      return route.path
-    },
-    /**
-     * 当前激活的一级菜单
-     * @returns {string}
-     */
-    activeFirstMenu() {
-      const route = this.$route.matched.find(item => item.parent === undefined)
-      return route.path
     },
     /**
      * 解析后的路径
@@ -71,10 +33,9 @@ export default {
      */
     resolvedPath() {
       if (this.item.fullPath) {
-        // 如果设置了自定义的路径，则直接返回
         return this.item.fullPath
       }
-      return isExternal(this.curItemPath) ? this.curItemPath : this.fullRootPath + this.curItemPath
+      return this.item.path
     },
     hasChildren() {
       return this.item.children && (this.item.children.filter(m => !m.hidden)).length
@@ -97,21 +58,20 @@ export default {
     <template v-if="hasChildren">
       <div class="eu-submenu__title" @click="isOpened = !isOpened">
         <i class="el-icon-arrow-right"></i>
-        <span>{{ item.meta.title }}</span>
+        <span class="text-overflow">{{ item.meta.title }}</span>
       </div>
       <ul class="eu-submenu__body">
         <second-sidebar-item
           v-for="child in (item.children.filter(m => !m.hidden))"
           :key="child.path"
           :item="child"
-          :root-path="resolvedPath"
           @item-click="$emit('item-click', $event)"
         />
       </ul>
     </template>
     <!-- 没有子菜单 -->
     <app-link v-else :to="resolvedPath">
-      <span>{{ item.meta.title }}</span>
+      <span class="text-overflow">{{ item.meta.title }}</span>
       <el-tag v-if="item.meta.badge" type="danger" effect="dark">{{ item.meta.badge }}</el-tag>
       <span v-else-if="item.meta.dot" class="eu-dot eu-dot-error">
         <span></span>

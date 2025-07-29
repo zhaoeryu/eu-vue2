@@ -45,9 +45,6 @@
           <el-form-item :label="$t('layout.ThemeConfig.form.showProgressBar')">
             <el-switch v-model="form.showProgressBar" />
           </el-form-item>
-          <el-form-item :label="$t('layout.ThemeConfig.form.useUsualMenu')">
-            <el-switch v-model="form.useUsualMenu" />
-          </el-form-item>
           <el-form-item :label="$t('layout.ThemeConfig.form.enabledWatermark')">
             <el-switch v-model="form.enabledWatermark" />
           </el-form-item>

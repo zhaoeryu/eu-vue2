@@ -11,8 +11,6 @@ export const defaultTheme = {
   darkMode: 'syncOS',
   // 是否使用进度条
   showProgressBar: true,
-  // 是否使用快捷菜单
-  useUsualMenu: false,
   // 是否开启水印
   enabledWatermark: true
 }

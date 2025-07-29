@@ -5,6 +5,7 @@ export default {
   'menu.query.expandAll': '全部折叠',
   'menu.query.collapseAll': '全部展开',
   'menu.column.menuName': '菜单名称',
+  'menu.column.menuType': '菜单类型',
   'menu.column.menuIcon': '图标',
   'menu.column.sortNum': '排序',
   'menu.column.path': '访问路径',

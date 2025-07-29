@@ -1,5 +1,6 @@
 <script>
 import AppLink from '@/layout/components/Sidebar/Link.vue'
+import { getMaxMatchedMenu } from '@/utils/route-helpers'
 
 export default {
   name: 'FirstSidebarItem',
@@ -7,6 +8,10 @@ export default {
   props: {
     item: {
       type: Object,
+      required: true
+    },
+    menuList: {
+      type: Array,
       required: true
     }
   },
@@ -19,7 +24,16 @@ export default {
       if (this.item.path === '/' && this.activeFirstMenu === '') {
         return true
       }
-      return this.item.path === this.activeFirstMenu
+      if (this.item.path === this.activeFirstMenu) {
+        return true
+      }
+
+      if (this.$route.meta.hidden === true) {
+        // 支持模糊匹配
+        const matched = getMaxMatchedMenu(this.$route.path, this.menuList)
+        return matched && matched === this.item.path
+      }
+      return false
     }
   },
 }
@@ -27,15 +41,9 @@ export default {
 
 <template>
   <li :class="{ 'active': isActive }">
-    <template v-if="item.meta.shortcut">
-      <app-link :to="item.children[0].fullPath">
-        <svg-icon v-if="item.meta.icon" :icon-class="item.meta.icon" />
-        <span>{{ item.meta.title }}</span>
-      </app-link>
-    </template>
-    <app-link v-else :to="item.path">
+    <app-link :to="item.path">
       <svg-icon v-if="item.meta.icon" :icon-class="item.meta.icon" />
-      <span>{{ item.meta.title }}</span>
+      <span class="text-overflow">{{ item.meta.title }}</span>
     </app-link>
   </li>
 </template>
@@ -59,9 +67,8 @@ li {
     height: 100%;
     >.svg-icon {
       display: inline-block;
-      width: 1.3em;
       min-width: 1.3em;
-      height: 1.3em;
+      min-height: 1.3em;
       text-align: center;
       margin-right: 8px;
     }

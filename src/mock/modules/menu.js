@@ -358,25 +358,6 @@ const arr = Mock.mock({
       parentId: 20
     },
     {
-      menuId: 1100,
-      menuName: '快捷菜单',
-      menuIcon: null,
-      sortNum: '@integer(0, 100)',
-      permission: 'setting:usual-menus',
-      path: '/usual-menus',
-      params: null,
-      componentName: 'UsualMenus',
-      component: 'setting/usual-menus',
-      status: 1,
-      visible: true,
-      cache: true,
-      iframe: false,
-      dot: false,
-      badge: 'New',
-      menuType: 2,
-      parentId: 20
-    },
-    {
       menuId: 30,
       menuName: '系统工具',
       menuIcon: 'gongju',

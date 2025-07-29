@@ -1,49 +1,76 @@
 <script>
 import { mapGetters } from 'vuex'
 import SidebarItem from '@/layout/components/Sidebar/vertical/SidebarItem.vue'
+import { getMaxMatchedMenu } from '@/utils/route-helpers'
 
 export default {
   name: 'SidebarVertical',
   components: { SidebarItem },
   data() {
-    return {}
+    return {
+      activeMenu: null,
+    }
   },
   computed: {
     ...mapGetters({
       routes: 'routes/routes',
-      usualMenus: 'routes/usualMenus',
       theme: 'settings/theme',
       sidebarCollapsed: 'settings/sidebarCollapsed'
     }),
     menuList() {
-      const menus = this.routes.filter(route => !route.hidden)
-      if (this.theme.useUsualMenu && this.shortcutMenu.children.length) {
-        return [this.shortcutMenu, ...menus]
-      }
-      return menus
-    },
-    shortcutMenu() {
-      return {
-        path: '/usual',
-        meta: { title: '快捷', icon: 'pushpin', shortcut: true },
-        children: this.usualMenus || []
-      }
+      return this.routes.filter(route => !route.hidden)
     },
     menuUniqueOpened() {
       return this.theme.uniqueOpened
     },
-    activeMenu() {
-      const route = this.$route
-      const { path } = route
-      return path
+    activeRoute() {
+      return this.$route
     },
   },
+  mounted() {
+    this.activeMenu = this.$route.path
+    this.tryHighlightMenu()
+  },
+  watch: {
+    $route: {
+      handler(){
+        this.activeMenu = this.$route.path
+        this.tryHighlightMenu()
+      },
+      // 深度观察监听
+      deep: true
+    },
+  },
+  methods: {
+    tryHighlightMenu() {
+      this.$nextTick(() => {
+        const isNotAcitve = this.$refs.menu.activeIndex === null
+        if (isNotAcitve) {
+          // 首页特殊处理
+          const foundHomeMenu = this.menuList.find(item => item.path === '/' && item.redirect === this.$route.path)
+          if (foundHomeMenu) {
+            this.activeMenu = foundHomeMenu.path
+            return
+          }
+
+          if (this.$route.meta.hidden === true) {
+            // 支持模糊匹配
+            const matched = getMaxMatchedMenu(this.activeMenu, this.menuList)
+            if (matched) {
+              this.activeMenu = matched
+            }
+          }
+        }
+      })
+    },
+  }
 }
 </script>
 
 <template>
   <el-scrollbar wrap-class="eu-scrollbar-wrapper">
     <el-menu
+      ref="menu"
       :default-active="activeMenu"
       :collapse="sidebarCollapsed"
       :unique-opened="menuUniqueOpened"
@@ -151,16 +178,14 @@ export default {
     color: var(--theme-nav-first-active-color);
   }
 }
+::v-deep {
+  .eu-scrollbar-wrapper {
+    margin-right: unset !important;
+    overflow-x: hidden !important;
 
-</style>
-<style lang="scss">
-.eu-scrollbar-wrapper {
-  margin-right: unset !important;
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-
-  &::-webkit-scrollbar {
-    width: 0;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
   }
 }
 </style>

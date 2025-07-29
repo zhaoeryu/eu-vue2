@@ -16,10 +16,6 @@ export default {
       type: Array,
       required: true
     },
-    rootPath: {
-      type: String,
-      required: false
-    },
   },
   mounted() {
     // 首次渲染后，如果二级菜单内容需要滚动，则显示滚动指示器
@@ -78,7 +74,6 @@ export default {
       <template v-for="(item, index) in secondNavList">
         <second-sidebar-item
           :item="item"
-          :root-path="rootPath"
           :key="index"
           @item-click="$emit('item-click', $event)"
         />
