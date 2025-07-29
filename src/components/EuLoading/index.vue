@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'EuLoading'
+}
+</script>
+
 <template>
   <div class="loading-container">
     <!-- loading -->
@@ -107,5 +113,3 @@
   }
 }
 </style>
-<script>
-</script>
