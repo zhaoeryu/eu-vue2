@@ -23,8 +23,8 @@ export default {
       this.show = true
 
       // 获取表格列配置
-      const { tableColumn } = refTable.getTableColumn()
-      const _columns = tableColumn.filter(item => this.columnFilter(item))
+      const { fullColumn } = refTable.getTableColumn()
+      const _columns = fullColumn.filter(item => this.columnFilter(item))
         .filter(item => item && item.field && item.title)
         .map(item => {
           return {
