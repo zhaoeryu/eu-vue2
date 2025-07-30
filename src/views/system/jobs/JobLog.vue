@@ -160,7 +160,7 @@ export default {
       this.onQuery()
     },
     onExport() {
-      this.download('/api/system/job-log/export', this.queryParams, `jobLog_${new Date().getTime()}.xlsx`)
+      this.$download('/api/system/job-log/export', this.queryParams, `jobLog_${new Date().getTime()}.xlsx`)
     },
     onRowDelete(row) {
       this.$confirm(this.$t('job.log.message.delete.confirm', { id: row.id }), this.$t('general.confirm.title'), {

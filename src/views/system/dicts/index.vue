@@ -128,7 +128,7 @@ export default {
       })
     },
     onExport() {
-      this.download('/api/system/dict/export', this.queryParams, `dict_${new Date().getTime()}.xlsx`)
+      this.$download('/api/system/dict/export', this.queryParams, `dict_${new Date().getTime()}.xlsx`)
     },
     onImport() {
       this.$refs.importDialog.open()

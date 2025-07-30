@@ -131,7 +131,7 @@ export default {
       this.onQuery()
     },
     onExport() {
-      this.download('/api/system/role/export', this.queryParams, `role_${new Date().getTime()}.xlsx`)
+      this.$download('/api/system/role/export', this.queryParams, `role_${new Date().getTime()}.xlsx`)
     },
     onImport() {
       this.$refs.importDialog.open()

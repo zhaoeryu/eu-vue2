@@ -123,7 +123,7 @@ export default {
     },
     onRowGen(row) {
       row._genLoading = true
-      this.download('/api/gen/gen', {
+      this.$download('/api/gen/gen', {
         tableName: row.tableName
       }, `${row.tableName}.zip`).finally(() => {
         row._genLoading = false

@@ -177,7 +177,7 @@ export default {
       this.onQuery()
     },
     onExport() {
-      this.download('/api/system/sysOperLog/export', this.queryParams, `sysOperLog_${new Date().getTime()}.xlsx`)
+      this.$download('/api/system/sysOperLog/export', this.queryParams, `sysOperLog_${new Date().getTime()}.xlsx`)
     },
     onRowStackView(row) {
       Object.assign(this.$data.errorStackDialog, this.$options.data().errorStackDialog)

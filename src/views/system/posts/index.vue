@@ -124,7 +124,7 @@ export default {
       })
     },
     onExport() {
-      this.download('/api/system/post/export', this.queryParams, `post_${new Date().getTime()}.xlsx`)
+      this.$download('/api/system/post/export', this.queryParams, `post_${new Date().getTime()}.xlsx`)
     },
     onImport() {
       this.$refs.importDialog.open()

@@ -345,7 +345,7 @@ export default {
       });
     },
     onExport() {
-      this.download('/api/system/user/export', this.queryParams, `user_${new Date().getTime()}.xlsx`)
+      this.$download('/api/system/user/export', this.queryParams, `user_${new Date().getTime()}.xlsx`)
     },
     onImport() {
       this.$refs.importDialog.open()

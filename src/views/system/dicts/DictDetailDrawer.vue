@@ -154,7 +154,7 @@ export default {
       })
     },
     onExport() {
-      this.download('/api/system/dict-detail/export', {
+      this.$download('/api/system/dict-detail/export', {
         pid: this.dictId,
         ...this.queryParams
       }, `dictDetail_${new Date().getTime()}.xlsx`)

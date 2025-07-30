@@ -139,7 +139,7 @@ export default {
       try {
         await this.onSave()
 
-        this.download('/api/gen/gen', {
+        this.$download('/api/gen/gen', {
           tableName: this.gen.tableName
         }, `${this.gen.tableName}.zip`)
       } catch (e) {

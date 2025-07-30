@@ -156,7 +156,7 @@ export default {
       })
     },
     onExport() {
-      this.download('/api/system/job/export', this.queryParams, `job_${new Date().getTime()}.xlsx`)
+      this.$download('/api/system/job/export', this.queryParams, `job_${new Date().getTime()}.xlsx`)
     },
     onBatchDel() {
       const ids = this.$refs.table.selection.map(item => item.id)

@@ -140,7 +140,7 @@ export default {
       })
     },
     onExport() {
-      this.download('/api/system/sysNotice/export', this.queryParams, `通知公告_${new Date().getTime()}.xlsx`)
+      this.$download('/api/system/sysNotice/export', this.queryParams, `通知公告_${new Date().getTime()}.xlsx`)
     },
     onBatchDel() {
       const ids = this.$refs.table.selection.map(item => item.id)

@@ -63,7 +63,7 @@ import { hasPermission, hasRole } from '@/utils/permission'
 import { openNewWindow, openTableColumnSettingDialog } from '@/utils/eu'
 import { EU_TABLE_COLUMN_FIELD_OPERATION } from '@/utils/constants'
 
-Vue.prototype.download = download
+Vue.prototype.$download = download
 Vue.prototype.$DataTimeRangePickerOptions = DataTimeRangePickerOptions
 Vue.prototype.$enumsParse = enumsParse
 Vue.prototype.$enumsParseLabel = enumsParseLabel

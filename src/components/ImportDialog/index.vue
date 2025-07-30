@@ -48,7 +48,7 @@ export default {
       this.show = true
     },
     onExportTemplate() {
-      this.download(this.tplExportUrl, {}, `${this.$t('crud.ImportDialog.tplFilePrefix')}_${new Date().getTime()}.xlsx`)
+      this.$download(this.tplExportUrl, {}, `${this.$t('crud.ImportDialog.tplFilePrefix')}_${new Date().getTime()}.xlsx`)
     },
     onSuccessCallback(response) {
       if (response.code !== 200) {
