@@ -2,7 +2,7 @@
 .el-dialog__header {
   border-bottom: 1px solid var(--color-border-2);
 }
-.el-dialog .eu-submit-btn {
+.eu-submit-btn {
   width: 150px;
 }
 
@@ -39,4 +39,30 @@
 
 .el-page-header__content {
   font-size: 16px;
+}
+
+.el-drawer {
+  .el-drawer__header {
+    position: relative;
+    font-size: 16px;
+    margin-bottom: 16px;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: var(--color-border);
+    }
+  }
+  .drawer-body {
+    height: 100%;
+    .drawer-body__footer {
+      width: 100%;
+      // 上阴影
+      box-shadow: 0 0 10px 0 var(--color-border-3);
+      z-index: 1;
+    }
+  }
 }

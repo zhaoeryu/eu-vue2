@@ -4,6 +4,7 @@
     :visible.sync="show"
     size="80%"
     direction="rtl"
+    append-to-body
   >
     <div v-loading="loading" style="position: relative;">
       <div style="display: flex;">
@@ -127,11 +128,6 @@ function buildTree(data) {
 </script>
 
 <style lang='scss' scoped>
-::v-deep {
-  .el-drawer__header {
-    margin-bottom: 12px;
-  }
-}
 .copy-btn {
   position: fixed;
   top: 100px;

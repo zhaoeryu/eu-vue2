@@ -7,6 +7,7 @@ import '@/assets/icons'
 import EuLoading from '@/components/EuLoading'
 import MCornerDecoration from '@/components/MCornerDecoration'
 import EuEditor from '@/components/EuEditor'
+import EuDrawer from '@/components/EuDrawer'
 import MBlockHeader from '@/components/MBlockHeader/index.vue'
 import UploadFile from '@/components/UploadFile/index.vue'
 import Pagination from '@/components/Pagination'
@@ -22,6 +23,7 @@ const components = [
   EuLoading,
   MCornerDecoration,
   EuEditor,
+  EuDrawer,
   MBlockHeader,
   UploadFile,
   Pagination,

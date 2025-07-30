@@ -52,7 +52,7 @@
 <script>
 import { page, syncTable } from '@/api/system/generate'
 import GeneratePreview from '@/views/tools/generate/GeneratePreview.vue'
-import GenerateSettingDrawer from '@/views/tools/generate/GenerateSettingDrawer.vue'
+import GenerateSettingDrawer from '@/views/tools/generate/GenerateSettingDrawer/index.vue'
 export default {
   name: 'Generate',
   components: { GenerateSettingDrawer, GeneratePreview },
@@ -122,9 +122,12 @@ export default {
       })
     },
     onRowGen(row) {
+      row._genLoading = true
       this.download('/api/gen/gen', {
         tableName: row.tableName
-      }, `${row.tableName}.zip`)
+      }, `${row.tableName}.zip`).finally(() => {
+        row._genLoading = false
+      })
     }
   },
 }

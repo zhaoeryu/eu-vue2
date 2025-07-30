@@ -28,16 +28,9 @@ export function syncTable(params) {
     params
   })
 }
-export function saveTable(data) {
+export function save(data) {
   return request({
-    url: '/api/gen/table',
-    method: 'post',
-    data
-  })
-}
-export function saveColumns(data) {
-  return request({
-    url: '/api/gen/columns',
+    url: '/api/gen/save',
     method: 'post',
     data
   })
