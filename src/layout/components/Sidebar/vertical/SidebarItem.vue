@@ -81,7 +81,6 @@ export default {
         v-for="child in childrenList"
         :key="child.path"
         :item="child"
-        :root-path="resolvedPath"
         :level="level + 1"
       />
     </el-submenu>
