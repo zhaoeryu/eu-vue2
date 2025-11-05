@@ -79,18 +79,26 @@
               <el-table-column type="selection" label="#" :selectable="onSelectable"></el-table-column>
               <el-table-column prop="username" :label="$t('user.column.username')" width="100"></el-table-column>
               <el-table-column prop="nickname" :label="$t('user.column.nickname')" width="100"></el-table-column>
-              <el-table-column prop="deptId" :label="$t('user.column.deptId')">
+              <el-table-column prop="deptId" :label="$t('user.column.deptId')" width="150">
                 <template #default="{ row }">
                   <span>{{ convertToDeptName(row.deptId) }}</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="mobile" :label="$t('user.column.mobile')"></el-table-column>
+              <el-table-column prop="mobile" :label="$t('user.column.mobile')" width="100"></el-table-column>
+              <el-table-column prop="email" :label="$t('user.column.email')" width="150"></el-table-column>
+              <el-table-column prop="sex" :label="$t('user.column.sex')">
+                <template #default="{ row }">
+                  <svg-icon v-if="row.sex === 1" icon-class="sex_man" />
+                  <svg-icon v-else-if="row.sex === 0" icon-class="sex_woman" />
+                </template>
+              </el-table-column>
               <el-table-column prop="status" :label="$t('user.column.status')" width="80">
                 <template v-slot:default="{ row }">
                   <el-switch v-model="row.status" :disabled="row.admin === 1" :active-value="0" :inactive-value="1" @change="onStatusChange(row)" />
                 </template>
               </el-table-column>
-              <el-table-column prop="lastActiveTime" :label="$t('user.column.lastActiveTime')"></el-table-column>
+              <el-table-column prop="lastActiveTime" :label="$t('user.column.lastActiveTime')" width="150"></el-table-column>
+              <el-table-column prop="createTime" :label="$t('user.column.createTime')" width="150"></el-table-column>
               <el-table-column :label="$t('general.column.operation')" fixed="right" width="150">
                 <template v-slot:default="{ row }">
                   <template v-if="row.admin !== 1">
