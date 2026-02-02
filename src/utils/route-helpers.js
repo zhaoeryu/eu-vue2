@@ -1,11 +1,11 @@
 // 路由处理相关的工具函数
 import _ from 'lodash'
 import { toArray } from 'tree-lodash'
-import { 
-  isExternal, 
-  removeLeadingSlash, 
-  addLeadingSlash, 
-  pathTrim, 
+import {
+  isExternal,
+  removeLeadingSlash,
+  addLeadingSlash,
+  pathTrim,
   removeEndSlash,
   getFirstChildrenFields
 } from './index'
@@ -19,9 +19,9 @@ import MiddleDirectory from '@/layout/components/MiddleDirectory.vue'
  * @returns {boolean} 是否有效
  */
 export function isValidRouteNode(node) {
-  return node && 
-         typeof node === 'object' && 
-         node.id && 
+  return node &&
+         typeof node === 'object' &&
+         node.id &&
          node.path !== undefined
 }
 
@@ -47,14 +47,14 @@ export function buildFullPath(parentPath, currentPath) {
   if (isExternal(currentPath)) {
     return currentPath
   }
-  
+
   const cleanParent = (parentPath || '').replace(/\/+$/, '')
   const cleanCurrent = sanitizePath(currentPath)
-  
+
   if (!cleanParent) {
     return `/${cleanCurrent}`
   }
-  
+
   return removeEndSlash(`${cleanParent}/${cleanCurrent}`)
 }
 
@@ -70,7 +70,7 @@ export function createRouteMeta(item) {
     affix: Boolean(item.affix),
     isChildMeta: false,
     permission: item.permission || '',
-    keepAlive: Boolean(item.keepAlive),
+    keepAlive: Boolean(item.cache),
     dot: Boolean(item.dot),
     badge: item.badge || '',
     showHeader: Boolean(item.showHeader),
@@ -122,12 +122,12 @@ export function processDirectoryNode(node, parentNode) {
     node.path = removeLeadingSlash(node.path)
     node.component = MiddleDirectory
   }
-  
+
   // redirect 到第一个子菜单
   const condition = (n) => n.menuType !== MenuTypeEnums.MENU.value
   const firstChildPath = getFirstChildrenFields(node, { fieldKey: 'path', condition }).join('/')
   node.redirect = pathTrim(addLeadingSlash(firstChildPath))
-  
+
   // 目录下只有一个子节点时，菜单栏直接显示子节点内容
   const isSingleChild = node.children.length === 1
   if (isSingleChild && !node.meta.alwaysShow) {
@@ -135,7 +135,7 @@ export function processDirectoryNode(node, parentNode) {
     node.meta = { ...child.meta }
     node.meta.isChildMeta = true
   }
-  
+
   return node
 }
 
@@ -157,7 +157,7 @@ export function processMenuNode(node, parentNode) {
     node.path = removeLeadingSlash(node.path)
     node.component = loadComponent(node)
   }
-  
+
   return node
 }
 
@@ -168,23 +168,23 @@ export function processMenuNode(node, parentNode) {
  */
 export function wrapMenuWithLayout(node) {
   const childNode = _.cloneDeep(node)
-  
+
   // 清理父节点属性
   delete node.name
   node.path = addLeadingSlash(node.path)
   node.redirect = node.path
   node.component = Layout
-  
+
   // 设置子节点属性
   childNode.path = ''
   childNode.children = []
-  
+
   // 处理所有子节点
   node.children = [childNode, ...(node.children || [])].map(item => ({
     ...item,
     component: loadComponent(item)
   }))
-  
+
   return node
 }
 
@@ -198,17 +198,17 @@ export function loadComponent(menu) {
   if (_.get(menu, 'meta.embed') === true) {
     return () => import('@/layout/components/InnerIframe/index.vue')
   }
-    
+
   // 外链不需要组件
   if (isExternal(menu.path)) {
     return null
   }
-    
+
   // 没有组件路径
   if (!menu.componentPath) {
     return null
   }
-    
+
   // 动态加载组件
   return () => import(`@/views/${removeLeadingSlash(menu.componentPath)}`)
 }
