@@ -17,7 +17,9 @@ const mutations = {
   },
   DEL_VISITED_VIEW: (state, view) => {
     const index = state.visitedViews.findIndex(item => item.path === view.path)
-    state.visitedViews.splice(index, 1)
+    if (index !== -1) {
+      state.visitedViews.splice(index, 1)
+    }
   },
   DEL_OTHER_VISITED_VIEW: (state, view) => {
     state.visitedViews = state.visitedViews.filter(item => {
